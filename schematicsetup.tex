@@ -1,0 +1,75 @@
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{patterns,snakes}
+\usepackage{graphicx}
+
+\begin{document}
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+
+\draw[thick,->] (-0.75,2) -- (-0.25,2);
+\draw[thick,->] (-0.75,2) -- (-0.75,2.5);
+\draw (-0.5,2) node[below] {$z$};
+\draw (-0.75,2.25) node[left] {$x$};
+
+\draw (0,0) node[below] {0} -- (0,4);
+\draw (1,0) node[below] {1} -- (1,4);
+\draw (4,0) node[below] {2} -- (4,4);
+\draw (5,0) node[below] {3} -- (5,4);
+\draw (8,0) node[below] {4} -- (8,4);
+\draw (9,0) node[below] {5} -- (9,4);
+\draw (12,0) node[below] {6} -- (12,4);
+
+\draw (2.5,0) node[below] {$n_0$};
+\draw (4.5,0) node[below] {$n_1$};
+\draw (6.5,0) node[below] {$n_2$};
+\draw (8.5,0) node[below] {$n_1$};
+\draw (10.5,0) node[below] {$n_0$};
+
+\draw[<->] (0,-1) -- (1,-1);
+\draw[<->] (1,-1) -- (4,-1);
+\draw[<->] (4,-1) -- (5,-1);
+\draw[<->] (5,-1) -- (8,-1);
+\draw[<->] (8,-1) -- (9,-1);
+\draw[<->] (9,-1) -- (12,-1);
+
+\draw (0.5,-1) node[below] {$f$};
+\draw (2.5,-1) node[below] {$L_c$};
+\draw (4.5,-1) node[below] {$L_g$};
+\draw (6.5,-1) node[below] {$L_t$};
+\draw (8.5,-1) node[below] {$L_g$};
+\draw (10.5,-1) node[below] {$L_s$};
+
+\draw [thick,decoration={brace,raise=0.5cm},decorate] (-0.5,4) -- (1.5,4);
+\draw [thick,decoration={brace,raise=0.5cm},decorate] (3.5,4) -- (9.5,4);
+\draw [thick,decoration={brace,raise=0.5cm},decorate] (11.5,4) -- (12.5,4);
+\draw (0.5,5) node {Camera};
+\draw (6.5,5) node {Tank};
+\draw (12,5) node {Screen};
+
+\draw[dashed] (0,2) -- (12,2);
+
+\draw[red] (0,1.833) -- (1,2);
+\draw[red] (1,2) -- (4,2.5);
+\draw[red] (4,2.5) -- (5,2.55);
+\draw[red] (5,2.55) -- (8, 3.05);
+\draw[red] (8, 3.05) -- (9,3.1);
+\draw[red] (9,3.1) -- (12,3.6);
+
+\draw[dashed, red] (5,2.55) -- (8, 2.85);
+\draw[dashed, red] (8, 2.85) -- (9,2.9);
+\draw[dashed, red] (9,2.9) -- (12,3.3);
+
+\draw[thick, <->] (12.15,3.6) -- (12.15,3.3);
+\draw (12.15,3.45) node[right] {$\Delta x$};
+
+\draw (2,2) arc (0:9.46:1);
+\node[above] at (2,2.1)  {$\theta_{x}$};
+
+\end{tikzpicture}
+\end{figure}
+
+
+\end{document}
