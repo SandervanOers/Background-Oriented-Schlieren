@@ -1,5 +1,7 @@
 \documentclass{article}
 \usepackage{geometry}
+%\usepackage[table]{xcolor}
+\usepackage{booktabs}
 \usepackage{standalone}
 \usepackage{tikz}
 \usepackage{subcaption}
@@ -161,6 +163,27 @@ Last, we combine white noise with a shift in optical axis, shown in Figure \ref{
 \subsection{Equipment}
 
 \subsection{Error Sources}
+
+\begin{table}[htbp]
+\caption{Estimated Error Magnitudes for a \SI{100}{\milli\metre} field of view. Copied from MatchID.}
+\label{tab:esterrmagn}
+\begin{tabular}{@{}llr@{}} \toprule
+2D Error	& Estimated Error (pixels)	& Notes \\ \midrule 
+Contrast/Noise & 0.01 & Easiest to determine and minimize. \\
+Interpolant Bias & 0.01 to 0.001 & Depends on noise and interpolant. \\
+Lighting Variation & 0.005 & If using ZNNSD. \\
+Subset size / Shape & linear fit to  &  Depends on underlying \\
+ \hspace{.3cm} function & displacement field & displacement field.  \\
+Optical distortions & 1+ & Depends on lens and distance moved.\\
+ \hspace{.3cm} without corrections	&	& \\
+Image Blur	& 0.001 & If blur is constant for all frames.\\
+Turbulence/Shockwaves & $\sim$ 0.01 to 2+ & Depends on lightning and lab environment. \\
+Out-of-Plane	& $\sim$ 0.5	& Depends on magnification and motion. \\
+Lack of Perpendicularity	& $\sim$ 0.5	& Depends on tilt and motion. \\
+System Resolution	& Small	& Increases subset size.\\
+Aliasing	& $\sim$ 0.005	& Adds noise to the image.\\ \bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Corrections}
 
