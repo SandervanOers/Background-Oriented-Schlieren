@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.4.11)  11 APR 2017 16:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.4.11)  18 APR 2017 17:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -799,7 +799,66 @@ Package: l3keys2e 2016/05/18 v6512 LaTeX2e option processing using LaTeX3 keys
 Package: translator 2010/06/12 ver 1.10
 
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/translator/translator-language-
-mappings.tex)))
+mappings.tex))) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2016/06/28 v2.15d AMS math features
+\@mathmargin=\skip55
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen291
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count166
+LaTeX Info: Redefining \frac on input line 199.
+\uproot@=\count167
+\leftroot@=\count168
+LaTeX Info: Redefining \overline on input line 297.
+\classnum@=\count169
+\DOTSCASE@=\count170
+LaTeX Info: Redefining \ldots on input line 394.
+LaTeX Info: Redefining \dots on input line 397.
+LaTeX Info: Redefining \cdots on input line 518.
+\Mathstrutbox@=\box63
+\strutbox@=\box64
+\big@size=\dimen292
+LaTeX Font Info:    Redeclaring font encoding OML on input line 634.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 635.
+\macc@depth=\count171
+\c@MaxMatrixCols=\count172
+\dotsspace@=\muskip16
+\c@parentequation=\count173
+\dspbrk@lvl=\count174
+\tag@help=\toks32
+\row@=\count175
+\column@=\count176
+\maxfields@=\count177
+\andhelp@=\toks33
+\eqnshift@=\dimen293
+\alignsep@=\dimen294
+\tagshift@=\dimen295
+\tagwidth@=\dimen296
+\totwidth@=\dimen297
+\lineht@=\dimen298
+\@envbody=\toks34
+\multlinegap=\skip56
+\multlinetaggap=\skip57
+\mathdisplay@stack=\toks35
+LaTeX Info: Redefining \[ on input line 2739.
+LaTeX Info: Redefining \] on input line 2740.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
 zlibrarypatterns.code.tex
 File: tikzlibrarypatterns.code.tex 2008/01/15 v3.0.1a (rcs-revision 1.2)
@@ -823,16 +882,16 @@ zlibrarydecorations.pathmorphing.code.tex
 zlibrarydecorations.code.tex
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduledecorations.cod
 e.tex
-\pgfdecoratedcompleteddistance=\dimen291
-\pgfdecoratedremainingdistance=\dimen292
-\pgfdecoratedinputsegmentcompleteddistance=\dimen293
-\pgfdecoratedinputsegmentremainingdistance=\dimen294
-\pgf@decorate@distancetomove=\dimen295
-\pgf@decorate@repeatstate=\count166
-\pgfdecorationsegmentamplitude=\dimen296
-\pgfdecorationsegmentlength=\dimen297
+\pgfdecoratedcompleteddistance=\dimen299
+\pgfdecoratedremainingdistance=\dimen300
+\pgfdecoratedinputsegmentcompleteddistance=\dimen301
+\pgfdecoratedinputsegmentremainingdistance=\dimen302
+\pgf@decorate@distancetomove=\dimen303
+\pgf@decorate@repeatstate=\count178
+\pgfdecorationsegmentamplitude=\dimen304
+\pgfdecorationsegmentlength=\dimen305
 )
-\tikz@lib@dec@box=\box63
+\tikz@lib@dec@box=\box65
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrary
 decorations.pathmorphing.code.tex))
@@ -850,18 +909,18 @@ LaTeX Warning: Label `fig:nfrommagndispnoiseshift' multiply defined.
 )
 \openout1 = `BOS.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -899,17 +958,17 @@ LaTeX Font Info:    ... okay on input line 13.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count167
-\scratchdimen=\dimen298
-\scratchbox=\box64
-\nofMPsegments=\count168
-\nofMParguments=\count169
-\everyMPshowfont=\toks32
-\MPscratchCnt=\count170
-\MPscratchDim=\dimen299
-\MPnumerator=\count171
-\makeMPintoPDFobject=\count172
-\everyMPtoPDFconversion=\toks33
+\scratchcounter=\count179
+\scratchdimen=\dimen306
+\scratchbox=\box66
+\nofMPsegments=\count180
+\nofMParguments=\count181
+\everyMPshowfont=\toks36
+\MPscratchCnt=\count182
+\MPscratchDim=\dimen307
+\MPnumerator=\count183
+\makeMPintoPDFobject=\count184
+\everyMPtoPDFconversion=\toks37
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2016/05/21 v0.22 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -949,123 +1008,134 @@ Dictionary: translator-basic-dictionary, Language: English
 (/usr/share/texlive/texmf-dist/tex/latex/siunitx/siunitx-abbreviations.cfg
 File: siunitx-abbreviations.cfg 2016/03/01 v2.6q siunitx: Abbreviated units
 )
-\c__siunitx_mathsf_int=\count173
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 13.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 13.
-\c__siunitx_mathtt_int=\count174
+\c__siunitx_mathsf_int=\count185
+LaTeX Font Info:    Try loading font information for U+msa on input line 15.
 
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 15.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+\c__siunitx_mathtt_int=\count186
+
+Underfull \hbox (badness 10000) in paragraph at lines 20--22
+
+ []
+
+[1
+
+{/usr/share/texlive/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}] [2]
 (./schematicsetup.tex)
 File: schematicsetup.tex Graphic file (type tex)
- [1
-
-{/usr/share/texlive/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}] [2] <./Figu
-res/hordispnmin.png, id=19, 1433.355pt x 743.02594pt>
+ [3]
+<./Figures/hordispnmin.png, id=24, 1433.355pt x 743.02594pt>
 File: ./Figures/hordispnmin.png Graphic file (type png)
 
 <use ./Figures/hordispnmin.png>
-Package pdftex.def Info: ./Figures/hordispnmin.png used on input line 80.
+Package pdftex.def Info: ./Figures/hordispnmin.png used on input line 165.
 (pdftex.def)             Requested size: 215.0023pt x 111.44908pt.
 
-<./Figures/verdispnmin.png, id=20, 1433.355pt x 743.02594pt>
+<./Figures/verdispnmin.png, id=25, 1433.355pt x 743.02594pt>
 File: ./Figures/verdispnmin.png Graphic file (type png)
 
 <use ./Figures/verdispnmin.png>
-Package pdftex.def Info: ./Figures/verdispnmin.png used on input line 84.
+Package pdftex.def Info: ./Figures/verdispnmin.png used on input line 169.
 (pdftex.def)             Requested size: 215.0023pt x 111.44908pt.
 
-<./Figures/magndispnmin.png, id=21, 1433.355pt x 743.02594pt>
+<./Figures/magndispnmin.png, id=26, 1433.355pt x 743.02594pt>
 File: ./Figures/magndispnmin.png Graphic file (type png)
 
 <use ./Figures/magndispnmin.png>
-Package pdftex.def Info: ./Figures/magndispnmin.png used on input line 88.
+Package pdftex.def Info: ./Figures/magndispnmin.png used on input line 173.
 (pdftex.def)             Requested size: 430.00462pt x 222.89816pt.
 
-<./Figures/hordispnmax.png, id=22, 1433.355pt x 743.02594pt>
+<./Figures/hordispnmax.png, id=27, 1433.355pt x 743.02594pt>
 File: ./Figures/hordispnmax.png Graphic file (type png)
 
 <use ./Figures/hordispnmax.png>
-Package pdftex.def Info: ./Figures/hordispnmax.png used on input line 96.
+Package pdftex.def Info: ./Figures/hordispnmax.png used on input line 181.
 (pdftex.def)             Requested size: 215.0023pt x 111.44908pt.
 
-<./Figures/verdispnmax.png, id=23, 1433.355pt x 743.02594pt>
+<./Figures/verdispnmax.png, id=28, 1433.355pt x 743.02594pt>
 File: ./Figures/verdispnmax.png Graphic file (type png)
 
 <use ./Figures/verdispnmax.png>
-Package pdftex.def Info: ./Figures/verdispnmax.png used on input line 100.
+Package pdftex.def Info: ./Figures/verdispnmax.png used on input line 185.
 (pdftex.def)             Requested size: 215.0023pt x 111.44908pt.
 
-<./Figures/magndispnmax.png, id=24, 1433.355pt x 743.02594pt>
+<./Figures/magndispnmax.png, id=29, 1433.355pt x 743.02594pt>
 File: ./Figures/magndispnmax.png Graphic file (type png)
 
 <use ./Figures/magndispnmax.png>
-Package pdftex.def Info: ./Figures/magndispnmax.png used on input line 104.
+Package pdftex.def Info: ./Figures/magndispnmax.png used on input line 189.
 (pdftex.def)             Requested size: 430.00462pt x 222.89816pt.
 
-<./Figures/hordispnmaxrefstatenmin.png, id=25, 1433.355pt x 743.02594pt>
+<./Figures/hordispnmaxrefstatenmin.png, id=30, 1433.355pt x 743.02594pt>
 File: ./Figures/hordispnmaxrefstatenmin.png Graphic file (type png)
 
 <use ./Figures/hordispnmaxrefstatenmin.png>
 Package pdftex.def Info: ./Figures/hordispnmaxrefstatenmin.png used on input li
-ne 112.
+ne 197.
 (pdftex.def)             Requested size: 215.0023pt x 111.44908pt.
 
-<./Figures/verdispnmaxrefstatenmin.png, id=26, 1433.355pt x 743.02594pt>
+<./Figures/verdispnmaxrefstatenmin.png, id=31, 1433.355pt x 743.02594pt>
 File: ./Figures/verdispnmaxrefstatenmin.png Graphic file (type png)
 
 <use ./Figures/verdispnmaxrefstatenmin.png>
 Package pdftex.def Info: ./Figures/verdispnmaxrefstatenmin.png used on input li
-ne 116.
+ne 201.
 (pdftex.def)             Requested size: 215.0023pt x 111.44908pt.
 
-<./Figures/magndispnmaxrefstatenmin.png, id=27, 1433.355pt x 743.02594pt>
+<./Figures/magndispnmaxrefstatenmin.png, id=32, 1433.355pt x 743.02594pt>
 File: ./Figures/magndispnmaxrefstatenmin.png Graphic file (type png)
 
 <use ./Figures/magndispnmaxrefstatenmin.png>
 Package pdftex.def Info: ./Figures/magndispnmaxrefstatenmin.png used on input l
-ine 120.
+ine 205.
 (pdftex.def)             Requested size: 430.00462pt x 222.89816pt.
-
-<./Figures/nfromhordispnoise.png, id=28, 1445.4pt x 724.95844pt>
+ [4] [5 <./Figures/hordispnmin.png (PNG copy)> <./Figures/verdispnmin.png (PNG 
+copy)> <./Figures/magndispnmin.png (PNG copy)>] [6 <./Figures/hordispnmax.png (
+PNG copy)> <./Figures/verdispnmax.png (PNG copy)> <./Figures/magndispnmax.png (
+PNG copy)>] [7 <./Figures/hordispnmaxrefstatenmin.png (PNG copy)> <./Figures/ve
+rdispnmaxrefstatenmin.png (PNG copy)> <./Figures/magndispnmaxrefstatenmin.png (
+PNG copy)>]
+<./Figures/nfromhordispnoise.png, id=47, 1445.4pt x 724.95844pt>
 File: ./Figures/nfromhordispnoise.png Graphic file (type png)
 
 <use ./Figures/nfromhordispnoise.png>
-Package pdftex.def Info: ./Figures/nfromhordispnoise.png used on input line 134
+Package pdftex.def Info: ./Figures/nfromhordispnoise.png used on input line 219
 .
 (pdftex.def)             Requested size: 430.00462pt x 215.67505pt.
 
-<./Figures/nfrommagndispshift.png, id=29, 1445.4pt x 724.95844pt>
+<./Figures/nfrommagndispshift.png, id=48, 1445.4pt x 724.95844pt>
 File: ./Figures/nfrommagndispshift.png Graphic file (type png)
 
 <use ./Figures/nfrommagndispshift.png>
-Package pdftex.def Info: ./Figures/nfrommagndispshift.png used on input line 14
-0.
+Package pdftex.def Info: ./Figures/nfrommagndispshift.png used on input line 22
+5.
 (pdftex.def)             Requested size: 430.00462pt x 215.67505pt.
 
-<./Figures/nfrommagndispnoiseshift.png, id=30, 1445.4pt x 724.95844pt>
+<./Figures/nfrommagndispnoiseshift.png, id=49, 1445.4pt x 724.95844pt>
 File: ./Figures/nfrommagndispnoiseshift.png Graphic file (type png)
 
 <use ./Figures/nfrommagndispnoiseshift.png>
 Package pdftex.def Info: ./Figures/nfrommagndispnoiseshift.png used on input li
-ne 148.
+ne 233.
 (pdftex.def)             Requested size: 430.00462pt x 215.67505pt.
 
-<./Figures/nfrommagndata.png, id=31, 1445.4pt x 724.95844pt>
+<./Figures/nfrommagndata.png, id=50, 1445.4pt x 724.95844pt>
 File: ./Figures/nfrommagndata.png Graphic file (type png)
 
 <use ./Figures/nfrommagndata.png>
-Package pdftex.def Info: ./Figures/nfrommagndata.png used on input line 154.
+Package pdftex.def Info: ./Figures/nfrommagndata.png used on input line 239.
 (pdftex.def)             Requested size: 430.00462pt x 215.67505pt.
- [3] [4 <./Figures/hordispnmin.png (PNG copy)> <./Figures/verdispnmin.png (PNG 
-copy)> <./Figures/magndispnmin.png (PNG copy)>] [5 <./Figures/hordispnmax.png (
-PNG copy)> <./Figures/verdispnmax.png (PNG copy)> <./Figures/magndispnmax.png (
-PNG copy)>] [6 <./Figures/hordispnmaxrefstatenmin.png (PNG copy)> <./Figures/ve
-rdispnmaxrefstatenmin.png (PNG copy)> <./Figures/magndispnmaxrefstatenmin.png (
-PNG copy)>] [7 <./Figures/nfromhordispnoise.png (PNG copy)> <./Figures/nfrommag
-ndispshift.png (PNG copy)>] [8 <./Figures/nfrommagndispnoiseshift.png (PNG copy
-)> <./Figures/nfrommagndata.png (PNG copy)>]
-[9
+ [8 <./Figures/nfromhordispnoise.png (PNG copy)>] [9 <./Figures/nfrommagndispsh
+ift.png (PNG copy)> <./Figures/nfrommagndispnoiseshift.png (PNG copy)>] [10 <./
+Figures/nfrommagndata.png (PNG copy)>]
+[11
 
 ] (./BOS.aux)
 
@@ -1073,13 +1143,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 24551 strings out of 493069
- 525590 string characters out of 6138222
- 512494 words of memory out of 5000000
- 27704 multiletter control sequences out of 15000+600000
- 6558 words of font info for 25 fonts, out of 8000000 for 9000
+ 25394 strings out of 493069
+ 534934 string characters out of 6138222
+ 522904 words of memory out of 5000000
+ 28517 multiletter control sequences out of 15000+600000
+ 8603 words of font info for 34 fonts, out of 8000000 for 9000
  1137 hyphenation exceptions out of 8191
- 67i,12n,100p,10386b,1044s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 67i,13n,100p,10374b,1052s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texl
@@ -1087,11 +1157,13 @@ ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmsy10.pfb>
-Output written on BOS.pdf (9 pages, 6513535 bytes).
+lic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/symbols/msbm10.pfb>
+Output written on BOS.pdf (11 pages, 6540786 bytes).
 PDF statistics:
- 82 PDF objects out of 1000 (max. 8388607)
- 49 compressed objects within 1 object stream
+ 96 PDF objects out of 1000 (max. 8388607)
+ 59 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  78 words of extra memory for PDF output out of 10000 (max. 10000000)
 

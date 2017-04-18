@@ -6,6 +6,8 @@
 \usepackage{tikz}
 \usepackage{subcaption}
 \usepackage{siunitx}
+\usepackage{amsmath}
+\usepackage{amssymb}
 \usetikzlibrary{patterns,snakes}
 
 \graphicspath{{./Figures/}}
@@ -15,18 +17,101 @@
 \section{Ray Tracing}
 
 \subsection{Derivation from Fermat's Principle}
-Fermat's principle or the principle of least time states that the path that a ray of light takes between two points minimizes the time it takes to traverse this path. The time needed to traverse between two points is
+Fermat's principle states: \\
+\textit{``The path between two points taken by a ray of light leaves the optical length stationary under variations in a family of nearby paths."} \\
+
+The optical length $\mathcal{A}$ of a path $\underline{r}(s)$ taken by a ray of light passing from point $A$ to point $B$ in three-dimensional space is defined by
 \begin{equation}
-	T = \int \! \, \mathrm{d}t = \int \! \frac{c}{c} \frac{d s / d t}{d s / d t} \, \mathrm{d}t = \frac{1}{c} \int \! \frac{c}{v} \, \mathrm{d}s = \frac{1}{c} \int \! n \, \mathrm{d}s,
-	\end{equation}
-where $c$ is the speed of light in a vacuum, $s$ the traversed distance, $v = d s / d t$ the speed of light in a medium and $n = c / v$ the refractive index. According to Fermat's principle the first variation of this integral must vanish,
+	\mathcal{A} = \int_A^B \! n(\underline{r}(s)) \, \mathrm{d}s,
+\end{equation}
+where $n(\underline{r})$ is the index of refraction at the spatial point $\underline{r} \in \mathbb{R}^3$ and $\mathrm{d}s^2 = \mathrm{d}\underline{r}(s) \cdot \mathrm{d}\underline{r}(s)$ is the element of arc length $\mathrm{d}s$ along the ray path $\underline{r}(s)$ through that point.
+
+Applying Fermat's principle to a ray of light between points $A$ and $B$ leaves the optical length stationary under variations in a family of nearby paths $\underline{r}(s,\epsilon)$ depending smoothly on a parameter $\epsilon$. The path $\underline{r}(s)$ satisfies
 \begin{equation}
-	\delta \int \! n \, \mathrm{d} s = 0.
+	\label{eq:ferray}
+	\delta \mathcal{A} = 0 \mbox{ with } \delta \mathcal{A} = \delta \int_A^B \! n(\underline{r}(s)) \, \mathrm{d}s = \left.\frac{d}{d \epsilon}\right|_{\epsilon=0} \int_A^B \! n(\underline{r}(s)) \, \mathrm{d}s,
+\end{equation}
+where the deviations of the ray path $\underline{r}(s,\epsilon)$ are assumed to vanish when $\epsilon=0$, and to leave its endpoints fixed. Performing the variational derivative in (\ref{eq:ferray}) yields
+\begin{equation}
+	\begin{aligned}
+		0 &= \delta \int_A^B \! n(\underline{r}(s)) \sqrt{\dot{\underline{r}} \cdot \dot{\underline{r}}} \, \mathrm{d}s \\
+		&= \int_A^B \! \left|\dot{\underline{r}}\right| \frac{\partial n}{\partial \underline{r}} \cdot \delta\underline{r} + n(\underline{r}(s)) \frac{\dot{\underline{r}}}{\left|\dot{\underline{r}}\right|} \cdot \delta \dot{ \underline{r}} \, \mathrm{d}s \\
+		&= \int_A^B \!  \left[ \left|\dot{\underline{r}}\right| \frac{\partial n}{\partial \underline{r}} - \frac{d}{ds} \left(n(\underline{r}(s)) \frac{\dot{\underline{r}}}{\left|\dot{\underline{r}}\right|}\right) \right] \cdot \delta \underline{r} \, \mathrm{d}s,
+	\end{aligned}
+\end{equation}
+where we used integration by parts with respect to $s$ and used the homogeneous end points. We choose the arc-length variables $\mathrm{d}s^2 = \mathrm{d}r\cdot\mathrm{d}r$, so that $|\dot{\underline{r}}|=1$ for $\dot{\underline{r}} = \mathrm{d}\underline{r}/\mathrm{d}s$. The eikonal equation for the ray path $\underline{r}$ emerges
+\begin{equation}
+	\label{eq:axialrayequation}
+	\frac{\partial n}{\partial \underline{r}} = \frac{d}{ds} \left(n(\underline{r}) \frac{\mathrm{d}\underline{r}}{\mathrm{d} s} \right).
 \end{equation}
 
-\vspace{1cm}
-To be completed 
-\vspace{1cm}
+Most optical instruments are designed to posses a line of sight (or primary direction of propagation of light) called the optical axis. Choosing a Cartesian coordinate system such that the $z$-axis coincides with this optical axis, expresses the arc-length $\mathrm{d}s$ in terms of the increment along the optical axis, $\mathrm{d}z$, as
+\begin{align}
+	\mathrm{d}s &= \sqrt{(dx)^2 + (dy)^2 + (dz)^2} \\
+	&= \sqrt{1+\dot{x}^2 +\dot{y}^2} d z = \frac{1}{\gamma} d z,
+\end{align}
+where $\dot{x} = d x / dz$ and $\dot{y} = dy/dz$ and 
+\begin{equation}
+	\label{eq:gamma}
+	\gamma = \frac{d z}{d s} = \frac{1}{\sqrt{1+\dot{x}^2+\dot{y}^2}} = \cos \theta\leq 1,
+\end{equation}
+where $\theta$ is the angle the ray makes with the $z$-axis. The position of a ray at a fixed value of $z$ is denoted by $[x,y]^T$. In our Cartesian coordinate system, $\underline{r}=\underline{x}(z) = [x(z),y(z),z]^T$. Using (\ref{eq:gamma}) in (\ref{eq:axialrayequation}) yields
+\begin{equation}
+	\gamma \frac{d}{dz} \left(n(\underline{x}) \gamma \frac{d \underline{x}}{d z} \right)  = \frac{\partial n(\underline{x})}{\partial \underline{x}}.
+\end{equation}
+This yields three equations, one for each coordinate direction,
+\begin{equation}
+	\label{eq:axraycoord}
+	\begin{aligned}
+		\ddot{x}  &= \frac{1}{\gamma^2} \frac{1}{n} \left(\frac{\partial n}{\partial x} - \dot{x} \frac{\partial n}{\partial z} \right), \\
+		\ddot{y} &= \frac{1}{\gamma^2} \frac{1}{n} \left(\frac{\partial n}{\partial y} - \dot{y} \frac{\partial n}{\partial z} \right), \\
+		\frac{\partial n}{\partial z} &= \gamma \frac{d}{dz}\left(n  \gamma\right).
+	\end{aligned}
+\end{equation}	
+Suppose the index of refraction $n$ is independent of the $z$-coordinate. (\ref{eq:axraycoord}) reduce to
+\begin{equation}
+	\label{eq:axraycoord2}
+		\ddot{x}  = \frac{1}{\gamma^2} \frac{1}{n} \frac{\partial n}{\partial x}, \qquad
+		\ddot{y} = \frac{1}{\gamma^2} \frac{1}{n} \frac{\partial n}{\partial y}, \qquad n\gamma = \mbox{ constant}.
+\end{equation}
+The constant $n\gamma$ appears as an invariant of the ray path. 
+
+\bigskip
+We solve (\ref{eq:axraycoord2}) for three cases:
+\begin{enumerate}
+\item $n=$ constant,
+\item $\dot{x} \ll 1$ and $\dot{y} \ll 1$, $n=n(x,y)$,
+\item $n=n(x,y)$.
+\end{enumerate}
+\bigskip 
+
+1. $n=$ constant: (\ref{eq:axraycoord2}) reduces to
+\begin{equation}
+	\ddot{x} = 0, \qquad \ddot{y} = 0, \qquad \gamma = \mbox{ constant},
+\end{equation}
+with solution
+\begin{equation}
+	x = A+Bz, \qquad y=C+Dz, \qquad \cos \theta = \mbox{ constant }
+\end{equation}
+where constants $A,B, C$ and $D$ are determined by initial conditions.
+\bigskip
+
+2. $\dot{x} \ll 1$ and $\dot{y} \ll 1$, $n=n(x,y)$: $\gamma \approx 1$ and (\ref{eq:axraycoord2}) reduces to
+\begin{equation}
+	\ddot{x} = \frac{1}{n} \frac{\partial n}{\partial x}, \qquad
+		\ddot{y} = \frac{1}{n} \frac{\partial n}{\partial y}, \qquad n \approx \mbox{ constant},
+\end{equation}
+with solution
+\begin{equation}
+	x = A + B z + \frac{z^2}{2 n} \frac{\partial n}{\partial x}, \qquad y = C + D z + \frac{z^2}{2 n} \frac{\partial n}{\partial y}, \qquad n \approx \mbox{ constant}, \qquad \cos \theta \approx 1
+\end{equation}
+where constants $A,B, C$ and $D$ are determined by initial conditions.
+\bigskip
+
+3. $n=n(x,y)$: no additional assumptions are made. Dividing the first two equations of (\ref{eq:axraycoord2}) we obtain
+\begin{equation}
+	\frac{\ddot{x}}{\ddot{y}} = \frac{\partial n / \partial x}{\partial n / \partial y}.
+\end{equation}
 
 \subsection{Application to the Water Tank}
 Figure \ref{fig:schviepalira} shows a schematic view of a path of a light ray. The intensity of light measured at a pixel on the ccd originates from a location on the screen. We are going to construct the path of the light ray from the ccd to the screen.
