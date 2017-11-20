@@ -1,0 +1,13 @@
+cmake_minimum_required (VERSION 2.8)
+project (DIC)
+set(OpenCV_DIR /usr/lib64/OpenCV/)
+find_package( OpenCV REQUIRED )
+include_directories( ${OpenCV_INCLUDE_DIRS} )
+add_executable( DisplayImage DisplayImage.cpp )
+set (LIBSRC nonlineariteration.hpp nonlineariteration.cpp pixeltranslation.hpp pixeltranslation.cpp coeff.h coeff.c interpol.h interpol.c)
+add_library(coeff STATIC ${LIBSRC})
+target_link_libraries( DisplayImage coeff ${OpenCV_LIBS} )
+#set(CMAKE_CXX_FlAGS "-O0 -ggdb -g3")
+set(CMAKE_CXX_FLAGS "-O3")
+set(CMAKE_C_FLAGS "-O3")
+
