@@ -30,6 +30,7 @@ extern std::vector<cv::Mat> calculatePixelTranslation(const cv::Mat &Reference, 
             tempi = (double)matchLoc.x+ SubsetLength/2 - (double)Indexi;
             DispX.at<double>(j,i) = tempi;
             CorrelationCoefficient.at<double>(j,i) = maxVal;
+
         }
         std::cout << "Percentage Done: " << (double)i/(DispX.cols-1)*100 << "%" << std::endl;
     }
@@ -39,3 +40,61 @@ extern std::vector<cv::Mat> calculatePixelTranslation(const cv::Mat &Reference, 
     ReturnVector.push_back(CorrelationCoefficient);
     return ReturnVector;
     }
+/*--------------------------------------------------------------------------*/
+extern std::vector<std::vector<double>>  calculatePixelTranslationRandom(const cv::Mat &Reference, const cv::Mat &Deformed, const unsigned int &SubsetLength, const std::vector<double> &X_positions, const std::vector<double> &Y_positions)
+{
+    std::vector<double> DispX, DispY, CorrelationCoefficient;
+    for (unsigned int k = 0; k<X_positions.size(); k++)
+    {
+        unsigned int Indexi = X_positions[k];
+        unsigned int Indexj = Y_positions[k];
+
+        cv::Mat temp = Reference(cv::Range(Indexj-SubsetLength/2,Indexj+SubsetLength/2+1), cv::Range(Indexi-SubsetLength/2, Indexi+SubsetLength/2+1));
+        cv::Mat result;
+        double minVal; double maxVal;
+        cv::Point minLoc; cv::Point maxLoc;
+        cv::Point matchLoc;
+        // Compute match
+        cv::matchTemplate(Deformed, temp, result, CV_TM_CCOEFF_NORMED);
+        // Localizing the best match with minMaxLoc
+        cv::minMaxLoc( result, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat() );
+        matchLoc = maxLoc;
+        double tempi;
+        tempi = (double)matchLoc.y + (SubsetLength/2) - (double)Indexj;
+        DispY.push_back(tempi);
+        tempi = (double)matchLoc.x+ SubsetLength/2 - (double)Indexi;
+        DispX.push_back(tempi);
+        CorrelationCoefficient.push_back(maxVal);
+
+        std::cout << "Percentage Done: " << (double)k/(X_positions.size())*100 << "%" << std::endl;
+    }
+    std::vector<std::vector<double>>  ReturnVector;
+    ReturnVector.push_back(DispX);
+    ReturnVector.push_back(DispY);
+    ReturnVector.push_back(CorrelationCoefficient);
+    return ReturnVector;
+}
+/*--------------------------------------------------------------------------*/
+extern std::vector<double> calculatePixelTranslationRandom_SinglePoint(const cv::Mat &Reference, const cv::Mat &Deformed, const unsigned int &SubsetLength, const double &Indexi, const double &Indexj)
+{
+        cv::Mat temp = Reference(cv::Range(Indexj-SubsetLength/2,Indexj+SubsetLength/2+1), cv::Range(Indexi-SubsetLength/2, Indexi+SubsetLength/2+1));
+        cv::Mat result;
+        double minVal; double maxVal;
+        cv::Point minLoc; cv::Point maxLoc;
+        cv::Point matchLoc;
+        // Compute match
+        cv::matchTemplate(Deformed, temp, result, CV_TM_CCOEFF_NORMED);
+        // Localizing the best match with minMaxLoc
+        cv::minMaxLoc( result, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat() );
+        matchLoc = maxLoc;
+        double DispX, DispY, CorrelationCoefficient;
+        DispY = (double)matchLoc.y + (SubsetLength/2) - (double)Indexj;
+        DispX = (double)matchLoc.x+ SubsetLength/2 - (double)Indexi;
+        CorrelationCoefficient = maxVal;
+
+    std::vector<double> ReturnVector;
+    ReturnVector.push_back(DispX);
+    ReturnVector.push_back(DispY);
+    ReturnVector.push_back(CorrelationCoefficient);
+    return ReturnVector;
+}
