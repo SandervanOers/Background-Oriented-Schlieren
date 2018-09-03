@@ -60,7 +60,7 @@ extern double	InterpolatedValue
 	long	i, j, k;
 
 	/* compute the interpolation indexes */
-	if (SplineDegree & 1L) {
+	/*if (SplineDegree & 1L) {
 		i = (long)floor(x) - SplineDegree / 2L;
 		j = (long)floor(y) - SplineDegree / 2L;
 		for (k = 0L; k <= SplineDegree; k++) {
@@ -68,14 +68,14 @@ extern double	InterpolatedValue
 			yIndex[k] = j++;
 		}
 	}
-	else {
+	else {*/
 		i = (long)floor(x + 0.5) - SplineDegree / 2L;
 		j = (long)floor(y + 0.5) - SplineDegree / 2L;
 		for (k = 0L; k <= SplineDegree; k++) {
 			xIndex[k] = i++;
 			yIndex[k] = j++;
 		}
-	}
+	//}
 
 	/* compute the interpolation weights */
 	switch (SplineDegree) {
@@ -394,7 +394,7 @@ extern double	InterpolatedValue
 			return(0.0);
 	}
 
-	/* apply the mirror boundary conditions */
+	/* apply the mirror boundary conditions */		
 	for (k = 0L; k <= SplineDegree; k++) {
 		xIndex[k] = (Width == 1L) ? (0L) : ((xIndex[k] < 0L) ?
 			(-xIndex[k] - Width2 * ((-xIndex[k]) / Width2))
@@ -448,18 +448,18 @@ extern double	InterpolatedValueDerivative
 
     /* x */
 /* compute the interpolation indexes */
-	if (SplineDegree_X & 1L) {
+	/*if (SplineDegree_X & 1L) {
 		i = (long)floor(x) - SplineDegree_X / 2L;
 		for (k = 0L; k <= SplineDegree_X; k++) {
 			xIndex[k] = i++;
 		}
 	}
-	else {
+	else {*/
 		i = (long)floor(x + 0.5) - SplineDegree_X / 2L;
 		for (k = 0L; k <= SplineDegree_X; k++) {
 			xIndex[k] = i++;
 		}
-	}
+	//}
 
 	/* compute the interpolation weights */
 	switch (SplineDegree_X) {
@@ -643,18 +643,18 @@ extern double	InterpolatedValueDerivative
 
     /* y */
 	/* compute the interpolation indexes */
-	if (SplineDegree_Y & 1L) {
+	/*if (SplineDegree_Y & 1L) {
 		j = (long)floor(y) - SplineDegree_Y / 2L;
 		for (k = 0L; k <= SplineDegree_Y; k++) {
 			yIndex[k] = j++;
 		}
 	}
-	else {
+	else {*/
 		j = (long)floor(y + 0.5) - SplineDegree_Y / 2L;
 		for (k = 0L; k <= SplineDegree_Y; k++) {
 			yIndex[k] = j++;
 		}
-	}
+	//}
 
 	/* compute the interpolation weights */
 	switch (SplineDegree_Y) {
