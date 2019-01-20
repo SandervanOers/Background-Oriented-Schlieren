@@ -18,6 +18,8 @@
 #include "pixeltranslation.hpp"
 #include "nonlineariteration.hpp"
 #include "PointsWithValue.hpp"
+#include "PositionDirection.hpp"
+#include "calculateN.hpp"
 
 extern "C" {
 #include "coeff.h"

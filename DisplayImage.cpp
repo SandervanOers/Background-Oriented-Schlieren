@@ -13,7 +13,7 @@ bool sort_by_C_value (const  Points_With_Value &lhs, const Points_With_Value &rh
 int main(int argc, char** argv )
 {
 	auto tr1 = std::chrono::high_resolution_clock::now();
-	for (unsigned int kk=0; kk <1; kk++)
+	for (unsigned int kk=0; kk<1; kk++)
 	{
     if ( argc != 15)
     {
@@ -102,10 +102,12 @@ int main(int argc, char** argv )
 	if ((yEnd-yStart) < SubsetLength/2+offset)
 	{
 		std::cout << "Vertical Range of Image is too small with this Subset" << std::endl;
+		return -1;
 	}	
 	if ((xEnd-xStart) < SubsetLength/2+offset)
 	{
 		std::cout << "Horizontal Range of Image is too small with this Subset" << std::endl;
+		return -1;
 	}
 	unsigned int Number_Of_Threads = atoi(argv[12]);
 	if (Number_Of_Threads > std::thread::hardware_concurrency())
@@ -471,13 +473,13 @@ int main(int argc, char** argv )
     store_matrix(path,"Vyy", Vyy);
     store_matrix(path,"CorrelationCoefficient", CorrelationCoefficient);
 	
-        cv::Mat Copy_CCF_16 = CorrelationCoefficient.clone();
-        Copy_CCF_16.convertTo(Copy_CCF_16, CV_16U, 255.0*256.0);
-        imwrite("Images/CC.png", Copy_CCF_16);
-		
-		flip(Copy_CCF_16, Copy_CCF_16, 0);
-		imwrite("Images/CCflipped.png", Copy_CCF_16);
-		
+	cv::Mat Copy_CCF_16 = CorrelationCoefficient.clone();
+	Copy_CCF_16.convertTo(Copy_CCF_16, CV_16U, 255.0*256.0);
+	imwrite("Images/CC.png", Copy_CCF_16);
+	
+	flip(Copy_CCF_16, Copy_CCF_16, 0);
+	imwrite("Images/CCflipped.png", Copy_CCF_16);
+	
 	//Mat Temp;
 	//DispX.convertTo(Temp, CV_8U);
 	//Mat DX_Median, DY_Median;
@@ -492,11 +494,120 @@ int main(int argc, char** argv )
 	 
 	auto tr2= std::chrono::high_resolution_clock::now();
 	std::cout << "Total took " << std::chrono::duration_cast<std::chrono::milliseconds>(tr2-tr1).count()
-		<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(tr2-tr1).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(tr2-tr1).count() << " minutes"<<std::endl;
-	 	
-		//std::cout << "Iterations took " << std::chrono::duration_cast<std::chrono::milliseconds>(tr5).count()
-		//<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(tr5-tr1).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(tr5-tr1).count() << " minutes"<<std::endl;
-	 	 std::cout << "Iterations took "<< T << " seconds" << std::endl;
+	<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(tr2-tr1).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(tr2-tr1).count() << " minutes"<<std::endl;
+	 std::cout << "Iterations took "<< T << " seconds" << std::endl;
+
+	auto tr3= std::chrono::high_resolution_clock::now();
+	
+	unsigned int SizeGrid = 6;
+    //unsigned int offsetSplineDegree = 2*((SplineDegree+1)/2) > 5 ? 2*((SplineDegree+1)/2) : 5;
+	//std::cout << "offsetSplineDegree = " << offsetSplineDegree << std::endl;
+	cv::Mat GX(cv::Size(SizeGrid,SizeGrid), CV_64FC1, Scalar(0));
+	cv::Mat GY(cv::Size(SizeGrid,SizeGrid), CV_64FC1, Scalar(0));
+	// Camera 
+	double focal_length = 50.0/1000.0; 
+	double Distance_From_Pixels_To_Meters = 6.45e-6;
+	double n_0 = 1;
+	double n_1 = 1.5;
+	// Lengths
+	double L_t = 0.168;
+	double L_g = 0.01;
+	double L_s = 0;
+	double Lm = 2.0;
+	// Plane Definition
+	double a = 1.0;
+	double b = 1.0;
+	double c = 5.0;
+	double d = -c*Lm;
+	// Normalize normal vector
+	double normPD = sqrt(a*a+b*b+c*c);
+	std::vector<double> PlaneDefinition{a/normPD, b/normPD, c/normPD, 1};
+	PlaneDefinition[3] = -c/normPD*Lm;
+	double L_c = c/normPD/(a/normPD+b/normPD+c/normPD)*Lm-L_s-2*L_g-L_t;
+	std::cout << "L_c = " << L_c << std::endl;
+	std::cout << "L_total = " << L_c+2*L_g+L_t+L_s << std::endl;
+	unsigned int Number_Of_Steps = 1000;
+	std::vector<double> Lengths{L_c, L_g, L_t, L_s};	
+	
+
+	//cv::Mat S_x(GX.size(), CV_64FC1, Scalar(0));
+	//cv::Mat S_y(GX.size(), CV_64FC1, Scalar(0));
+	//cv::Mat S_z(GX.size(), CV_64FC1, Scalar(0));	
+	cv::Mat n_field(GX.size(), CV_64FC1);
+	for (unsigned int i = 0; i < static_cast<unsigned int>(GX.cols); i++)
+	{
+		for (unsigned int j = 0; j < static_cast<unsigned int>(GX.rows); j++)
+		{
+			GX.at<double>(i,j) = i*200.0;
+			GY.at<double>(i,j) = j*200.0;
+			//S_x.at<double>(i,j) = i;
+			//S_y.at<double>(i,j) = j;
+			//S_z.at<double>(i,j) = (-PlaneDefinition[3]-PlaneDefinition[0]*i-PlaneDefinition[1]*j)/PlaneDefinition[2];
+			n_field.at<double>(i,j) = 1.333;//1.0+i/(double)SizeGrid/2.0;
+		}
+	}
+	std::cout << GX << std::endl << std::endl;
+	std::cout << GY << std::endl << std::endl;
+	 cv::Ptr<cv::Formatter> formatMat=Formatter::get(cv::Formatter::FMT_DEFAULT);
+	 formatMat->set64fPrecision(4);
+	
+	std::vector<cv::Mat> D6 = ForwardModel(GX, GY, focal_length, Lm, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n_field, SplineDegree, Number_Of_Steps);
+	
+	std::cout << "X6 = " << std::endl << D6[0] << std::endl<< std::endl;
+	std::cout << "Z6 = " << std::endl << D6[2] << std::endl<< std::endl;
+	/*
+	std::vector<cv::Mat> DirectionCosines = calculateDirectionCosines(GX, GY, L_f, Distance_From_Pixels_To_Meters);
+	
+	cv::Mat alpha = DirectionCosines[0].clone();
+	cv::Mat beta = DirectionCosines[1].clone();
+	cv::Mat gamma =  DirectionCosines[2].clone();	
+	
+	std::cout << "Direction Cosines: " << std::endl;
+	std::cout << alpha << std::endl<< std::endl;
+	std::cout << beta << std::endl<< std::endl;
+	std::cout << gamma << std::endl<< std::endl;
+	
+
+	std::vector<cv::Mat> InitialPosition;
+	InitialPosition.push_back(S_x);
+	InitialPosition.push_back(S_y);
+	InitialPosition.push_back(S_z);
+	
+	std::vector<cv::Mat> Intersection = calculateIntersectionPlaneLine(InitialPosition, DirectionCosines, PlaneDefinition);
+	
+	//cv::Mat P_x = Intersection[0].clone();
+	//cv::Mat P_y = Intersection[1].clone();
+	//cv::Mat P_z =  Intersection[2].clone();
+	
+
+	std::vector<cv::Mat> Refracted = SnellsLaw(DirectionCosines, PlaneDefinition, n_0, n_1);
+	
+	cv::Mat alpha2 = Refracted[0].clone();
+	cv::Mat beta2 = Refracted[1].clone();
+	cv::Mat gamma2 = Refracted[2].clone();
+	
+	std::cout << "Refracted Direction Cosines: " << std::endl;
+	std::cout << alpha2 << std::endl << std::endl;
+	std::cout << beta2 << std::endl << std::endl;
+	std::cout << gamma2 << std::endl << std::endl;
+	
+	cv::Mat Q = calculateTransformationMatrix(PlaneDefinition);
+	std::cout << Q << std::endl;
+	
+	// The coordinates of n_field are u,v of the rays when entering the fluid domain: n_1 = n_1(u,v)|_{plane 4}
+
+	PositionDirection Pos_Dir_Plane5 = calculateIntersectionRungeKutta(InitialPosition, DirectionCosines, PlaneDefinition, n_field, n_0, n_1, SplineDegree, L_t, NumberOfSteps);
+	std::vector<cv::Mat> ExitPosition = Pos_Dir_Plane5.Position;
+	std::vector<cv::Mat> ExitDirection = Pos_Dir_Plane5.Direction;
+	std::cout << std::endl<< "S_x = " << ExitPosition[0] << std::endl<< std::endl;
+	std::cout << std::endl<< "T_z = " << ExitDirection[2] << std::endl<< std::endl;
+	*/
+	auto tr4= std::chrono::high_resolution_clock::now();
+
+	std::cout << "Total took " << std::chrono::duration_cast<std::chrono::milliseconds>(tr4-tr3).count()
+	<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(tr4-tr3).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(tr4-tr3).count() << " minutes"<<std::endl;
 	 }
+	 
+
     return 0;
 }
