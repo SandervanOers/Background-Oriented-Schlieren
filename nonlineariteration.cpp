@@ -30,20 +30,6 @@ static double getDerivativeValue(float *fptr_img1, const unsigned int &cols, con
                 -(double)InterpolatedValueDerivative(fptr_img1, cols, rows, x-0.5*(1.0-(double)direction), y-0.5*(double)direction, SplineDegree-1*(1-direction), SplineDegree-1*direction);
 }
 /*--------------------------------------------------------------------------*/
-static double get_fm(const cv::Mat &img,const unsigned int &Indexi, const unsigned int &Indexj, const unsigned int &SubsetLength)
-{
-	double fm = 0;
-	for (unsigned int ii = Indexi-SubsetLength/2; ii < Indexi+SubsetLength/2+1; ii++)
-	{
-		for (unsigned int jj = Indexj-SubsetLength/2; jj < Indexj+SubsetLength/2+1; jj++)
-		{
-			fm += (double)img.at<float>(jj,ii);
-		}
-	}
-	fm /= (2*(SubsetLength/2)+1)*(2*(SubsetLength/2)+1);	
-	return fm;
-}
-/*--------------------------------------------------------------------------*/
 static double get_sum_f_minus_fm_squared(const cv::Mat &img, const unsigned int &Indexi, const unsigned int &Indexj, const unsigned int &SubsetLength, const double &fm)
 {
 	double sum_f_minus_fm_squared = 0;
@@ -55,53 +41,6 @@ static double get_sum_f_minus_fm_squared(const cv::Mat &img, const unsigned int 
 		}
 	}	
 	return sum_f_minus_fm_squared;
-}
-/*--------------------------------------------------------------------------*/
-static double get_gm(float *fptr_img1, const std::vector<double> &P, const unsigned int &Indexi, const unsigned int &Indexj, const unsigned int &SubsetLength, const unsigned int &SplineDegree, const unsigned int &img_cols, const unsigned int &img_rows)
-{
-	double gm = 0;
-    double U0 = P[0];
-    double V0 = P[1];
-    double Ux = 0;
-    double Vx = 0;
-    double Uy = 0;
-    double Vy = 0;
-    double Uxy = 0;
-    double Vxy = 0;
-    double Uxx = 0;
-    double Vxx = 0;
-    double Uyy = 0;
-    double Vyy = 0;
-    if (P.size() > 2)
-    {
-        Ux = P[2];
-        Vx = P[3];
-        Uy = P[4];
-        Vy = P[5];
-    }
-    if (P.size() > 6)
-    {
-        Uxy = P[6];
-        Vxy = P[7];
-    }
-    if (P.size() > 8)
-    {
-        Uxx = P[8];
-        Vxx = P[9];
-        Uyy = P[10];
-        Vyy = P[11];
-    }	
-	for (unsigned int ii = Indexi-SubsetLength/2; ii < Indexi+SubsetLength/2+1; ii++)
-	{
-		double deltax = ((double)ii-(double)Indexi);
-		for (unsigned int jj = Indexj-SubsetLength/2; jj < Indexj+SubsetLength/2+1; jj++)
-		{
-			double deltay = ((double)jj-(double)Indexj);
-			gm += InterpolatedValue(fptr_img1, img_cols, img_rows, ii+U0+Ux*deltax+Uy*deltay+Uxy*deltax*deltay+Uxx*deltax*deltax+Uyy*deltay*deltay, jj+V0+Vx*deltax+Vy*deltay+Vxy*deltax*deltay+Vxx*deltax*deltax+Vyy*deltay*deltay, SplineDegree);					
-		}
-	}
-	gm /= (2*(SubsetLength/2)+1)*(2*(SubsetLength/2)+1);	
-	return gm;
 }
 /*--------------------------------------------------------------------------*/
 static std::pair<double, double> get_gm_and_sum_g_minus_gm_squared(const std::vector<double> g_values)
@@ -178,7 +117,7 @@ static std::vector<double> get_g_values(float *fptr_img1, const std::vector<doub
 	return g_values;
 }
 /*--------------------------------------------------------------------------*/
-static double get_sum_g_minus_gm_squared(float *fptr_img1, const std::vector<double> &P, const unsigned int &Indexi, const unsigned int &Indexj, const unsigned int &SubsetLength, const unsigned int &SplineDegree, const double &gm, const unsigned int &img_cols, const unsigned int &img_rows)
+/*static double get_sum_g_minus_gm_squared(float *fptr_img1, const std::vector<double> &P, const unsigned int &Indexi, const unsigned int &Indexj, const unsigned int &SubsetLength, const unsigned int &SplineDegree, const double &gm, const unsigned int &img_cols, const unsigned int &img_rows)
 {
 	double sum_g_minus_gm_squared = 0;
     double U0 = P[0];
@@ -223,9 +162,9 @@ static double get_sum_g_minus_gm_squared(float *fptr_img1, const std::vector<dou
 		}
 	}
 	return sum_g_minus_gm_squared;
-}
+}*/
 /*--------------------------------------------------------------------------*/
-static bool is_data_uniform(const double &sum_g_minus_gm_squared)	
+static bool is_data_uniform(const double &sum_g_minus_gm_squared)
 {	
 	if (sum_g_minus_gm_squared < 1e-8)
 	{

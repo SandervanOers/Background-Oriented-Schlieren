@@ -3,7 +3,12 @@
 
 #include <stdio.h>
 #include <opencv2/opencv.hpp>
+# include <cppad/cppad.hpp>
+//# include <cppad/ipopt/solve.hpp>
 #include <numeric>
+# include <vector>
+# include <iostream>
+
 
 #include "PositionDirection.hpp"
 
@@ -29,10 +34,12 @@ extern PositionDirection calculateIntersectionRungeKutta(const std::vector<cv::M
 /*--------------------------------------------------------------------------*/
 extern PositionDirection calculateIntersectionConstantRefraction(const PositionDirection &InitialPositionDirection, const std::vector<double> &PlaneDefinition, const double &n_initial, const double &n_final);
 /*--------------------------------------------------------------------------*/
-extern std::vector<cv::Mat> ForwardModel(const cv::Mat &GridX, const cv::Mat &GridY, const double &focal_length, const double &Lm, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const cv::Mat &n_field, const unsigned int &SplineDegree, const unsigned int &Number_Of_Steps);
+extern std::vector<cv::Mat> ForwardModel(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const double &Lm, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const cv::Mat &n_field, const unsigned int &SplineDegree, const unsigned int &Number_Of_Steps);
 /*--------------------------------------------------------------------------*/
 static double getDerivativeValue(float *fptr_img1, const unsigned int &cols, const unsigned int &rows, const double &x, const double &y, const unsigned int &SplineDegree, const unsigned int &direction);
 /*--------------------------------------------------------------------------*/
-cv::Mat calculateTransformationMatrix(const std::vector<double> &PlaneDefinition);
+static cv::Mat calculateTransformationMatrix(const std::vector<double> &PlaneDefinition);
+/*--------------------------------------------------------------------------*/
+extern int poly_test(void);
 /*--------------------------------------------------------------------------*/
 #endif

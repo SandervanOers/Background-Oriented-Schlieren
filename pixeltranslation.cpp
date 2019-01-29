@@ -10,7 +10,7 @@ std::vector<double> calculatePixelTranslationRandom_SinglePoint(const cv::Mat &R
 	cv::Mat     mean;
 	cv::Mat     stddev;
 	cv::meanStdDev (temp, mean, stddev );
-	double       stddev_pxl = stddev.data[0];
+	double stddev_pxl = stddev.data[0];
 	if (stddev_pxl>=1)
 	{
 		unsigned int dyl, dyr;

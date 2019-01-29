@@ -529,10 +529,8 @@ int main(int argc, char** argv )
 	unsigned int Number_Of_Steps = 1000;
 	std::vector<double> Lengths{L_c, L_g, L_t, L_s};	
 	
-
-	//cv::Mat S_x(GX.size(), CV_64FC1, Scalar(0));
-	//cv::Mat S_y(GX.size(), CV_64FC1, Scalar(0));
-	//cv::Mat S_z(GX.size(), CV_64FC1, Scalar(0));	
+	cv::Mat Dx(GX.size(), CV_64FC1, Scalar(0));
+	cv::Mat Dy(GX.size(), CV_64FC1, Scalar(0));
 	cv::Mat n_field(GX.size(), CV_64FC1);
 	for (unsigned int i = 0; i < static_cast<unsigned int>(GX.cols); i++)
 	{
@@ -540,9 +538,8 @@ int main(int argc, char** argv )
 		{
 			GX.at<double>(i,j) = i*200.0;
 			GY.at<double>(i,j) = j*200.0;
-			//S_x.at<double>(i,j) = i;
-			//S_y.at<double>(i,j) = j;
-			//S_z.at<double>(i,j) = (-PlaneDefinition[3]-PlaneDefinition[0]*i-PlaneDefinition[1]*j)/PlaneDefinition[2];
+			Dx.at<double>(i,j) = 10+i;
+			Dy.at<double>(i,j) = j;
 			n_field.at<double>(i,j) = 1.333;//1.0+i/(double)SizeGrid/2.0;
 		}
 	}
@@ -551,63 +548,20 @@ int main(int argc, char** argv )
 	 cv::Ptr<cv::Formatter> formatMat=Formatter::get(cv::Formatter::FMT_DEFAULT);
 	 formatMat->set64fPrecision(4);
 	
-	std::vector<cv::Mat> D6 = ForwardModel(GX, GY, focal_length, Lm, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n_field, SplineDegree, Number_Of_Steps);
+	std::vector<cv::Mat> D6 = ForwardModel(GX, GY, Dx, Dy, focal_length, Lm, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n_field, SplineDegree, Number_Of_Steps);
 	
 	std::cout << "X6 = " << std::endl << D6[0] << std::endl<< std::endl;
 	std::cout << "Z6 = " << std::endl << D6[2] << std::endl<< std::endl;
-	/*
-	std::vector<cv::Mat> DirectionCosines = calculateDirectionCosines(GX, GY, L_f, Distance_From_Pixels_To_Meters);
 	
-	cv::Mat alpha = DirectionCosines[0].clone();
-	cv::Mat beta = DirectionCosines[1].clone();
-	cv::Mat gamma =  DirectionCosines[2].clone();	
-	
-	std::cout << "Direction Cosines: " << std::endl;
-	std::cout << alpha << std::endl<< std::endl;
-	std::cout << beta << std::endl<< std::endl;
-	std::cout << gamma << std::endl<< std::endl;
-	
-
-	std::vector<cv::Mat> InitialPosition;
-	InitialPosition.push_back(S_x);
-	InitialPosition.push_back(S_y);
-	InitialPosition.push_back(S_z);
-	
-	std::vector<cv::Mat> Intersection = calculateIntersectionPlaneLine(InitialPosition, DirectionCosines, PlaneDefinition);
-	
-	//cv::Mat P_x = Intersection[0].clone();
-	//cv::Mat P_y = Intersection[1].clone();
-	//cv::Mat P_z =  Intersection[2].clone();
-	
-
-	std::vector<cv::Mat> Refracted = SnellsLaw(DirectionCosines, PlaneDefinition, n_0, n_1);
-	
-	cv::Mat alpha2 = Refracted[0].clone();
-	cv::Mat beta2 = Refracted[1].clone();
-	cv::Mat gamma2 = Refracted[2].clone();
-	
-	std::cout << "Refracted Direction Cosines: " << std::endl;
-	std::cout << alpha2 << std::endl << std::endl;
-	std::cout << beta2 << std::endl << std::endl;
-	std::cout << gamma2 << std::endl << std::endl;
-	
-	cv::Mat Q = calculateTransformationMatrix(PlaneDefinition);
-	std::cout << Q << std::endl;
-	
-	// The coordinates of n_field are u,v of the rays when entering the fluid domain: n_1 = n_1(u,v)|_{plane 4}
-
-	PositionDirection Pos_Dir_Plane5 = calculateIntersectionRungeKutta(InitialPosition, DirectionCosines, PlaneDefinition, n_field, n_0, n_1, SplineDegree, L_t, NumberOfSteps);
-	std::vector<cv::Mat> ExitPosition = Pos_Dir_Plane5.Position;
-	std::vector<cv::Mat> ExitDirection = Pos_Dir_Plane5.Direction;
-	std::cout << std::endl<< "S_x = " << ExitPosition[0] << std::endl<< std::endl;
-	std::cout << std::endl<< "T_z = " << ExitDirection[2] << std::endl<< std::endl;
-	*/
 	auto tr4= std::chrono::high_resolution_clock::now();
 
 	std::cout << "Total took " << std::chrono::duration_cast<std::chrono::milliseconds>(tr4-tr3).count()
 	<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(tr4-tr3).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(tr4-tr3).count() << " minutes"<<std::endl;
 	 }
 	 
+	 std::cout << "1" << std::endl;
+	 int pp = poly_test();
+	 std::cout << "2" << std::endl;
 
     return 0;
 }

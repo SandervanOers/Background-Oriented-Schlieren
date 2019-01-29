@@ -378,7 +378,10 @@ extern PositionDirection calculateIntersectionRungeKutta(const std::vector<cv::M
 	// Step 7: Obtain grad n = ( dn/du, dn/dv, dn/dw)
 	 // Assumption: dn / dw = 0
 
-	cv::Mat S_z0 = S_z.clone();
+	//cv::Mat S_z0 = S_z.clone();
+	//double Sz0 = calculateMean(S_z);
+	double Sz0 = S_z.at<double>(0.0);
+	std::cout << "Sz0 = " << Sz0 << std::endl; 
 	//std::cout << std::endl << "S_x = " << std::endl << S_x << std::endl << std::endl;
 	std::cout << std::endl << "S_z = " << std::endl << S_z << std::endl << std::endl;
 	std::cout << std::endl << "T_x = " << std::endl << T_x << std::endl << std::endl;
@@ -395,10 +398,8 @@ extern PositionDirection calculateIntersectionRungeKutta(const std::vector<cv::M
 	std::vector<int> Index(total[0]);
 	std::iota(Index.begin(), Index.end(), 0);
 	
-	std::cout << S_z0 << std::endl;
 	std::cout << L_t << std::endl;
 	while (cv::sum(done)[0] < total[0])
-	//for (unsigned k = 0; k < Number_Of_Steps; k++)
 	{
 		cv::Mat k1_u(S_x.size(), CV_64FC1, Scalar(0));
 		cv::Mat k1_v(S_x.size(), CV_64FC1, Scalar(0));
@@ -428,7 +429,8 @@ extern PositionDirection calculateIntersectionRungeKutta(const std::vector<cv::M
 		{
 			unsigned int i = singleindex/cols;
 			unsigned int j = singleindex%cols;
-			if (S_z.at<double>(i,j) - S_z0.at<double>(i,j) >= L_t)
+			//if (S_z.at<double>(i,j) - S_z0.at<double>(i,j) >= L_t)
+			if (S_z.at<double>(i,j) - Sz0 >= L_t)
 			{
 				done.at<uchar>(i,j) = 1;
 				Index.erase( std::remove( Index.begin(), Index.end(), singleindex ), Index.end() ); 
@@ -554,7 +556,8 @@ extern PositionDirection calculateIntersectionRungeKutta(const std::vector<cv::M
 	{
 		for (unsigned int j = 0; j < cols; j++)
 		{
-			cv::Vec3d position(S_x.at<double>(i,j), S_y.at<double>(i,j), S_z.at<double>(i,j));
+			//cv::Vec3d position(S_x.at<double>(i,j), S_y.at<double>(i,j), S_z.at<double>(i,j));
+			cv::Vec3d position(S_x.at<double>(i,j), S_y.at<double>(i,j), Sz0+L_t);
 			double S_u = position.dot(unit_x);
 			double S_v = position.dot(unit_y);
 			double S_w = position.dot(unit_z);
@@ -581,7 +584,7 @@ extern PositionDirection calculateIntersectionConstantRefraction(const PositionD
 	return Return;
 }
 /*--------------------------------------------------------------------------*/
-extern std::vector<cv::Mat> ForwardModel(const cv::Mat &GridX, const cv::Mat &GridY, const double &focal_length, const double &Lm, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const cv::Mat &n_field, const unsigned int &SplineDegree, const unsigned int &Number_Of_Steps)
+extern std::vector<cv::Mat> ForwardModel(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const double &Lm, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const cv::Mat &n_field, const unsigned int &SplineDegree, const unsigned int &Number_Of_Steps)
 {
 	double L_c = Lengths[0];
 	double L_g = Lengths[1];
@@ -610,7 +613,7 @@ extern std::vector<cv::Mat> ForwardModel(const cv::Mat &GridX, const cv::Mat &Gr
 	std::cout << "Plane 1 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << d1 << " = 0 " << ": (x,y)=(0,0) => z_1 = " << -d1/PlaneDefinition[2] << std::endl << std::endl;
 	
 	/* // Test 1
-	std::vector<cv::Mat> InitialPosition;	
+	std::vector<cv::Mat> InitialPosition;
 	cv::Mat S_x(1,1, CV_64FC1, Scalar(0));
 	cv::Mat S_y(1,1, CV_64FC1, Scalar(0));
 	cv::Mat S_z(1,1, CV_64FC1, Scalar(0));
@@ -650,11 +653,9 @@ extern std::vector<cv::Mat> ForwardModel(const cv::Mat &GridX, const cv::Mat &Gr
 	PositionDirection PlaneW = calculateIntersectionConstantRefraction(Plane1,  PlaneDefinitionW, n0W, n1W);	
 	*/
 	// Full Sim
+	// Unknown n
 	double L_f = calculateLf(focal_length, Lm);
 	std::vector<cv::Mat> InitialDirection = calculateDirectionCosines(GridX, GridY, L_f, Distance_From_Pixels_To_Meters);
-	std::cout << std::endl << "Initial Direction X = " << std::endl << InitialDirection.at(0) << std::endl << std::endl;
-	//std::cout << std::endl << "Initial Direction Y = " << std::endl << InitialDirection.at(1) << std::endl << std::endl;
-	std::cout << std::endl << "Initial Direction Z = " << std::endl << InitialDirection.at(2) << std::endl << std::endl;
 	std::vector<cv::Mat> InitialPosition;
 	cv::Mat S_x(GridX.size(), CV_64FC1, Scalar(0));
 	cv::Mat S_y(GridX.size(), CV_64FC1, Scalar(0));
@@ -696,9 +697,31 @@ extern std::vector<cv::Mat> ForwardModel(const cv::Mat &GridX, const cv::Mat &Gr
 	//std::cout << std::endl << "Plane 5 Direction Y = " << std::endl << Plane5.Direction.at(1) << std::endl << std::endl;
 	std::cout << std::endl << "Plane 5 Direction Z = " << std::endl << Plane5.Direction.at(2) << std::endl << std::endl;
 	std::cout << std::endl << "--- Plane 6 --- " << std::endl << std::endl;
-	std::vector<cv::Mat> PositionPlane6 = calculateIntersectionPlaneLine(Plane5.Position, Plane5.Direction, PlaneDefinition);
+	std::vector<cv::Mat> PositionPlane6_unknown = calculateIntersectionPlaneLine(Plane5.Position, Plane5.Direction, PlaneDefinition);
 	
-	return PositionPlane6;
+	// Known n
+	double n_2 = n_1;
+	std::cout << std::endl << "Initial Direction X = " << std::endl << InitialDirection.at(0) << std::endl << std::endl;
+	std::cout << std::endl << "Initial Direction Y = " << std::endl << InitialDirection.at(1) << std::endl << std::endl;
+	std::cout << std::endl << "Initial Direction Z = " << std::endl << InitialDirection.at(2) << std::endl << std::endl;
+	InitialDirection = calculateDirectionCosines(GridX+Dx, GridY+Dy, L_f, Distance_From_Pixels_To_Meters);
+	std::cout << std::endl << "Initial Direction X = " << std::endl << InitialDirection.at(0) << std::endl << std::endl;
+	std::cout << std::endl << "Initial Direction Y = " << std::endl << InitialDirection.at(1) << std::endl << std::endl;
+	std::cout << std::endl << "Initial Direction Z = " << std::endl << InitialDirection.at(2) << std::endl << std::endl;
+	Plane2 = calculateIntersectionConstantRefraction(Plane1, PlaneDefinition2, n_0, n_1);
+	PositionDirection Plane3 = calculateIntersectionConstantRefraction(Plane2, PlaneDefinition3, n_1, n_2);
+	Plane4 = calculateIntersectionConstantRefraction(Plane3, PlaneDefinition3, n_2, n_1);
+	Plane5 = calculateIntersectionConstantRefraction(Plane4, PlaneDefinition5, n_1, n_0);
+	std::vector<cv::Mat> PositionPlane6_known = calculateIntersectionPlaneLine(Plane5.Position, Plane5.Direction, PlaneDefinition);
+	
+	std::vector<cv::Mat> Displacement;
+	cv::Mat DX = PositionPlane6_known[0] - PositionPlane6_unknown[0];
+	cv::Mat DY = PositionPlane6_known[1] - PositionPlane6_unknown[1];
+	cv::Mat DZ = PositionPlane6_known[2] - PositionPlane6_unknown[2];
+	Displacement.push_back(DX);
+	Displacement.push_back(DY);
+	Displacement.push_back(DZ);
+	return Displacement;
 	
 }
 /*--------------------------------------------------------------------------*/
@@ -708,7 +731,7 @@ static double getDerivativeValue(float *fptr_img1, const unsigned int &cols, con
                 -(double)InterpolatedValueDerivative(fptr_img1, cols, rows, x-0.5*(1.0-(double)direction), y-0.5*(double)direction, SplineDegree-1*(1-direction), SplineDegree-1*direction);
 }
 /*--------------------------------------------------------------------------*/
-extern cv::Mat calculateTransformationMatrix(const std::vector<double> &PlaneDefinition)
+static cv::Mat calculateTransformationMatrix(const std::vector<double> &PlaneDefinition)
 {
 	double a[] = {PlaneDefinition[0], PlaneDefinition[1], PlaneDefinition[2]};
     double b[] = {0, 0, 1};
@@ -742,5 +765,76 @@ extern cv::Mat calculateTransformationMatrix(const std::vector<double> &PlaneDef
 	
 	return Q;
 	
+}
+/*--------------------------------------------------------------------------*/ 
+namespace {
+      // define y(x) = Poly(a, x) in the empty namespace
+      template <class Type>
+      Type Poly(const std::vector<double> &a, const Type &x)
+      {     size_t k  = a.size();
+            Type y   = 0.;  // initialize summation
+            Type x_i = 1.;  // initialize x^i
+            size_t i;
+            for(i = 0; i < k; i++)
+            {     y   += a[i] * x_i;  // y   = y + a_i * x^i
+                  x_i *= x;           // x_i = x_i * x
+            }
+            return y;
+      }
+}
+/*--------------------------------------------------------------------------*/ 
+// main program
+extern int poly_test(void)
+{   
+	std::cout << "test poly " << std::endl;  
+	using CppAD::AD;           // use AD as abbreviation for CppAD::AD
+      size_t i;                  // a temporary index
+
+      // vector of polynomial coefficients
+      size_t k = 5;              // number of polynomial coefficients
+      std::vector<double> a(k);       // vector of polynomial coefficients
+      for(i = 0; i < k; i++)
+            a[i] = 1.;           // value of polynomial coefficients
+	std::cout << "test poly 1" << std::endl;  
+	
+      // domain space vector
+      size_t n = 1;              // number of domain space variables
+      std::vector< AD<double> > X(1); // vector of domain space variables
+      X[0] = 3.0;                 // value corresponding to operation sequence
+	  std::cout << "X[0] = " << X[0] << std::endl;
+	std::cout << "test poly 3" << std::endl;  
+
+      // declare independent variables and start recording operation sequence
+      CppAD::Independent(X);
+	std::cout << "test poly 3.1" << std::endl;  
+
+      // range space vector
+      size_t m = 1;              // number of ranges space variables
+      std::vector< AD<double> > Y(m); // vector of ranges space variables
+	std::cout << "test poly 3.5" << std::endl;  
+      Y[0] = Poly(a, X[0]);      // value during recording of operations
+	std::cout << "test poly 4" << std::endl;  
+
+      // store operation sequence in f: X -> Y and stop recording
+      CppAD::ADFun<double> f(X, Y);
+	std::cout << "test poly 5" << std::endl;  
+
+      // compute derivative using operation sequence stored in f
+      std::vector<double> jac(m * n); // Jacobian of f (m by n matrix)
+      std::vector<double> x(n);       // domain space vector
+      x[0] = 3.;                 // argument value for derivative
+      jac  = f.Jacobian(x);      // Jacobian for operation sequence
+
+      // print the results
+      std::cout << "f'(3) computed by CppAD = " << jac[0] << std::endl;
+
+      // check if the derivative is correct
+      int error_code;
+      if( jac[0] == 142. )
+            error_code = 0;      // return code for correct case
+      else  error_code = 1;      // return code for incorrect case
+
+      return error_code;
+	  return 0;
 }
 /*--------------------------------------------------------------------------*/ 
