@@ -3,7 +3,7 @@
 int main(int argc, char** argv )
 {
 	auto tr1 = std::chrono::high_resolution_clock::now();
-	
+
 	/*--------------------------------------------------------------------------*/
 	// Check and Process Input
 	std::string pathname_string;
@@ -14,7 +14,6 @@ int main(int argc, char** argv )
 	{
 		return -1;
 	}
-	std::cout <<  "Number_Of_Threads = " << Number_Of_Threads << std::endl;
 	std::cout << std::endl << "\033[1;32mInput Parsed\033[0m\n" << std::endl;
 	cv::String path(pathname_string);
 	/*--------------------------------------------------------------------------*/
@@ -28,7 +27,18 @@ int main(int argc, char** argv )
 	}
 	std::cout << "\033[1;32mImages Loaded\033[0m\n" << std::endl;
 	/*--------------------------------------------------------------------------*/
-    cv::Mat M_valid_points = get_valid_points(img, SubsetLength, offset);
+    //cv::Mat M_valid_points = get_valid_points(img, SubsetLength, offset);
+    cv::Mat M_valid_points(img.size(), CV_8U, Scalar(0));
+    for (unsigned int i = 0; i < static_cast<unsigned int>(img.rows); i++)
+    {
+        for (unsigned int j = 0; j < static_cast<unsigned int>(img.cols); j++)
+        {
+            if (i >= SubsetLength/2+offset && i <= static_cast<unsigned int>(img.rows)-SubsetLength/2-offset && j >= SubsetLength/2+offset && j <= static_cast<unsigned int>(img.cols)-SubsetLength/2-offset)
+            {
+                M_valid_points.at<uchar>(i,j) = 1;
+            }
+        }
+    }
 	/*--------------------------------------------------------------------------*/
     // Calculate interpolation coefficients for g
     cv::Mat prova_img1= img1.clone();
@@ -52,18 +62,18 @@ int main(int argc, char** argv )
 	cv::Mat Vyy =   IG[11].clone();
 	cv::Mat CorrelationCoefficient =  IG[12].clone();
 	cv::Mat Computed_Points =  IG[13].clone();
-	
+
 	compute_Save_GridX_Y(DispX.size(), xStart_ROI, yStart_ROI, GridLength, pathname_string);
 	std::cout << "\033[1;32mInitial Points Computed\033[0m\n" << std::endl;
 	/*--------------------------------------------------------------------------*/
     std::vector<Points_With_Value> Locations_Best_Correlation;
     cv::Mat nonZeroCoordinates;
     cv::findNonZero(CorrelationCoefficient>0, nonZeroCoordinates);
-    for (unsigned int i = 0; i < nonZeroCoordinates.total(); i++ ) 
+    for (unsigned int i = 0; i < nonZeroCoordinates.total(); i++ )
 	{
 		Locations_Best_Correlation.push_back(Points_With_Value(CorrelationCoefficient.at<double>(nonZeroCoordinates.at<Point>(i)), nonZeroCoordinates.at<Point>(i)));
     }
-		
+
     // Sort first elements
     sort(Locations_Best_Correlation.begin(), Locations_Best_Correlation.end(), sort_by_C_value);
     for (auto i = Locations_Best_Correlation.begin(); i < Locations_Best_Correlation.end(); i++)
@@ -88,15 +98,15 @@ int main(int argc, char** argv )
         imwrite(filename, Copy_CCF);
     }
 	//auto tr5 = std::chrono::high_resolution_clock::now();
-	
+
 	//std::chrono::duration<double> TR = tr5-tr5;
 	//auto T = TR.count();
 	/*--------------------------------------------------------------------------*/
-	
+
 	cv::Ptr<cv::Formatter> fmt = cv::Formatter::get(cv::Formatter::FMT_DEFAULT);
 	fmt->set64fPrecision(2);
 	fmt->set32fPrecision(2);
-	
+
 	int outputcount = 1;
 	while(static_cast<unsigned int>(cv::sum(Computed_Points).val[0]) < Computed_Points.total())
     {
@@ -123,7 +133,7 @@ int main(int argc, char** argv )
             std::vector<double> point2 = iteration(img, fptr_img1, (*i).x, (*i).y, InitialCondition, SplineDegree, SubsetLength, GridLength, abs_tolerance_threshold, rel_tolerance_threshold, ShapeFunction);
 			//std::cout << "after" << std::endl;
 			//auto tr4 = std::chrono::high_resolution_clock::now();
-			//std::chrono::duration<double> elapsed_seconds = tr4-tr3;	
+			//std::chrono::duration<double> elapsed_seconds = tr4-tr3;
 			//T += elapsed_seconds.count();
             DispX.at<double>(*i) = point2[0];
 			//std::cout << "0" << std::endl;
@@ -157,9 +167,9 @@ int main(int argc, char** argv )
     //for (auto i = Locations_Best_Correlation.begin(); i < Locations_Best_Correlation.end(); i++)
 	//{
 	//	std::cout << (*i).Loc << ": " << (*i).C_value << std::endl;
-	//}	
+	//}
 	//std::cout << "After Loc"<< std::endl;
-	
+
         if (Neighbours.empty())
         {
             //std::cout << "no valid or uncomputed neighbours" << std::endl;
@@ -187,7 +197,7 @@ int main(int argc, char** argv )
                     std::cout << "Points Computed: " << std::setprecision(2) << computed << "%" << std::endl;
                 }
             }
-        } 
+        }
     }
 	std::cout << std::endl << "\033[1;32mAll Points Computed\033[0m\n" << std::endl;
 	/*--------------------------------------------------------------------------*/
@@ -201,7 +211,7 @@ int main(int argc, char** argv )
         std::vector<double> InitialCondition = {DispX.at<double>(matchLoc), DispY.at<double>(matchLoc), Ux.at<double>(matchLoc), Vx.at<double>(matchLoc), Uy.at<double>(matchLoc), Vy.at<double>(matchLoc), Uxy.at<double>(matchLoc), Vxy.at<double>(matchLoc), Uxx.at<double>(matchLoc), Vxx.at<double>(matchLoc), Uyy.at<double>(matchLoc), Vyy.at<double>(matchLoc)};
         std::vector<cv::Point> Neighbours = get_valid_Neighbours(M_valid_points, Computed_Points, matchLoc.x, matchLoc.y, SubsetLength, GridLength, offset);
 		std::vector<std::vector<double>> List_Neighbour_Solution;
-		
+
         for (auto i = Neighbours.begin(); i < Neighbours.end(); i++)
        // for (auto i = Neighbours_list.begin(); i < Neighbours_list.end(); i++)
         {
@@ -215,17 +225,17 @@ int main(int argc, char** argv )
 			//std::vector<double> point2 = iteration(img, fptr_img1, (*i).x, (*i).y, InitialCondition, SplineDegree, SubsetLength, GridLength, abs_tolerance_threshold, rel_tolerance_threshold, ShapeFunction);
 			//List_Neighbour_Solution.push_back(point2);
 		}
-		
+
 			Locations_Best_Correlation.erase(Locations_Best_Correlation.begin());
-			
-			
-			
+
+
+
 		for (auto &future : futures) {
 		   //List_Neighbour_Solution.push_back(future.get());
-		//}		
+		//}
 
 		//for (auto i = 0; i < Neighbours.size(); i++)
-		//{	
+		//{
 			//std::vector<double> point2 = List_Neighbour_Solution[i];
 			std::vector<double> point2 = future.get();
 			cv::Point Loc(point2[13], point2[14]);
@@ -279,7 +289,7 @@ int main(int argc, char** argv )
                     std::cout << "Points Computed: " << std::setprecision(2) << computed << "%" << std::endl;
                 }
             //}
-        //} 
+        //}
     }
 	*/
 	std::cout << "Reliability = " << std::setprecision(5) << cv::sum(CorrelationCoefficient).val[0]/static_cast<double>(CorrelationCoefficient.total()) << std::endl;
@@ -294,7 +304,7 @@ int main(int argc, char** argv )
         Copy_CCF_16.convertTo(Copy_CCF_16, CV_16U, 255.0*256.0);
         imwrite(filename, Copy_CCF_16);
     }
-	
+
 
     store_matrix(path,"U0", DispX);
     store_matrix(path,"V0", DispY);
@@ -309,14 +319,14 @@ int main(int argc, char** argv )
     store_matrix(path,"Vxx", Vxx);
     store_matrix(path,"Vyy", Vyy);
     store_matrix(path,"CorrelationCoefficient", CorrelationCoefficient);
-	
+
 	//cv::Mat Copy_CCF_16 = CorrelationCoefficient.clone();
 	//Copy_CCF_16.convertTo(Copy_CCF_16, CV_16U, 255.0*256.0);
 	//imwrite("Images/CC.png", Copy_CCF_16);
 	//
 	//flip(Copy_CCF_16, Copy_CCF_16, 0);
 	//imwrite("Images/CCflipped.png", Copy_CCF_16);
-	
+
 	//Mat Temp;
 	//DispX.convertTo(Temp, CV_8U);
 	//Mat DX_Median, DY_Median;
@@ -328,12 +338,13 @@ int main(int argc, char** argv )
     //medianBlur(DispY, DY_Median, 3 );
 	//store_matrix(path,"U0filter", DX_Median);
 	// store_matrix(path,"V0filter", DY_Median);
-	 
+
 	auto tr2= std::chrono::high_resolution_clock::now();
 	std::cout << "Total took " << std::chrono::duration_cast<std::chrono::milliseconds>(tr2-tr1).count()
 	<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(tr2-tr1).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(tr2-tr1).count() << " minutes"<<std::endl;
 	// std::cout << "Iterations took "<< T << " seconds" << std::endl;
 	/*--------------------------------------------------------------------------*/
+
     cv::Mat GridX(DispX.size(), CV_64FC1, Scalar(0));
     cv::Mat GridY(DispX.size(), CV_64FC1, Scalar(0));
 	for (unsigned int i = 0; i < static_cast<unsigned int>(GridX.cols); i++)
@@ -343,9 +354,9 @@ int main(int argc, char** argv )
 			GridX.at<double>(j,i) = xStart_ROI + i*GridLength;
 			GridY.at<double>(j,i) = yStart_ROI + j*GridLength;
 		}
-	}	
-	// Camera 
-	double focal_length = 50.0/1000.0; 
+	}
+	// Camera
+	double focal_length = 50.0/1000.0;
 	double Distance_From_Pixels_To_Meters = 6.45e-6;
 	double n_0 = 1;
 	double n_1 = 1.5;
@@ -357,17 +368,18 @@ int main(int argc, char** argv )
 	double L_s = 0;
 	std::vector<double> Lengths{L_c, L_g, L_t, L_s};
 	CalibrationFigures(GridX, GridY, DispX, DispY, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n);
+
 	/*--------------------------------------------------------------------------*/
 	/*
 	auto tr3= std::chrono::high_resolution_clock::now();
-	
+
 	unsigned int SizeGrid = 6;
     //unsigned int offsetSplineDegree = 2*((SplineDegree+1)/2) > 5 ? 2*((SplineDegree+1)/2) : 5;
 	//std::cout << "offsetSplineDegree = " << offsetSplineDegree << std::endl;
 	cv::Mat GX(cv::Size(SizeGrid,SizeGrid), CV_64FC1, Scalar(0));
 	cv::Mat GY(cv::Size(SizeGrid,SizeGrid), CV_64FC1, Scalar(0));
-	// Camera 
-	double focal_length = 50.0/1000.0; 
+	// Camera
+	double focal_length = 50.0/1000.0;
 	double Distance_From_Pixels_To_Meters = 6.45e-6;
 	double n_0 = 1;
 	double n_1 = 1.5;
@@ -389,8 +401,8 @@ int main(int argc, char** argv )
 	std::cout << "L_c = " << L_c << std::endl;
 	std::cout << "L_total = " << L_c+2*L_g+L_t+L_s << std::endl;
 	unsigned int Number_Of_Steps = 1000;
-	std::vector<double> Lengths{L_c, L_g, L_t, L_s};	
-	
+	std::vector<double> Lengths{L_c, L_g, L_t, L_s};
+
 	cv::Mat Dx(GX.size(), CV_64FC1, Scalar(0));
 	cv::Mat Dy(GX.size(), CV_64FC1, Scalar(0));
 	cv::Mat n_field(GX.size(), CV_64FC1);
@@ -409,18 +421,18 @@ int main(int argc, char** argv )
 	std::cout << GY << std::endl << std::endl;
 	cv::Ptr<cv::Formatter> formatMat=Formatter::get(cv::Formatter::FMT_DEFAULT);
 	formatMat->set64fPrecision(4);
-	
+
 	std::vector<cv::Mat> D6 = ForwardModel(GX, GY, Dx, Dy, focal_length, Lm, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n_field, SplineDegree, Number_Of_Steps);
-	
+
 	std::cout << "X6 = " << std::endl << D6[0] << std::endl<< std::endl;
 	std::cout << "Z6 = " << std::endl << D6[2] << std::endl<< std::endl;
-	
+
 	auto tr4= std::chrono::high_resolution_clock::now();
 
 	std::cout << "Total took " << std::chrono::duration_cast<std::chrono::milliseconds>(tr4-tr3).count()
 	<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(tr4-tr3).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(tr4-tr3).count() << " minutes"<<std::endl;
 	 }
-	 
+
 	 std::cout << "1" << std::endl;
 	 int pp = poly_test();
 	 std::cout << "2" << std::endl;
@@ -436,7 +448,7 @@ void store_matrix(std::string path, std::string filename, cv::Mat Matrix_To_Be_S
     myfile.close();
 }
 /*--------------------------------------------------------------------------*/
-bool sort_by_C_value (const  Points_With_Value &lhs, const Points_With_Value &rhs) 
+bool sort_by_C_value (const  Points_With_Value &lhs, const Points_With_Value &rhs)
 {
     return lhs.C_value > rhs.C_value;
 }
@@ -454,7 +466,7 @@ static void compute_Save_GridX_Y(const cv::Size &Size, const unsigned int &xStar
 		}
 	}
     store_matrix(path,"GridX", GridX);
-	store_matrix(path,"GridY", GridY);	
+	store_matrix(path,"GridY", GridY);
 }
 /*--------------------------------------------------------------------------*/
 

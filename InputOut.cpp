@@ -5,13 +5,13 @@ extern int checkinput(unsigned int argc, char *argv[], std::string &pathname_str
 {
 	// Checks number of Arguments
     if ( argc != 16)
-    {	
-		printf("Too few arguments");
+    {
+		printf("Too few arguments\n");
         printf("usage: DisplayImage.out <Image_Path> SplineDegree SubsetLength GridLength ShapeFunction PropagationFunction OrderingImages xStart xEnd yStart yEnd NumberOfThreads MaxPixelYVertical Tolerance MimCorrCoeffIG\n");
 		return -1;
     }
-	
-	// Checks pathname 
+
+	// Checks pathname
 	const char *pathname;
 	pathname = argv[1];
 	struct stat info;
@@ -21,7 +21,7 @@ extern int checkinput(unsigned int argc, char *argv[], std::string &pathname_str
 		printf( "cannot access %s\n", pathname );
 		return -1;
 	}
-	else if( info.st_mode & S_IFDIR )  // S_ISDIR() doesn't exist on my windows 
+	else if( info.st_mode & S_IFDIR )  // S_ISDIR() doesn't exist on my windows
 	{
 		//printf( "%s is a directory\n", pathname );
 	}
@@ -31,7 +31,7 @@ extern int checkinput(unsigned int argc, char *argv[], std::string &pathname_str
 		return -1;
 	}
 	pathname_string = std::string(pathname);
-	
+
 	// Saves Command
 	std::ofstream myfile;
 	myfile.open (pathname_string+"/commandline.txt");
@@ -41,14 +41,14 @@ extern int checkinput(unsigned int argc, char *argv[], std::string &pathname_str
 		myfile << argv[i] << " ";
 	}
 	myfile.close();
-	
+
 	// Checks input
     SplineDegree = atoi(argv[2]);
     if (!(SplineDegree > 2 && SplineDegree < 9))
     {
         printf("Spline degree must be between 2 and 9 \n");
         return -1;
-    }	
+    }
     SubsetLength = atoi(argv[3]);
     if (!(SubsetLength > 1))
     {
@@ -60,7 +60,7 @@ extern int checkinput(unsigned int argc, char *argv[], std::string &pathname_str
     {
         printf("GridLength must be larger than 0 \n");
         return -1;
-    }	
+    }
     ShapeFunction = atoi(argv[5]);
     if (!(ShapeFunction==0 || ShapeFunction==1 || ShapeFunction==2 || ShapeFunction==3))
     {
@@ -70,13 +70,13 @@ extern int checkinput(unsigned int argc, char *argv[], std::string &pathname_str
     if (SubsetLength < GridLength)
     {
         printf("Warning: Subset Length smaller than GridLength: you are not using all available data. \n");
-    }	
+    }
     propagationfunction = atoi(argv[6]);
     if (propagationfunction != 0 && propagationfunction != 1)
     {
         printf("Propagation Function must be on (1) or off (0)");
         return -1;
-    }	
+    }
 	ordering = atoi(argv[7]);
     if (ordering != 0 && ordering != 1)
     {
@@ -98,12 +98,17 @@ extern int checkinput(unsigned int argc, char *argv[], std::string &pathname_str
 		return -1;
 	}
     offset = 2*((SplineDegree+1)/2) > 5 ? 2*((SplineDegree+1)/2) : 5;
-    offset = GridLength > (SubsetLength/2+offset) ? GridLength-SubsetLength/2 : offset; 
+	std::cout << " offset = " << offset << std::endl;
+    offset = GridLength > (SubsetLength/2+offset) ? GridLength-SubsetLength/2 : offset;
+    std::cout << "offset = " << offset << std::endl;
+    offset++;
+    std::cout << "offset = " << offset << std::endl;
+    std::cout << " SubsetLength/2 = "  << SubsetLength/2 << std::endl;
 	if ((yEnd-yStart) < SubsetLength/2+offset)
 	{
 		std::cout << "Vertical Range of Image is too small with this Subset" << std::endl;
 		return -1;
-	}	
+	}
 	if ((xEnd-xStart) < SubsetLength/2+offset)
 	{
 		std::cout << "Horizontal Range of Image is too small with this Subset" << std::endl;
@@ -114,14 +119,14 @@ extern int checkinput(unsigned int argc, char *argv[], std::string &pathname_str
 	{
 		std::cout << "Specified Number of Threads larger than maximum available on this system. Using the system's maximum" << std::endl;
 		Number_Of_Threads = std::thread::hardware_concurrency();
-	}	
+	}
 	MaxPixelYVertical = atoi(argv[13]);
 	if (MaxPixelYVertical > (yEnd-yStart))
 	{
 		std::cout << "Maximum Vertical Pixel Allowed is larger than Vertical Image Size"<< std::endl;
 		std::cout << "TO DO: check if this is an error"<< std::endl;
 		return -1;
-	}	
+	}
 	double tolerance = atof(argv[14]);
 	if (tolerance < 0)
 	{
@@ -135,10 +140,10 @@ extern int checkinput(unsigned int argc, char *argv[], std::string &pathname_str
 	}
     // Stopping Criterion
     abs_tolerance_threshold = tolerance;
-    rel_tolerance_threshold = tolerance;	
+    rel_tolerance_threshold = tolerance;
 	// Minimum Acceptable Correlation Coefficient for Initial Guess
 	minimum_corrcoeff_IG =  atoi(argv[15]);
-	
+
 	return 1;
 }
 /*--------------------------------------------------------------------------*/
@@ -148,10 +153,10 @@ extern int readImageDataFromFile(const cv::String &path, cv::Mat &img, cv::Mat &
 	cv::String path1;
 	path1 = path+"/*.tif";
     cv::glob(path1,filenames,true); // recurse
-	// Read First Image to Determine Size 
+	// Read First Image to Determine Size
 	{
 		cv::Mat im = cv::imread(filenames[0] , IMREAD_GRAYSCALE );
-		if (im.empty()) 
+		if (im.empty())
 		{
 			std::cout << "No Images Found" << std::endl;
 			return -1;
@@ -167,7 +172,7 @@ extern int readImageDataFromFile(const cv::String &path, cv::Mat &img, cv::Mat &
 		}
 	}
 	std::vector<cv::Mat> data;
-	// Read all tif files in folder	
+	// Read all tif files in folder
     for (size_t k=0; k<filenames.size(); ++k)
     {
          cv::Mat im = cv::imread(filenames[k] , IMREAD_GRAYSCALE );
@@ -183,8 +188,8 @@ extern int readImageDataFromFile(const cv::String &path, cv::Mat &img, cv::Mat &
     yStart_ROI = yStart+SubsetLength/2+offset;
     unsigned int yEnd_ROI   = yEnd-SubsetLength/2-offset;
     horx_ROI = xEnd_ROI - xStart_ROI;
-    very_ROI = yEnd_ROI - yStart_ROI;	
-	
+    very_ROI = yEnd_ROI - yStart_ROI;
+
     if (ordering==0)
     {
         (data.at(0)).copyTo(img);
@@ -204,10 +209,10 @@ extern int readImageDataFromFile(const cv::String &path, cv::Mat &img, cv::Mat &
 	 * */
     imwrite(path+"/Template.png", img);
     imwrite(path+"/Deformed.png", img1);
-	
-	
+
+
     img.convertTo(img, CV_32F);
-    img1.convertTo(img1, CV_32F);	
+    img1.convertTo(img1, CV_32F);
 	return 1;
 }
 /*--------------------------------------------------------------------------*/

@@ -10,7 +10,7 @@ PositionDirection.hpp pixeltranslation.hpp pixeltranslation.cpp
 nonlineariteration.hpp 
 nonlineariteration.cpp calculateN.hpp calculateN.cpp InputOut.hpp InputOut.cpp coeff.h coeff.c interpol.h interpol.c)
 add_library(coeff STATIC ${LIBSRC})
-target_link_libraries( DIC coeff ${OpenCV_LIBS} )
+target_link_libraries( DIC coeff ${OpenCV_LIBS} -lpthread)
 set(CMAKE_CXX_FLAGS "-g3 -pg -O0 -Wall -Wextra -Wconversion -pedantic")
 set(CMAKE_C_FLAGS "-g3 -pg -O0 -Wall -Wextra -Wconversion -pedantic")
 #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Ofast -march=native -pg")

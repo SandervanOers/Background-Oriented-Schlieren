@@ -3,7 +3,6 @@
 
 #include <stdio.h>
 #include <opencv2/opencv.hpp>
-#include <cppad/cppad.hpp>
 
 #include <math.h>
 #include <numeric>
