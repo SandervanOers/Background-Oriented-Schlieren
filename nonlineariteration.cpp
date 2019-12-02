@@ -1,5 +1,17 @@
 # include "nonlineariteration.hpp"
 /*--------------------------------------------------------------------------*/
+static std::vector<double> iteration_rigid_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold);
+/*--------------------------------------------------------------------------*/
+static std::vector<double> iteration_affine_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold);
+/*--------------------------------------------------------------------------*/
+static std::vector<double> iteration_irregular_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold);
+/*--------------------------------------------------------------------------*/
+static std::vector<double> iteration_quadratic_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold);
+/*--------------------------------------------------------------------------*/
+static double Correlation_Coefficient_ZNSSD(const double &fm, const double &sum_f_minus_fm_squared, const double &gm, const double &sum_g_minus_gm_squared, const std::vector<double> &f_values, const std::vector<double> &g_values);
+/*--------------------------------------------------------------------------*/
+static void calculate_Hessian_Jacobian_quadratic(cv::Mat &Hessian, cv::Mat &Jacobian, const cv::Mat &img, float *fptr_img1, const std::vector<double> &P, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &Indexi, const unsigned int &Indexj, const std::vector<double> &f_values, const double &fm, const double &sum_f_minus_fm_squared, const std::vector<double> &g_values, const double &gm, const double &sum_g_minus_gm_squared, const double &lambda);
+/*--------------------------------------------------------------------------*/
 extern std::vector<double> iteration(const cv::Mat &img, float *fptr_img1, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold, const unsigned int &ShapeFunction)
 {
     switch(ShapeFunction)
@@ -30,7 +42,7 @@ static double getDerivativeValue(float *fptr_img1, const unsigned int &cols, con
                 -(double)InterpolatedValueDerivative(fptr_img1, cols, rows, x-0.5*(1.0-(double)direction), y-0.5*(double)direction, SplineDegree-1*(1-direction), SplineDegree-1*direction);
 }
 /*--------------------------------------------------------------------------*/
-static double get_sum_f_minus_fm_squared(const cv::Mat &img, const unsigned int &Indexi, const unsigned int &Indexj, const unsigned int &SubsetLength, const double &fm)
+/*static double get_sum_f_minus_fm_squared(const cv::Mat &img, const unsigned int &Indexi, const unsigned int &Indexj, const unsigned int &SubsetLength, const double &fm)
 {
 	double sum_f_minus_fm_squared = 0;
 	for (unsigned int ii = Indexi-SubsetLength/2; ii < Indexi+SubsetLength/2+1; ii++)
@@ -41,7 +53,7 @@ static double get_sum_f_minus_fm_squared(const cv::Mat &img, const unsigned int 
 		}
 	}	
 	return sum_f_minus_fm_squared;
-}
+}*/
 /*--------------------------------------------------------------------------*/
 static std::pair<double, double> get_gm_and_sum_g_minus_gm_squared(const std::vector<double> g_values)
 {
@@ -620,6 +632,7 @@ static void calculate_Hessian_Jacobian_quadratic(cv::Mat &Hessian, cv::Mat &Jaco
 /*--------------------------------------------------------------------------*/
 static std::vector<double> iteration_quadratic_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold)
 {
+		//std::cout << "start" << std::endl;
         double abs_tolerance = 1;
         double rel_tolerance = 1;
         double max_val_nu = 1e7;
@@ -737,6 +750,7 @@ static std::vector<double> iteration_quadratic_LM(const cv::Mat &img, float *fpt
 		{
 			returnvector.push_back(Correlation_Coefficient_old);
 		}
+		//std::cout << "end" << std::endl;
         return returnvector;
 }
 /*--------------------------------------------------------------------------*/
@@ -1136,5 +1150,21 @@ extern std::vector<cv::Point> get_valid_Neighbours(const cv::Mat &M_valid_points
         }
     }
     return valid_neighbours;
+}
+/*--------------------------------------------------------------------------*/
+extern cv::Mat get_valid_points(const cv::Mat &img, const unsigned int &SubsetLength, const unsigned int &offset)
+{
+    cv::Mat M_valid_points(img.size(), CV_8U, cv::Scalar(0));
+    for (unsigned int i = 0; i < static_cast<unsigned int>(img.rows); i++)
+    {
+        for (unsigned int j = 0; j < static_cast<unsigned int>(img.cols); j++)
+        {
+            if (i >= SubsetLength/2+offset && i <= static_cast<unsigned int>(img.rows)-SubsetLength/2-offset && j >= SubsetLength/2+offset && j <= static_cast<unsigned int>(img.cols)-SubsetLength/2-offset)
+            {
+                M_valid_points.at<uchar>(i,j) = 1;
+            }
+        }
+    }
+	return 	M_valid_points;
 }
 /*--------------------------------------------------------------------------*/

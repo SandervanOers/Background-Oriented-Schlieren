@@ -1,5 +1,6 @@
 #include "calculateN.hpp"
-
+/*--------------------------------------------------------------------------*/
+static std::vector<cv::Mat> ForwardModelConstantn(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const double &n);
 /*--------------------------------------------------------------------------*/
 static cv::Mat signum(cv::Mat src)
 {
@@ -18,12 +19,12 @@ extern double calculateLf(const double &focal_length, const double &Lm)
 	return 1.0/(1.0/focal_length-1.0/Lm);
 }
 /*--------------------------------------------------------------------------*/
-extern std::vector<cv::Mat> calculateDirectionCosines(const cv::Mat &GridX, const cv::Mat &GridY, const double &L_f, const double &Distance_From_Pixels_To_Meters)
+extern std::vector<cv::Mat> calculateDirectionCosines(const cv::Mat &GridX, const cv::Mat &GridY, const double &meanGridX, const double &meanGridY, const double &L_f, const double &Distance_From_Pixels_To_Meters)
 {
 	cv::Mat L_F(GridX.size(), CV_64FC1, L_f);
 	
-	cv::Mat X = GridX-calculateMean(GridX);
-	cv::Mat Y = GridY-calculateMean(GridY);
+	cv::Mat X = GridX-meanGridX;
+	cv::Mat Y = GridY-meanGridY;
 	// Scale X and Y from pixels to meters
 	// Depends on Camera Properties
 	X = X*Distance_From_Pixels_To_Meters;
@@ -266,7 +267,7 @@ extern std::vector<cv::Mat> SnellsLawMat(const std::vector<cv::Mat> &DirectionCo
 	return ReturnVector;
 }
 /*--------------------------------------------------------------------------*/
-extern PositionDirection calculateIntersectionRungeKutta(const std::vector<cv::Mat> &InitialPosition, const std::vector<cv::Mat> &DirectionCosines, const std::vector<double> &PlaneDefinition, const cv::Mat &n_field, const double &n_0, const double &n_2, const unsigned int &SplineDegree, const double &L_t, const unsigned int &Number_Of_Steps)
+/*extern PositionDirection calculateIntersectionRungeKutta(const std::vector<cv::Mat> &InitialPosition, const std::vector<cv::Mat> &DirectionCosines, const std::vector<double> &PlaneDefinition, const cv::Mat &n_field, const double &n_0, const double &n_2, const unsigned int &SplineDegree, const double &L_t, const unsigned int &Number_Of_Steps)
 {
 	cv::Mat S_x = InitialPosition.at(0);
 	cv::Mat S_y = InitialPosition.at(1);
@@ -518,7 +519,7 @@ extern PositionDirection calculateIntersectionRungeKutta(const std::vector<cv::M
 	//std::cout << "L_t = " << L_t << std::endl;
 	//std::cout << std::endl << "T_z = " << std::endl << T_z << std::endl << std::endl;
 	 
-	 // Step 7: Transform incomping rays back to coordinates x y z
+	 // Step 7: Transform incoming rays back to coordinates x y z
 	for (unsigned int i = 0; i < rows; i++)
 	{
 		for (unsigned int j = 0; j < cols; j++)
@@ -572,7 +573,7 @@ extern PositionDirection calculateIntersectionRungeKutta(const std::vector<cv::M
 	ReturnPosition.push_back(S_z);
 	PositionDirection Return(ReturnPosition, RefractedExit);
 	return Return;
-}
+}*/
 /*--------------------------------------------------------------------------*/
 extern PositionDirection calculateIntersectionConstantRefraction(const PositionDirection &InitialPositionDirection, const std::vector<double> &PlaneDefinition, const double &n_initial, const double &n_final)
 {
@@ -584,7 +585,7 @@ extern PositionDirection calculateIntersectionConstantRefraction(const PositionD
 	return Return;
 }
 /*--------------------------------------------------------------------------*/
-extern std::vector<cv::Mat> ForwardModel(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const double &Lm, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const cv::Mat &n_field, const unsigned int &SplineDegree, const unsigned int &Number_Of_Steps)
+/*extern std::vector<cv::Mat> ForwardModel(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const double &Lm, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const cv::Mat &n_field, const unsigned int &SplineDegree, const unsigned int &Number_Of_Steps)
 {
 	double L_c = Lengths[0];
 	double L_g = Lengths[1];
@@ -612,7 +613,7 @@ extern std::vector<cv::Mat> ForwardModel(const cv::Mat &GridX, const cv::Mat &Gr
 	std::cout << "Plane 2 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << d2 << " = 0 " << ": (x,y)=(0,0) => z_2 = " << -d2/PlaneDefinition[2] << std::endl << std::endl;
 	std::cout << "Plane 1 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << d1 << " = 0 " << ": (x,y)=(0,0) => z_1 = " << -d1/PlaneDefinition[2] << std::endl << std::endl;
 	
-	/* // Test 1
+	/ * // Test 1
 	std::vector<cv::Mat> InitialPosition;
 	cv::Mat S_x(1,1, CV_64FC1, Scalar(0));
 	cv::Mat S_y(1,1, CV_64FC1, Scalar(0));
@@ -631,6 +632,8 @@ extern std::vector<cv::Mat> ForwardModel(const cv::Mat &GridX, const cv::Mat &Gr
 	std::vector<double> PlaneDefinitionW{0, 0, 1};
 	double n0W = 0.9; double n1W = 1.0;
 	PositionDirection PlaneW = calculateIntersectionConstantRefraction(Plane1,  PlaneDefinitionW, n0W, n1W);
+	 
+	 
 	*/ // Test 2 
 	/*
 	std::vector<cv::Mat> InitialPosition;	
@@ -651,9 +654,11 @@ extern std::vector<cv::Mat> ForwardModel(const cv::Mat &GridX, const cv::Mat &Gr
 	std::vector<double> PlaneDefinitionW{0, -2, -1};
 	double n0W = 1; double n1W = 1.5;
 	PositionDirection PlaneW = calculateIntersectionConstantRefraction(Plane1,  PlaneDefinitionW, n0W, n1W);	
-	*/
+	* /
+	
 	// Full Sim
 	// Unknown n
+	
 	double L_f = calculateLf(focal_length, Lm);
 	std::vector<cv::Mat> InitialDirection = calculateDirectionCosines(GridX, GridY, L_f, Distance_From_Pixels_To_Meters);
 	std::vector<cv::Mat> InitialPosition;
@@ -721,17 +726,18 @@ extern std::vector<cv::Mat> ForwardModel(const cv::Mat &GridX, const cv::Mat &Gr
 	Displacement.push_back(DX);
 	Displacement.push_back(DY);
 	Displacement.push_back(DZ);
+	
 	return Displacement;
 	
-}
+}*/
 /*--------------------------------------------------------------------------*/
-static double getDerivativeValue(float *fptr_img1, const unsigned int &cols, const unsigned int &rows, const double &x, const double &y, const unsigned int &SplineDegree, const unsigned int &direction)
+/*static double getDerivativeValue(float *fptr_img1, const unsigned int &cols, const unsigned int &rows, const double &x, const double &y, const unsigned int &SplineDegree, const unsigned int &direction)
 {
 	return (double)InterpolatedValueDerivative(fptr_img1, cols, rows, x+0.5*(1.0-(double)direction), y+0.5*(double)direction, SplineDegree-1*(1-direction), SplineDegree-1*direction)
                 -(double)InterpolatedValueDerivative(fptr_img1, cols, rows, x-0.5*(1.0-(double)direction), y-0.5*(double)direction, SplineDegree-1*(1-direction), SplineDegree-1*direction);
-}
+}*/
 /*--------------------------------------------------------------------------*/
-static cv::Mat calculateTransformationMatrix(const std::vector<double> &PlaneDefinition)
+/*static cv::Mat calculateTransformationMatrix(const std::vector<double> &PlaneDefinition)
 {
 	double a[] = {PlaneDefinition[0], PlaneDefinition[1], PlaneDefinition[2]};
     double b[] = {0, 0, 1};
@@ -765,9 +771,9 @@ static cv::Mat calculateTransformationMatrix(const std::vector<double> &PlaneDef
 	
 	return Q;
 	
-}
+}*/
 /*--------------------------------------------------------------------------*/ 
-namespace {
+/*namespace {
       // define y(x) = Poly(a, x) in the empty namespace
       template <class Type>
       Type Poly(const std::vector<double> &a, const Type &x)
@@ -776,18 +782,18 @@ namespace {
             Type x_i = 1.;  // initialize x^i
             size_t i;
             for(i = 0; i < k; i++)
-            {     y   += a[i] * x_i;  // y   = y + a_i * x^i
+            {     y   += a[i] * x_i;  // y = y + a_i * x^i
                   x_i *= x;           // x_i = x_i * x
             }
             return y;
       }
-}
+}*/
 /*--------------------------------------------------------------------------*/ 
 // main program
-extern int poly_test(void)
+/*extern int poly_test(void)
 {   
 	std::cout << "test poly " << std::endl;  
-	using CppAD::AD;           // use AD as abbreviation for CppAD::AD
+	using CppAD::AD;           	 // use AD as abbreviation for CppAD::AD
       size_t i;                  // a temporary index
 
       // vector of polynomial coefficients
@@ -836,5 +842,102 @@ extern int poly_test(void)
 
       return error_code;
 	  return 0;
+}*/
+/*--------------------------------------------------------------------------*/ 
+extern void CalibrationFigures(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const double &n_0, const double &n_1, const double &n)
+{
+	//double L_c = Lengths[0];
+	double L_g = Lengths[1];
+	double L_t = Lengths[2];
+	double L_s = Lengths[4];
+	
+	// Loop over a, b, c, d
+	
+	double a, b, c, d;
+	a = 1;
+	b = 1;
+	c = 1;
+	d = 1;
+	double normPD = sqrt(a*a+b*b+c*c);
+	std::vector<double> PlaneDefinition{a/normPD, b/normPD, c/normPD, d/normPD};
+	
+	double L_m = - d / c;
+	double L_c = c/(a+b+c)*L_m-L_s-2*L_g-L_t;
+	std::vector<double> Lengthsnew(Lengths.begin(), Lengths.end());
+	Lengthsnew[0] = L_c;
+	cv::Mat DX0(GridX.size(), CV_64FC1, Scalar(0));
+	cv::Mat DY0(GridX.size(), CV_64FC1, Scalar(0));
+	std::vector<cv::Mat> X60 = ForwardModelConstantn(GridX, GridY, DX0, DY0, focal_length, Lengthsnew, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n_0);
+	std::vector<cv::Mat> X61 = ForwardModelConstantn(GridX, GridY, Dx, Dy, focal_length, Lengthsnew, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
+
+	cv::Mat DX = X61[0] - X60[0];
+	cv::Mat DY = X61[2] - X60[1];
+	cv::Mat DZ = X61[2] - X60[1];
+	
+	cv::Mat DXsquared = DX.mul(DX);
+	cv::Mat DYsquared = DY.mul(DY);
+	cv::Mat DZsquared = DZ.mul(DZ);
+	
+	Scalar s = DX.dot(DX); 
+	Scalar s2 = cv::sum(DXsquared); 
+	std::cout << "Diff Dot Sum Square = " << s - s2 << std::endl;
+	Scalar SS = cv::sum(DXsquared)+cv::sum(DYsquared)+cv::sum(DZsquared);
+	double S = SS[0];
+	std::cout << S << std::endl;
+	
+	
+}
+/*--------------------------------------------------------------------------*/ 
+static std::vector<cv::Mat> ForwardModelConstantn(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const double &n)
+{
+	double L_c = Lengths[0];
+	double L_g = Lengths[1];
+	double L_t = Lengths[2];
+	double L_s = Lengths[4];
+	double a = PlaneDefinition[0];
+	double b = PlaneDefinition[1];
+	double c = PlaneDefinition[2];
+	double d = PlaneDefinition[3];
+	
+	double L_m = - d / c;
+	
+	double d5 = d+(a+b+c)*L_s;
+	double d4 = d+(a+b+c)*(L_s+L_g);
+	double d3 = d+(a+b+c)*(L_s+L_g+L_t);
+	double d2 = d+(a+b+c)*(L_s+2.0*L_g+L_t);
+	double d1 = d+(a+b+c)*(L_s+2.0*L_g+L_t+L_c);
+	//std::vector<double> PlaneDefinition1{PlaneDefinition[0],PlaneDefinition[1],PlaneDefinition[2],d1}; // Should pass through Origin (0,0,0)
+	std::vector<double> PlaneDefinition2{PlaneDefinition[0],PlaneDefinition[1],PlaneDefinition[2],d2};
+	std::vector<double> PlaneDefinition3{PlaneDefinition[0],PlaneDefinition[1],PlaneDefinition[2],d3};
+	std::vector<double> PlaneDefinition4{PlaneDefinition[0],PlaneDefinition[1],PlaneDefinition[2],d4};
+	std::vector<double> PlaneDefinition5{PlaneDefinition[0],PlaneDefinition[1],PlaneDefinition[2],d5};
+	
+	std::cout << "Plane 6 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << PlaneDefinition[3] << " = 0" << ": (x,y)=(0,0) => z_6 = " << -PlaneDefinition[3]/PlaneDefinition[2] << std::endl << std::endl;
+	std::cout << "Plane 5 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << d5 << " = 0 " << ": (x,y)=(0,0) => z_5 = " << -d5/PlaneDefinition[2] << std::endl << std::endl;
+	std::cout << "Plane 4 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << d4 << " = 0 " << ": (x,y)=(0,0) => z_4 = " << -d4/PlaneDefinition[2] << std::endl << std::endl;
+	std::cout << "Plane 3 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << d3 << " = 0 " << ": (x,y)=(0,0) => z_3 = " << -d3/PlaneDefinition[2] << std::endl << std::endl;
+	std::cout << "Plane 2 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << d2 << " = 0 " << ": (x,y)=(0,0) => z_2 = " << -d2/PlaneDefinition[2] << std::endl << std::endl;
+	std::cout << "Plane 1 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << d1 << " = 0 " << ": (x,y)=(0,0) => z_1 = " << -d1/PlaneDefinition[2] << std::endl << std::endl;
+	
+	double L_f = calculateLf(focal_length, L_m);
+	double meanGridX = calculateMean(GridX);
+	double meanGridY = calculateMean(GridY);
+	std::vector<cv::Mat> InitialDirection = calculateDirectionCosines(GridX+Dx, GridY+Dy, meanGridX, meanGridY, L_f, Distance_From_Pixels_To_Meters);
+	std::vector<cv::Mat> InitialPosition;
+	cv::Mat S_x(GridX.size(), CV_64FC1, Scalar(0));
+	cv::Mat S_y(GridX.size(), CV_64FC1, Scalar(0));
+	cv::Mat S_z(GridX.size(), CV_64FC1, Scalar(0));
+	InitialPosition.push_back(S_x);
+	InitialPosition.push_back(S_y);
+	InitialPosition.push_back(S_z);	
+	
+	PositionDirection Plane1(InitialPosition, InitialDirection);
+	PositionDirection Plane2 = calculateIntersectionConstantRefraction(Plane1, PlaneDefinition2, n_0, n_1);
+	PositionDirection Plane3 = calculateIntersectionConstantRefraction(Plane2, PlaneDefinition3, n_1, n);
+	PositionDirection Plane4 = calculateIntersectionConstantRefraction(Plane3, PlaneDefinition4, n, n_1);
+	PositionDirection Plane5 = calculateIntersectionConstantRefraction(Plane4, PlaneDefinition5, n_1, n_0);
+	std::vector<cv::Mat> PositionPlane6 = calculateIntersectionPlaneLine(Plane5.Position, Plane5.Direction, PlaneDefinition);
+	
+	return PositionPlane6;
 }
 /*--------------------------------------------------------------------------*/ 

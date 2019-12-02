@@ -1,9 +1,9 @@
 # include "pixeltranslation.hpp"
 /*--------------------------------------------------------------------------*/
-std::vector<double> calculatePixelTranslationRandom_SinglePoint(const cv::Mat &Reference, const cv::Mat &Deformed, const unsigned int &SubsetLength, const unsigned int &Indexi, const unsigned int &Indexj, const unsigned int &MaxPixelYVertical)
+std::vector<double> calculatePixelTranslationRandom_SinglePoint(const cv::Mat &Reference, const cv::Mat &Deformed, const unsigned int &SubsetLength, const unsigned int &Indexi, const unsigned int &Indexj, const unsigned int &MaxPixelYVertical, const unsigned int &HorizontalDifference_DeformedReference, const unsigned int &VerticalDifference_DeformedReference)
 {
 	cv::Mat temp = Reference(cv::Range(Indexj-SubsetLength/2,Indexj+SubsetLength/2+1), cv::Range(Indexi-SubsetLength/2, Indexi+SubsetLength/2+1));
-	
+
 	double DispX=0, DispY=0, CorrelationCoefficient=-1;
 	
 	// check wheter the reference image is (nearly) uniform. 
@@ -30,6 +30,8 @@ std::vector<double> calculatePixelTranslationRandom_SinglePoint(const cv::Mat &R
 		{
 			dyr = Deformed.rows;
 		}
+		//dyl = 0;
+		//dyr = Deformed.rows;
 		cv::Mat Deformed2 = Deformed(cv::Range(dyl,dyr), cv::Range::all());
 		
 		cv::Mat result;
@@ -40,8 +42,8 @@ std::vector<double> calculatePixelTranslationRandom_SinglePoint(const cv::Mat &R
 		// Localizing the best match with minMaxLoc
 		cv::minMaxLoc( result, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat() );
 		matchLoc = maxLoc;
-		DispY = (double)matchLoc.y + (SubsetLength/2) + dyl-(double)Indexj;
-		DispX = (double)matchLoc.x + SubsetLength/2 - (double)Indexi;
+		DispY = (double)matchLoc.y + (SubsetLength/2) + dyl-(double)Indexj;// + (double)(VerticalDifference_DeformedReference/2);
+		DispX = (double)matchLoc.x + SubsetLength/2 - (double)Indexi;// + (double)(HorizontalDifference_DeformedReference/2);
 		CorrelationCoefficient = maxVal;
 	}
     std::vector<double> ReturnVector;
@@ -51,7 +53,7 @@ std::vector<double> calculatePixelTranslationRandom_SinglePoint(const cv::Mat &R
     return ReturnVector;
 }
 /*--------------------------------------------------------------------------*/
-void calculateInitialGuess_Thread_Iteration(const unsigned int &Number_Of_Threads, const cv::Mat &Reference, const cv::Mat &Deformed, float *fptr_img1, cv::Mat &DispX, cv::Mat &DispY, cv::Mat &Ux, cv::Mat &Vx, cv::Mat &Uy, cv::Mat &Vy, cv::Mat &Uxy, cv::Mat &Vxy, cv::Mat &Uxx, cv::Mat &Vxx, cv::Mat &Uyy, cv::Mat &Vyy, cv::Mat &CorrelationCoefficient, cv::Mat &Computed_Points, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const unsigned int &offset, const unsigned int &xl, const unsigned int &xr, const unsigned int &yl, const unsigned int &yr, const unsigned int &MaxPixelYVertical, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold, const unsigned int &ShapeFunction, const double &minimum_corrcoeff)
+void calculateInitialGuess_Thread_Iteration(const unsigned int &Number_Of_Threads, const cv::Mat &Reference, const cv::Mat &Deformed, float *fptr_img1, cv::Mat &DispX, cv::Mat &DispY, cv::Mat &Ux, cv::Mat &Vx, cv::Mat &Uy, cv::Mat &Vy, cv::Mat &Uxy, cv::Mat &Vxy, cv::Mat &Uxx, cv::Mat &Vxx, cv::Mat &Uyy, cv::Mat &Vyy, cv::Mat &CorrelationCoefficient, cv::Mat &Computed_Points, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const unsigned int &offset, const unsigned int &xl, const unsigned int &xr, const unsigned int &yl, const unsigned int &yr, const unsigned int &MaxPixelYVertical, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold, const unsigned int &ShapeFunction, const double &minimum_corrcoeff, const unsigned int &HorizontalDifference_DeformedReference, const unsigned int &VerticalDifference_DeformedReference)
 {
 	thread_local std::uniform_int_distribution<unsigned> ux(xl, xr);
     thread_local std::uniform_int_distribution<unsigned> uy(yl, yr);
@@ -74,7 +76,7 @@ void calculateInitialGuess_Thread_Iteration(const unsigned int &Number_Of_Thread
         unsigned int Indexi = offset+SubsetLength/2 + i * GridLength;
         unsigned int Indexj = offset+SubsetLength/2 + j * GridLength;
         std::vector <double> Displ;
-        Displ = calculatePixelTranslationRandom_SinglePoint(Reference, Deformed, SubsetLength, Indexi, Indexj, MaxPixelYVertical);
+        Displ = calculatePixelTranslationRandom_SinglePoint(Reference, Deformed, SubsetLength, Indexi, Indexj, MaxPixelYVertical, HorizontalDifference_DeformedReference, VerticalDifference_DeformedReference);
         //Displ = calculatePixelTranslationRandom_SinglePoint(Reference(cv::Range(Indexj-SubsetLength/2,Indexj+SubsetLength/2+1), cv::Range(Indexi-SubsetLength/2, Indexi+SubsetLength/2+1)), Deformed, SubsetLength, Indexi, Indexj);
 		
 		List_Of_Initial_Guesses.insert(std::pair<double, Points_With_Location_And_Data>(Displ[2],Points_With_Location_And_Data(Displ[0], Displ[1], i, j) ));
@@ -92,10 +94,12 @@ void calculateInitialGuess_Thread_Iteration(const unsigned int &Number_Of_Thread
 		std::map<double, Points_With_Location_And_Data>:: iterator it = List_Of_Initial_Guesses.end();
 		it--;
 		List_Of_Initial_Guesses.erase(it);
-		
 		// Use the Initial Guess to Calculate the Iterated Solution 
 		std::vector<double> InitialCondition = {DX, DY, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		
+		// TO DO: Need to rewrite nonlineariteration.cpp to use img1.cols and img1.rows instead of img.cols and img.rows since interpol.c needs width and height of image.
 		std::vector<double> point1 = iteration(Reference, fptr_img1, I, J, InitialCondition, SplineDegree, SubsetLength, GridLength, abs_tolerance_threshold, rel_tolerance_threshold, ShapeFunction);
+		//std::cout << "CC = " << CC << ", point1.back() " << point1.back() << std::endl;
 		if (point1.back()>CC && point1.back()>minimum_corrcoeff)
 		{
 			better_solution = 1;
@@ -119,7 +123,7 @@ void calculateInitialGuess_Thread_Iteration(const unsigned int &Number_Of_Thread
 /*--------------------------------------------------------------------------*/
 extern std::vector<cv::Mat> calculateInitialGuess_Iteration(const cv::Mat &Reference, const cv::Mat &Deformed, float *fptr_img1, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const unsigned int &horx_ROI, const unsigned int &very_ROI, const unsigned int &offset, const unsigned int &Number_Of_Threads, const unsigned int &MaxPixelYVertical, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold, const unsigned int &ShapeFunction, const double &minimum_corrcoeff)
 {
-	std::cout << "Computing Initial Guess" << std::endl;
+	//std::cout << "Computing Initial Guess" << std::endl;
 	cv::Mat DispX(very_ROI/GridLength+1, horx_ROI/GridLength+1, CV_64F, 0.0);
     cv::Mat DispY(very_ROI/GridLength+1, horx_ROI/GridLength+1, CV_64F, 0.0);
     cv::Mat CorrelationCoefficient(very_ROI/GridLength+1, horx_ROI/GridLength+1, CV_64F, 0.0);
@@ -135,6 +139,14 @@ extern std::vector<cv::Mat> calculateInitialGuess_Iteration(const cv::Mat &Refer
     cv::Mat Uyy(DispX.size(), CV_64FC1, 0.0);
     cv::Mat Vyy(DispX.size(), CV_64FC1, 0.0);
 	
+	//std::cout << "Reference.rows = " << Reference.rows << ", Reference.cols = " << Reference.cols << std::endl;
+	//std::cout << "Deformed.rows = " << Deformed.rows << ", Deformed.cols = " << Deformed.cols << std::endl;
+	//std::cout << "Horizontal Difference = "<< Deformed.rows - Reference.rows << std::endl;
+	//std::cout << "Vertical Difference = "<< Deformed.cols - Reference.cols << std::endl;
+	
+	unsigned int HorizontalDifference_DeformedReference = Deformed.rows - Reference.rows;
+	unsigned int VerticalDifference_DeformedReference = Deformed.cols - Reference.cols;
+	
 	std::vector<std::thread> threads;
 	for (unsigned int l = 0; l < Number_Of_Threads; l++)
 	{
@@ -143,13 +155,13 @@ extern std::vector<cv::Mat> calculateInitialGuess_Iteration(const cv::Mat &Refer
 		unsigned int yl = static_cast<unsigned int>(1+round(0.1*very_ROI/GridLength) + (double)l/Number_Of_Threads * (very_ROI/GridLength-round(0.1*very_ROI/GridLength)-(1+round(0.1*very_ROI/GridLength))));
 		unsigned int yr = static_cast<unsigned int>(1+round(0.1*very_ROI/GridLength) + (l+1.0)/Number_Of_Threads * (very_ROI/GridLength-round(0.1*very_ROI/GridLength)-(1+round(0.1*very_ROI/GridLength)))-1);
 		// Possible Error when Number_Of_Threads is large and GridLength is large: yl == yr or even yl>yr.
-		threads.push_back(std::thread(calculateInitialGuess_Thread_Iteration, Number_Of_Threads, Reference, Deformed, fptr_img1, std::ref(DispX), std::ref(DispY), std::ref(Ux), std::ref(Vx), std::ref(Uy), std::ref(Vy), std::ref(Uxy), std::ref(Vxy), std::ref(Uxx), std::ref(Vxx), std::ref(Uyy), std::ref(Vyy), std::ref(CorrelationCoefficient), std::ref(Computed_Points), SplineDegree, SubsetLength, GridLength, offset, xl, xr, yl, yr, MaxPixelYVertical, abs_tolerance_threshold, rel_tolerance_threshold, ShapeFunction, minimum_corrcoeff));
+		threads.push_back(std::thread(calculateInitialGuess_Thread_Iteration, Number_Of_Threads, Reference, Deformed, fptr_img1, std::ref(DispX), std::ref(DispY), std::ref(Ux), std::ref(Vx), std::ref(Uy), std::ref(Vy), std::ref(Uxy), std::ref(Vxy), std::ref(Uxx), std::ref(Vxx), std::ref(Uyy), std::ref(Vyy), std::ref(CorrelationCoefficient), std::ref(Computed_Points), SplineDegree, SubsetLength, GridLength, offset, xl, xr, yl, yr, MaxPixelYVertical, abs_tolerance_threshold, rel_tolerance_threshold, ShapeFunction, minimum_corrcoeff, HorizontalDifference_DeformedReference, VerticalDifference_DeformedReference));
 	}  
 	
 	for (auto& th : threads) 
 		th.join();
 	
-	std::cout << "Computation Initial Guess Completed " << std::endl;
+	//std::cout << "Computation Initial Guess Completed " << std::endl;
 	std::vector<cv::Mat> ReturnVector;
     ReturnVector.push_back(DispX);
     ReturnVector.push_back(DispY);
