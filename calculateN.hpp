@@ -42,7 +42,7 @@ extern PositionDirection calculateIntersectionConstantRefraction(const PositionD
 /*--------------------------------------------------------------------------*/
 //extern int poly_test(void);
 /*--------------------------------------------------------------------------*/
-extern void CalibrationFigures(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const double &n_0, const double &n_1, const double &n);
+extern void CalibrationFigures(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const double &n_0, const double &n_1, const double &n, const std::string &path);
 /*--------------------------------------------------------------------------*/
 //static std::vector<cv::Mat> ForwardModelConstantn(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const double &n);
 /*--------------------------------------------------------------------------*/

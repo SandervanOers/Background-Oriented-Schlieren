@@ -844,48 +844,95 @@ extern PositionDirection calculateIntersectionConstantRefraction(const PositionD
 	  return 0;
 }*/
 /*--------------------------------------------------------------------------*/ 
-extern void CalibrationFigures(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const double &n_0, const double &n_1, const double &n)
+extern void CalibrationFigures(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const double &n_0, const double &n_1, const double &n, const std::string &path)
 {
 	//double L_c = Lengths[0];
 	double L_g = Lengths[1];
 	double L_t = Lengths[2];
-	double L_s = Lengths[4];
+	double L_s = Lengths[3];
 	
-	// Loop over a, b, c, d
-	
-	double a, b, c, d;
-	a = 1;
-	b = 1;
-	c = 1;
-	d = 1;
-	double normPD = sqrt(a*a+b*b+c*c);
-	std::vector<double> PlaneDefinition{a/normPD, b/normPD, c/normPD, d/normPD};
-	
-	double L_m = - d / c;
-	double L_c = c/(a+b+c)*L_m-L_s-2*L_g-L_t;
-	std::vector<double> Lengthsnew(Lengths.begin(), Lengths.end());
-	Lengthsnew[0] = L_c;
+    std::ofstream myfile;
+    myfile.open(path+"/Sfile.csv");
+    myfile << "a b c d S"<< std::endl;
+    
 	cv::Mat DX0(GridX.size(), CV_64FC1, Scalar(0));
 	cv::Mat DY0(GridX.size(), CV_64FC1, Scalar(0));
-	std::vector<cv::Mat> X60 = ForwardModelConstantn(GridX, GridY, DX0, DY0, focal_length, Lengthsnew, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n_0);
-	std::vector<cv::Mat> X61 = ForwardModelConstantn(GridX, GridY, Dx, Dy, focal_length, Lengthsnew, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
-
-	cv::Mat DX = X61[0] - X60[0];
-	cv::Mat DY = X61[2] - X60[1];
-	cv::Mat DZ = X61[2] - X60[1];
 	
-	cv::Mat DXsquared = DX.mul(DX);
-	cv::Mat DYsquared = DY.mul(DY);
-	cv::Mat DZsquared = DZ.mul(DZ);
+	// Grid Search
+	unsigned int iterations = 50;
+	// Loop over a, b, c, d
+	double a, b, c, d;
+	unsigned int iterations_over_a = iterations;
+	unsigned int iterations_over_b = iterations;
+	unsigned int iterations_over_c = iterations;
+	unsigned int iterations_over_d = iterations;
+	for (unsigned int i = 0; i <= iterations_over_a; i++)
+	{
+		a = -1.0+2.0*(double)i/iterations_over_a;
+		for (unsigned int j = 0; j <= iterations_over_b; j++)
+		{
+			b = -1.0+2.0*(double)j/iterations_over_b;
+			for (unsigned int k = 0; k < iterations_over_c;k++)
+			{
+				c = -1.0 +1.0*(double)k/iterations_over_c; 
+				double normPD = sqrt(a*a+b*b+c*c);
+				//for (unsigned int l = 0; l <= iterations_over_d;l++)
+				{
+					double L_m = 1.0;//0.1 + 10.0*(double)l/iterations_over_d; 
+					//d = -10.0 +20.0*(double)l/iterations_over_d; 
+					d = -c/normPD*L_m;
+					//double L_m = - d / c*normPD;
+					std::vector<double> PlaneDefinition{a/normPD, b/normPD, c/normPD, d};
+					double L_c = c/(a+b+c)*L_m-L_s-2.0*L_g-L_t;
+					std::vector<double> Lengthsnew(Lengths.begin(), Lengths.end());
+					Lengthsnew[0] = L_c;
+					std::vector<cv::Mat> X60 = ForwardModelConstantn(GridX, GridY, DX0, DY0, focal_length, Lengthsnew, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n_0);
+					//std::vector<cv::Mat> X61 = ForwardModelConstantn(GridX, GridY, DX0, DY0, focal_length, Lengthsnew, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n_0);
+					std::vector<cv::Mat> X61 = ForwardModelConstantn(GridX, GridY, Dx, Dy, focal_length, Lengthsnew, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
+					cv::Mat DX = X61[0] - X60[0];
+					cv::Mat DY = X61[1] - X60[1];
+					cv::Mat DZ = X61[2] - X60[2];
+					
+					Scalar SS = DX.dot(DX) + DY.dot(DY) + DZ.dot(DZ);
+					double S = SS[0];
+					myfile << a/normPD << " " << b/normPD << " " << c/normPD << " " << L_m << " " << S << std::endl;
+				}
+			}
+		}
+		std::cout << "Calibrations done: "<< std::setprecision(2) << (double)i/iterations_over_a*100.0 << "%" << std::endl;
+	}
+	myfile.close();
 	
-	Scalar s = DX.dot(DX); 
-	Scalar s2 = cv::sum(DXsquared); 
-	std::cout << "Diff Dot Sum Square = " << s - s2 << std::endl;
-	Scalar SS = cv::sum(DXsquared)+cv::sum(DYsquared)+cv::sum(DZsquared);
-	double S = SS[0];
-	std::cout << S << std::endl;
+	// Gradient Descent
+	// Initial Guess
+	a = 0.8;
+	b = 0.02;
+	c = - 0.60;
+	double L_m  = 1.0;
+	d = -c/normPD*L_m;
+	double normPD = sqrt(a*a+b*b+c*c);
+	std::vector<double> PlaneDefinition{a/normPD, b/normPD, c/normPD, d};
+	double L_c = c/(a+b+c)*L_m-L_s-2.0*L_g-L_t;
 	
+	// Compute Jacobian
+	h = 0.001;
+	aplus = a+h;
+	normPDplus = sqrt(aplus*aplus+b*b+c*c);
+	double dplus = -c/normPDplus*L_m
+	double L_cplus = c/(aplus+b+c)*L_m-L_s-2.0*L_g-L_t;
+	std::vector<double> Lengthsnewplus(Lengths.begin(), Lengths.end());
+	Lengthsnew[0] = L_cplus;
+	std::vector<double> PlaneDefinitionplus{aplus/normPDplus, b/normPDplus, c/normPDplus, dplus};
 	
+	std::vector<double> Lengthsnewminus(Lengths.begin(), Lengths.end());
+	Lengthsnew[0] = L_cminus;
+	aminus = a-h;
+	normPDminus = sqrt(aminus*aminus+b*b+c*c);
+	double dminus = -c/normPDminus*L_m
+	double L_cminus = c/(aminus+b+c)*L_m-L_s-2.0*L_g-L_t;
+	std::vector<double> PlaneDefinitionminus{aminus/normPDminus, b/normPDminus, c/normPDminus, dminus};
+	
+	ader = ForwardModelConstantn(GridX, GridY, DX0, DY0, focal_length, Lengthsnewplus, Distance_From_Pixels_To_Meters, PlaneDefinitionplus, n_0, n_1, n_0)-ForwardModelConstantn(GridX, GridY, DX0, DY0, focal_length, Lengthsminus, Distance_From_Pixels_To_Meters, PlaneDefinitionminus, n_0, n_1, n_0);
 }
 /*--------------------------------------------------------------------------*/ 
 static std::vector<cv::Mat> ForwardModelConstantn(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const double &n)
@@ -900,7 +947,6 @@ static std::vector<cv::Mat> ForwardModelConstantn(const cv::Mat &GridX, const cv
 	double d = PlaneDefinition[3];
 	
 	double L_m = - d / c;
-	
 	double d5 = d+(a+b+c)*L_s;
 	double d4 = d+(a+b+c)*(L_s+L_g);
 	double d3 = d+(a+b+c)*(L_s+L_g+L_t);
@@ -912,12 +958,12 @@ static std::vector<cv::Mat> ForwardModelConstantn(const cv::Mat &GridX, const cv
 	std::vector<double> PlaneDefinition4{PlaneDefinition[0],PlaneDefinition[1],PlaneDefinition[2],d4};
 	std::vector<double> PlaneDefinition5{PlaneDefinition[0],PlaneDefinition[1],PlaneDefinition[2],d5};
 	
-	std::cout << "Plane 6 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << PlaneDefinition[3] << " = 0" << ": (x,y)=(0,0) => z_6 = " << -PlaneDefinition[3]/PlaneDefinition[2] << std::endl << std::endl;
-	std::cout << "Plane 5 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << d5 << " = 0 " << ": (x,y)=(0,0) => z_5 = " << -d5/PlaneDefinition[2] << std::endl << std::endl;
-	std::cout << "Plane 4 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << d4 << " = 0 " << ": (x,y)=(0,0) => z_4 = " << -d4/PlaneDefinition[2] << std::endl << std::endl;
-	std::cout << "Plane 3 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << d3 << " = 0 " << ": (x,y)=(0,0) => z_3 = " << -d3/PlaneDefinition[2] << std::endl << std::endl;
-	std::cout << "Plane 2 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << d2 << " = 0 " << ": (x,y)=(0,0) => z_2 = " << -d2/PlaneDefinition[2] << std::endl << std::endl;
-	std::cout << "Plane 1 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << d1 << " = 0 " << ": (x,y)=(0,0) => z_1 = " << -d1/PlaneDefinition[2] << std::endl << std::endl;
+	//std::cout << "Plane 6 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << PlaneDefinition[3] << " = 0" << ": (x,y)=(0,0) => z_6 = " << -PlaneDefinition[3]/PlaneDefinition[2] << std::endl << std::endl;
+	//std::cout << "Plane 5 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << d5 << " = 0 " << ": (x,y)=(0,0) => z_5 = " << -d5/PlaneDefinition[2] << std::endl << std::endl;
+	//std::cout << "Plane 4 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << d4 << " = 0 " << ": (x,y)=(0,0) => z_4 = " << -d4/PlaneDefinition[2] << std::endl << std::endl;
+	//std::cout << "Plane 3 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << d3 << " = 0 " << ": (x,y)=(0,0) => z_3 = " << -d3/PlaneDefinition[2] << std::endl << std::endl;
+	//std::cout << "Plane 2 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << d2 << " = 0 " << ": (x,y)=(0,0) => z_2 = " << -d2/PlaneDefinition[2] << std::endl << std::endl;
+	//std::cout << "Plane 1 Definition: " << PlaneDefinition[0] << "x + " << PlaneDefinition[1] << "y + " << PlaneDefinition[2] << "z + " << d1 << " = 0 " << ": (x,y)=(0,0) => z_1 = " << -d1/PlaneDefinition[2] << std::endl << std::endl;
 	
 	double L_f = calculateLf(focal_length, L_m);
 	double meanGridX = calculateMean(GridX);

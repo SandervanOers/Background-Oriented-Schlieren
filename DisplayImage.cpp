@@ -340,11 +340,11 @@ int main(int argc, char** argv )
 	// store_matrix(path,"V0filter", DY_Median);
 
 	auto tr2= std::chrono::high_resolution_clock::now();
-	std::cout << "Total took " << std::chrono::duration_cast<std::chrono::milliseconds>(tr2-tr1).count()
+	std::cout << "DIC took " << std::chrono::duration_cast<std::chrono::milliseconds>(tr2-tr1).count()
 	<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(tr2-tr1).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(tr2-tr1).count() << " minutes"<<std::endl;
 	// std::cout << "Iterations took "<< T << " seconds" << std::endl;
 	/*--------------------------------------------------------------------------*/
-
+	auto tr3= std::chrono::high_resolution_clock::now();
     cv::Mat GridX(DispX.size(), CV_64FC1, Scalar(0));
     cv::Mat GridY(DispX.size(), CV_64FC1, Scalar(0));
 	for (unsigned int i = 0; i < static_cast<unsigned int>(GridX.cols); i++)
@@ -367,8 +367,13 @@ int main(int argc, char** argv )
 	double L_g = 0.01;
 	double L_s = 0;
 	std::vector<double> Lengths{L_c, L_g, L_t, L_s};
-	CalibrationFigures(GridX, GridY, DispX, DispY, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n);
-
+	CalibrationFigures(GridX, GridY, DispX, DispY, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, path);
+	
+	std::cout << std::endl << "\033[1;32mCalibration Completed\033[0m\n" << std::endl;
+	
+	auto tr4= std::chrono::high_resolution_clock::now();
+	std::cout << "Calibration took " << std::chrono::duration_cast<std::chrono::milliseconds>(tr4-tr3).count()
+	<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(tr4-tr3).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(tr4-tr3).count() << " minutes"<<std::endl;	
 	/*--------------------------------------------------------------------------*/
 	/*
 	auto tr3= std::chrono::high_resolution_clock::now();
