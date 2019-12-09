@@ -8,6 +8,7 @@
 #include <numeric>
 # include <vector>
 # include <iostream>
+#include <random>
 
 
 #include "PositionDirection.hpp"
@@ -45,5 +46,7 @@ extern PositionDirection calculateIntersectionConstantRefraction(const PositionD
 extern void CalibrationFigures(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const double &n_0, const double &n_1, const double &n, const std::string &path);
 /*--------------------------------------------------------------------------*/
 //static std::vector<cv::Mat> ForwardModelConstantn(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const double &n);
+/*--------------------------------------------------------------------------*/
+extern void Calibration(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const cv::Mat &CorrelationCoefficient, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const double &n_0, const double &n_1, const double &n, const std::string &path);
 /*--------------------------------------------------------------------------*/
 #endif

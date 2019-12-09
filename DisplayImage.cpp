@@ -343,6 +343,8 @@ int main(int argc, char** argv )
 	std::cout << "DIC took " << std::chrono::duration_cast<std::chrono::milliseconds>(tr2-tr1).count()
 	<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(tr2-tr1).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(tr2-tr1).count() << " minutes"<<std::endl;
 	// std::cout << "Iterations took "<< T << " seconds" << std::endl;
+	
+	std::cout << std::endl;
 	/*--------------------------------------------------------------------------*/
 	auto tr3= std::chrono::high_resolution_clock::now();
     cv::Mat GridX(DispX.size(), CV_64FC1, Scalar(0));
@@ -367,7 +369,9 @@ int main(int argc, char** argv )
 	double L_g = 0.01;
 	double L_s = 0;
 	std::vector<double> Lengths{L_c, L_g, L_t, L_s};
-	CalibrationFigures(GridX, GridY, DispX, DispY, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, path);
+	//CalibrationFigures(GridX, GridY, DispX, DispY, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, path);
+	Calibration(GridX, GridY, DispX, DispY, CorrelationCoefficient, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, path);
+
 	
 	std::cout << std::endl << "\033[1;32mCalibration Completed\033[0m\n" << std::endl;
 	

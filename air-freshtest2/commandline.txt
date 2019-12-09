@@ -1,0 +1,2 @@
+usage: DisplayImage.out <Image_Path> SplineDegree SubsetLength GridLength ShapeFunction PropagationFunction OrderingImages xStart xEnd yStart yEnd NumberOfThreads MaxPixelYVertical Tolerance
+./DIC 20-6-2018/SmallTank/Side/air-freshtest2 5 21 50 3 1 0 155 700 165 765 3 200 1e-8 
