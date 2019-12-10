@@ -291,7 +291,7 @@ int main(int argc, char** argv )
             //}
         //}
     }
-	*/
+clTabCtrl	*/
 	std::cout << "Reliability = " << std::setprecision(5) << cv::sum(CorrelationCoefficient).val[0]/static_cast<double>(CorrelationCoefficient.total()) << std::endl;
 
     if (plotting==1)
@@ -367,17 +367,48 @@ int main(int argc, char** argv )
 	double L_c = 10000;
 	double L_t = 0.168;
 	double L_g = 0.01;
-	double L_s = 0;
+	double L_s = 0.0;
 	std::vector<double> Lengths{L_c, L_g, L_t, L_s};
-	//CalibrationFigures(GridX, GridY, DispX, DispY, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, path);
-	Calibration(GridX, GridY, DispX, DispY, CorrelationCoefficient, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, path);
-
-	
+	//CalibrationFigures(GridX, GridY, DispX, DispY, CorrelationCoefficient, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, path);
+	/*--------------------------------------------------------------------------*/
+    cv::Mat GX(1, 21, CV_64FC1, Scalar(0));
+    cv::Mat GY(1, 21, CV_64FC1, Scalar(0));
+	for (unsigned int i = 0; i < static_cast<unsigned int>(GX.cols); i++)
+	{
+		for (unsigned int j = 0; j < static_cast<unsigned int>(GX.rows); j++)
+		{
+			GX.at<double>(j,i) = i*20;
+			GY.at<double>(j,i) = j*20;
+		}
+	}	
+	std::cout << GX << std::endl;
+	double L_m = 1.778;
+	std::vector<double> PlaneDefinition{0,0,-1,L_m};
+	Lengths[0] = L_m-2*L_g-L_t-L_s;
+	calculate_Displacements(GX, GY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
+	std::cout << "L_c = " << L_m-2*L_g-L_t-L_s << std::endl;
+	/*--------------------------------------------------------------------------*/
+	/*
+	std::vector<double> CalibrationNumbers = Calibration(GridX, GridY, -DispX, DispY, CorrelationCoefficient, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, path);
 	std::cout << std::endl << "\033[1;32mCalibration Completed\033[0m\n" << std::endl;
+	double a = CalibrationNumbers[0];
+	double b = CalibrationNumbers[1];
+	double c = CalibrationNumbers[2];
+	double L_m = CalibrationNumbers[3];
+	double normPD = calculateNorm(a, b, c);
+	double d = -c/normPD*L_m;
+	//double pd[] = {a/normPD, b/normPD, c/normPD, d};
+	std::vector<double> PlaneDefinition{a/normPD, b/normPD, c/normPD, d};
+	//PlaneDefinition.assign(pd, pd+4);
+	L_c = c/(a+b+c)*L_m-L_s-2.0*L_g-L_t;
+	Lengths[0] = L_c;
+	calculateNFigures(GridX, GridY, -DispX, DispY, CorrelationCoefficient, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, path);
+	*/
 	
 	auto tr4= std::chrono::high_resolution_clock::now();
 	std::cout << "Calibration took " << std::chrono::duration_cast<std::chrono::milliseconds>(tr4-tr3).count()
 	<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(tr4-tr3).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(tr4-tr3).count() << " minutes"<<std::endl;	
+	std::cout << std::endl << "\033[1;32mN Calculation Completed\033[0m\n" << std::endl;
 	/*--------------------------------------------------------------------------*/
 	/*
 	auto tr3= std::chrono::high_resolution_clock::now();
@@ -446,6 +477,9 @@ int main(int argc, char** argv )
 	 int pp = poly_test();
 	 std::cout << "2" << std::endl;
 */
+	auto trend = std::chrono::high_resolution_clock::now();
+	std::cout << "Total took " << std::chrono::duration_cast<std::chrono::milliseconds>(trend-tr1).count()
+	<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(trend-tr1).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(trend-tr1).count() << " minutes"<<std::endl;		
     return 0;
 }
 /*--------------------------------------------------------------------------*/
