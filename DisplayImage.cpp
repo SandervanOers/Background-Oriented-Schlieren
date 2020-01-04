@@ -136,7 +136,6 @@ int main(int argc, char** argv )
 			//std::chrono::duration<double> elapsed_seconds = tr4-tr3;
 			//T += elapsed_seconds.count();
             DispX.at<double>(*i) = point2[0];
-			//std::cout << "0" << std::endl;
             DispY.at<double>(*i) = point2[1];
             Ux.at<double>(*i) = point2[2];
             Vx.at<double>(*i) = point2[3];
@@ -192,6 +191,7 @@ int main(int argc, char** argv )
                 double computed = cv::sum(Computed_Points).val[0]/static_cast<double>(Computed_Points.total())*100.0;
                 if (computed>outputcount)
                 {
+                    outputcount++;
                     outputcount++;
                     outputcount++;
                     std::cout << "Points Computed: " << std::setprecision(2) << computed << "%" << std::endl;
@@ -304,8 +304,8 @@ clTabCtrl	*/
         Copy_CCF_16.convertTo(Copy_CCF_16, CV_16U, 255.0*256.0);
         imwrite(filename, Copy_CCF_16);
     }
-
-
+	
+	/*--------------------------------------------------------------------------*/
     store_matrix(path,"U0", DispX);
     store_matrix(path,"V0", DispY);
     store_matrix(path,"Ux", Ux);
@@ -319,7 +319,16 @@ clTabCtrl	*/
     store_matrix(path,"Vxx", Vxx);
     store_matrix(path,"Vyy", Vyy);
     store_matrix(path,"CorrelationCoefficient", CorrelationCoefficient);
-
+	/*--------------------------------------------------------------------------*/
+	std::string filename = "U0";
+	cv::Mat In = load_matrix(path, filename, 1);
+	std::cout << In << std::endl;
+	std::cout << std::endl;
+	std::cout << std::endl;
+	std::cout << DispX - In << std::endl;
+	std::cout << std::endl;
+	/*--------------------------------------------------------------------------*/
+	
 	//cv::Mat Copy_CCF_16 = CorrelationCoefficient.clone();
 	//Copy_CCF_16.convertTo(Copy_CCF_16, CV_16U, 255.0*256.0);
 	//imwrite("Images/CC.png", Copy_CCF_16);
@@ -327,24 +336,31 @@ clTabCtrl	*/
 	//flip(Copy_CCF_16, Copy_CCF_16, 0);
 	//imwrite("Images/CCflipped.png", Copy_CCF_16);
 
-	//Mat Temp;
-	//DispX.convertTo(Temp, CV_8U);
-	//Mat DX_Median, DY_Median;
-	//DX_Median = Temp.clone();
-	//DispY.convertTo(Temp, CV_8U);
-	//DY_Median = Temp.clone();
-	////Apply median filter
-    //medianBlur(Temp, DX_Median, 3 );
-    //medianBlur(DispY, DY_Median, 3 );
-	//store_matrix(path,"U0filter", DX_Median);
-	// store_matrix(path,"V0filter", DY_Median);
-
 	auto tr2= std::chrono::high_resolution_clock::now();
 	std::cout << "DIC took " << std::chrono::duration_cast<std::chrono::milliseconds>(tr2-tr1).count()
-	<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(tr2-tr1).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(tr2-tr1).count() << " minutes"<<std::endl;
+	<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(tr2-tr1).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(tr2-tr1).count() << " minutes\n"<<std::endl;
 	// std::cout << "Iterations took "<< T << " seconds" << std::endl;
-	
-	std::cout << std::endl;
+
+	/*--------------------------------------------------------------------------*/
+	if (ordering==1)
+	{
+		DispX = - DispX;
+		DispY = - DispY;
+	}
+	// Median Filter
+	/*
+	DispX.convertTo(DispX, CV_32F);
+	DispY.convertTo(DispY, CV_32F);
+	medianBlur ( DispX, DispX, 3 );
+	medianBlur ( DispY, DispY, 3 );
+	DispX.convertTo(DispX, CV_64F);
+	DispY.convertTo(DispY, CV_64F);
+	 * */
+	// Gaussian Filter
+	//GaussianBlur(DispX, DispX, Size(5, 5), 0);
+	//GaussianBlur(DispY, DispY, Size(5, 5), 0);
+	// Store Again?
+	 
 	/*--------------------------------------------------------------------------*/
 	auto tr3= std::chrono::high_resolution_clock::now();
     cv::Mat GridX(DispX.size(), CV_64FC1, Scalar(0));
@@ -360,18 +376,27 @@ clTabCtrl	*/
 	// Camera
 	double focal_length = 50.0/1000.0;
 	double Distance_From_Pixels_To_Meters = 6.45e-6;
-	double n_0 = 1;
-	double n_1 = 1.5;
+	double n_0 = 1.0003;
+	double n_1 = 1.52;
 	double n = 1.333;
-	// Lengths
+	// Lengths Small Tank
 	double L_c = 10000;
-	double L_t = 0.168;
-	double L_g = 0.01;
+	double L_t = 0.191;//0.168;//0.168;//
+	double L_g = 0.004; //0.01
 	double L_s = 0.0;
+	// Lengths Full Tank
+	/*
+	double L_c = 1.60;
+	double L_g = 5.8/1000;
+	double L_t = 13.8/100-2*L_g;
+	double L_s = 0.0;//0.523;
+	 * */
 	std::vector<double> Lengths{L_c, L_g, L_t, L_s};
+	double corr_cut_off = 0.98;
 	//CalibrationFigures(GridX, GridY, DispX, DispY, CorrelationCoefficient, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, path);
 	/*--------------------------------------------------------------------------*/
-    cv::Mat GX(1, 21, CV_64FC1, Scalar(0));
+    /*
+	 * cv::Mat GX(1, 21, CV_64FC1, Scalar(0));
     cv::Mat GY(1, 21, CV_64FC1, Scalar(0));
 	for (unsigned int i = 0; i < static_cast<unsigned int>(GX.cols); i++)
 	{
@@ -380,35 +405,66 @@ clTabCtrl	*/
 			GX.at<double>(j,i) = i*20;
 			GY.at<double>(j,i) = j*20;
 		}
-	}	
-	std::cout << GX << std::endl;
+	}
+	//std::cout << GX << std::endl;
+	
+	double a, b, c;
 	double L_m = 1.778;
 	std::vector<double> PlaneDefinition{0,0,-1,L_m};
 	Lengths[0] = L_m-2*L_g-L_t-L_s;
-	calculate_Displacements(GX, GY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
-	std::cout << "L_c = " << L_m-2*L_g-L_t-L_s << std::endl;
+	//calculate_Displacements(GX, GY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n); 
+	std::cout << "L_c = " << L_m-2*L_g-L_t-L_s << std::endl;*/
 	/*--------------------------------------------------------------------------*/
+    double a, b, c, L_m, meanGridX, meanGridY;
 	/*
-	std::vector<double> CalibrationNumbers = Calibration(GridX, GridY, -DispX, DispY, CorrelationCoefficient, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, path);
-	std::cout << std::endl << "\033[1;32mCalibration Completed\033[0m\n" << std::endl;
-	double a = CalibrationNumbers[0];
-	double b = CalibrationNumbers[1];
-	double c = CalibrationNumbers[2];
-	double L_m = CalibrationNumbers[3];
+	//std::vector<double> CalibrationNumbers = Calibration(GridX, GridY, DispX, DispY, CorrelationCoefficient, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, path, corr_cut_off);
+	std::vector<double> CalibrationNumbers = Calibration2(GridX, GridY, DispX, DispY, CorrelationCoefficient, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, path, corr_cut_off);
+	//std::vector<double> CalibrationNumbers = CalibrationExtended(GridX, GridY, DispX, DispY, CorrelationCoefficient, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, path);
+	a = CalibrationNumbers[0];
+	b = CalibrationNumbers[1];
+	c = CalibrationNumbers[2];
+	L_m = CalibrationNumbers[3];
+	meanGridX = CalibrationNumbers[4];
+	meanGridY = CalibrationNumbers[5];
+	//L_t = CalibrationNumbers[4];
+	*/
+	std::cout << std::endl << "\033[1;32mCalibration Completed\033[0m\n" << std::endl;   
+	
+	a = -0.12082091 ;
+	b = 0.12082091 ;
+	c =  -0.43362714 ;
+	L_m =  2.1608463 ;
+	meanGridX =  555.04703 ;
+	meanGridY =  -765.25704;
+	 
 	double normPD = calculateNorm(a, b, c);
 	double d = -c/normPD*L_m;
 	//double pd[] = {a/normPD, b/normPD, c/normPD, d};
-	std::vector<double> PlaneDefinition{a/normPD, b/normPD, c/normPD, d};
+	std::vector<double> PlaneDefinition{0, 0, 0, 0};
+	PlaneDefinition[0] = a/normPD; //{a/normPD, b/normPD, c/normPD, d};
+	PlaneDefinition[1] = b/normPD;
+	PlaneDefinition[2] = c/normPD;
+	PlaneDefinition[3] = d;
 	//PlaneDefinition.assign(pd, pd+4);
 	L_c = c/(a+b+c)*L_m-L_s-2.0*L_g-L_t;
 	Lengths[0] = L_c;
-	calculateNFigures(GridX, GridY, -DispX, DispY, CorrelationCoefficient, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, path);
-	*/
-	
+	Lengths[2] = L_t;
+	//calculateNFigures(GridX, GridY, DispX, DispY, CorrelationCoefficient, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, path);
+
+    
 	auto tr4= std::chrono::high_resolution_clock::now();
 	std::cout << "Calibration took " << std::chrono::duration_cast<std::chrono::milliseconds>(tr4-tr3).count()
-	<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(tr4-tr3).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(tr4-tr3).count() << " minutes"<<std::endl;	
+	<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(tr4-tr3).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(tr4-tr3).count() << " minutes"<<std::endl;
 	std::cout << std::endl << "\033[1;32mN Calculation Completed\033[0m\n" << std::endl;
+	/*--------------------------------------------------------------------------*/
+	//cv::Mat nfield = CalculateN(GridX, GridY, DispX, DispY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, path);
+	cv::Mat nfield = CalculateN2(GridX, GridY, meanGridX, meanGridY, DispX, DispY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, path);
+	store_matrix(path,"nfield", nfield);
+	auto tr5= std::chrono::high_resolution_clock::now();
+	std::cout << "n Calculation took " << std::chrono::duration_cast<std::chrono::milliseconds>(tr5-tr4).count()
+	<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(tr5-tr4).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(tr5-tr4).count() << " minutes"<<std::endl;
+	std::cout << std::endl << "\033[1;32mN Calculation Completed\033[0m\n" << std::endl;	
+
 	/*--------------------------------------------------------------------------*/
 	/*
 	auto tr3= std::chrono::high_resolution_clock::now();
@@ -479,7 +535,7 @@ clTabCtrl	*/
 */
 	auto trend = std::chrono::high_resolution_clock::now();
 	std::cout << "Total took " << std::chrono::duration_cast<std::chrono::milliseconds>(trend-tr1).count()
-	<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(trend-tr1).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(trend-tr1).count() << " minutes"<<std::endl;		
+	<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(trend-tr1).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(trend-tr1).count() << " minutes"<<std::endl;
     return 0;
 }
 /*--------------------------------------------------------------------------*/
@@ -489,6 +545,41 @@ void store_matrix(std::string path, std::string filename, cv::Mat Matrix_To_Be_S
     myfile.open(path+"/"+filename+".csv");
     myfile << format(Matrix_To_Be_Stored,cv::Formatter::FMT_MATLAB);
     myfile.close();
+}
+/*--------------------------------------------------------------------------*/
+cv::Mat load_matrix(std::string path, std::string filename, const int &skiplines)
+{
+
+    std::ifstream file(path+"/"+filename+".csv");
+    std::ifstream file1(path+"/"+filename+".csv");
+	int line = 0;
+	int numberofrows, numberofcols;
+    for(CSVIterator loop(file); loop != CSVIterator(); ++loop)
+    {
+		if (line>=skiplines)
+		{
+			numberofrows = (*loop).size();
+		}
+		line++;
+    }
+	numberofcols = line-skiplines;
+	
+	cv::Mat In(numberofcols, numberofrows, CV_64FC1);
+	line = 0;
+    for(CSVIterator loop(file1); loop != CSVIterator(); ++loop)
+    {
+		if (line>=skiplines)
+		{
+			for (unsigned int i = 0; i < (*loop).size(); i++ )
+			{
+				std::string s = (*loop)[i];
+				removeCharsFromString( s, ";" );
+				In.at<double>(line-skiplines,i) =  std::stod(s);
+			}
+		}
+		line++;		
+    }
+	return In;
 }
 /*--------------------------------------------------------------------------*/
 bool sort_by_C_value (const  Points_With_Value &lhs, const Points_With_Value &rhs)
