@@ -3,13 +3,12 @@
 
 #include <stdio.h>
 #include <opencv2/opencv.hpp>
-# include <cppad/cppad.hpp>
-//# include <cppad/ipopt/solve.hpp>
 #include <numeric>
 # include <vector>
 # include <iostream>
 #include <iomanip>
 #include <random>
+#include <future>
 
 
 #include "PositionDirection.hpp"
@@ -50,10 +49,18 @@ extern void CalibrationFigures(const cv::Mat &GridX, const cv::Mat &GridY, const
 /*--------------------------------------------------------------------------*/
 //static std::vector<cv::Mat> ForwardModelConstantn(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const double &n);
 /*--------------------------------------------------------------------------*/
-extern std::vector<double>  Calibration(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const cv::Mat &CorrelationCoefficient, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const double &n_0, const double &n_1, const double &n, const std::string &path);
+extern std::vector<double> Calibration(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const cv::Mat &CorrelationCoefficient, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const double &n_0, const double &n_1, const double &n, const std::string &path, const double &corr_cut_off);
+/*--------------------------------------------------------------------------*/
+extern std::vector<double> Calibration2(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const cv::Mat &CorrelationCoefficient, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const double &n_0, const double &n_1, const double &n, const std::string &path, const double &corr_cut_off);
 /*--------------------------------------------------------------------------*/
 extern void calculateNFigures(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const cv::Mat &CorrelationCoefficient, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &	PlaneDefinition, const double &n_0, const double &n_1, const std::string &path);
 /*--------------------------------------------------------------------------*/
 extern void calculate_Displacements(const cv::Mat &GridX, const cv::Mat &GridY, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const double &n);
+/*--------------------------------------------------------------------------*/
+extern cv::Mat CalculateN(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const std::string &path);
+/*--------------------------------------------------------------------------*/
+extern cv::Mat CalculateN2(const cv::Mat &GridX, const cv::Mat &GridY, const double &meanGridX, const double &meanGridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const std::string &path);
+/*--------------------------------------------------------------------------*/
+extern std::vector<double> CalibrationExtended(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const cv::Mat &CorrelationCoefficient, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const double &n_0, const double &n_1, const double &n, const std::string &path);
 /*--------------------------------------------------------------------------*/
 #endif

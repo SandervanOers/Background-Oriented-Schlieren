@@ -121,7 +121,7 @@ void calculateInitialGuess_Thread_Iteration(const unsigned int &Number_Of_Thread
 	}
 }
 /*--------------------------------------------------------------------------*/
-extern std::vector<cv::Mat> calculateInitialGuess_Iteration(const cv::Mat &Reference, const cv::Mat &Deformed, float *fptr_img1, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const unsigned int &horx_ROI, const unsigned int &very_ROI, const unsigned int &offset, const unsigned int &Number_Of_Threads, const unsigned int &MaxPixelYVertical, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold, const unsigned int &ShapeFunction, const double &minimum_corrcoeff)
+extern std::vector<cv::Mat> calculateInitialGuess_Iteration2(const cv::Mat &Reference, const cv::Mat &Deformed, float *fptr_img1, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const unsigned int &horx_ROI, const unsigned int &very_ROI, const unsigned int &offset, const unsigned int &Number_Of_Threads, const unsigned int &MaxPixelYVertical, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold, const unsigned int &ShapeFunction, const double &minimum_corrcoeff)
 {
 	//std::cout << "Computing Initial Guess" << std::endl;
 	cv::Mat DispX(very_ROI/GridLength+1, horx_ROI/GridLength+1, CV_64F, 0.0);
@@ -156,6 +156,66 @@ extern std::vector<cv::Mat> calculateInitialGuess_Iteration(const cv::Mat &Refer
 		unsigned int yr = static_cast<unsigned int>(1+round(0.1*very_ROI/GridLength) + (l+1.0)/Number_Of_Threads * (very_ROI/GridLength-round(0.1*very_ROI/GridLength)-(1+round(0.1*very_ROI/GridLength)))-1);
 		// Possible Error when Number_Of_Threads is large and GridLength is large: yl == yr or even yl>yr.
 		threads.push_back(std::thread(calculateInitialGuess_Thread_Iteration, Number_Of_Threads, Reference, Deformed, fptr_img1, std::ref(DispX), std::ref(DispY), std::ref(Ux), std::ref(Vx), std::ref(Uy), std::ref(Vy), std::ref(Uxy), std::ref(Vxy), std::ref(Uxx), std::ref(Vxx), std::ref(Uyy), std::ref(Vyy), std::ref(CorrelationCoefficient), std::ref(Computed_Points), SplineDegree, SubsetLength, GridLength, offset, xl, xr, yl, yr, MaxPixelYVertical, abs_tolerance_threshold, rel_tolerance_threshold, ShapeFunction, minimum_corrcoeff, HorizontalDifference_DeformedReference, VerticalDifference_DeformedReference));
+	}  
+	
+	for (auto& th : threads) 
+		th.join();
+	
+	//std::cout << "Computation Initial Guess Completed " << std::endl;
+	std::vector<cv::Mat> ReturnVector;
+    ReturnVector.push_back(DispX);
+    ReturnVector.push_back(DispY);
+    ReturnVector.push_back(Ux);
+    ReturnVector.push_back(Vx);
+    ReturnVector.push_back(Uy);
+    ReturnVector.push_back(Vy);
+    ReturnVector.push_back(Uxy);
+    ReturnVector.push_back(Vxy);
+    ReturnVector.push_back(Uxx);
+    ReturnVector.push_back(Vxx);
+    ReturnVector.push_back(Uyy);
+    ReturnVector.push_back(Vyy);
+    ReturnVector.push_back(CorrelationCoefficient);
+    ReturnVector.push_back(Computed_Points);
+    return ReturnVector;
+}
+/*--------------------------------------------------------------------------*/
+extern std::vector<cv::Mat> calculateInitialGuess_Iteration(const cv::Mat &Reference, const cv::Mat &Deformed, float *fptr_img1, const InputVariables &inputvariables)
+{
+
+	//std::cout << "Computing Initial Guess" << std::endl;
+	cv::Mat DispX(inputvariables.very_ROI/inputvariables.GridLength+1, inputvariables.horx_ROI/inputvariables.GridLength+1, CV_64F, 0.0);
+    cv::Mat DispY(inputvariables.very_ROI/inputvariables.GridLength+1, inputvariables.horx_ROI/inputvariables.GridLength+1, CV_64F, 0.0);
+    cv::Mat CorrelationCoefficient(inputvariables.very_ROI/inputvariables.GridLength+1, inputvariables.horx_ROI/inputvariables.GridLength+1, CV_64F, 0.0);
+    cv::Mat Computed_Points(DispX.size(), CV_8UC1, 0.0);
+    cv::Mat Ux(DispX.size(), CV_64FC1, 0.0);
+    cv::Mat Vx(DispX.size(), CV_64FC1, 0.0);
+    cv::Mat Uy(DispX.size(), CV_64FC1, 0.0);
+    cv::Mat Vy(DispX.size(), CV_64FC1, 0.0);
+    cv::Mat Uxy(DispX.size(), CV_64FC1, 0.0);
+    cv::Mat Vxy(DispX.size(), CV_64FC1, 0.0);
+    cv::Mat Uxx(DispX.size(), CV_64FC1, 0.0);
+    cv::Mat Vxx(DispX.size(), CV_64FC1, 0.0);
+    cv::Mat Uyy(DispX.size(), CV_64FC1, 0.0);
+    cv::Mat Vyy(DispX.size(), CV_64FC1, 0.0);
+	
+	//std::cout << "Reference.rows = " << Reference.rows << ", Reference.cols = " << Reference.cols << std::endl;
+	//std::cout << "Deformed.rows = " << Deformed.rows << ", Deformed.cols = " << Deformed.cols << std::endl;
+	//std::cout << "Horizontal Difference = "<< Deformed.rows - Reference.rows << std::endl;
+	//std::cout << "Vertical Difference = "<< Deformed.cols - Reference.cols << std::endl;
+	
+	unsigned int HorizontalDifference_DeformedReference = Deformed.rows - Reference.rows;
+	unsigned int VerticalDifference_DeformedReference = Deformed.cols - Reference.cols;
+	
+	std::vector<std::thread> threads;
+	for (unsigned int l = 0; l < inputvariables.Number_Of_Threads; l++)
+	{
+		unsigned int xl = static_cast<unsigned int>(1+round(0.1*inputvariables.horx_ROI/inputvariables.GridLength));
+		unsigned int xr = static_cast<unsigned int>(inputvariables.horx_ROI/inputvariables.GridLength-round(0.1*inputvariables.horx_ROI/inputvariables.GridLength));
+		unsigned int yl = static_cast<unsigned int>(1+round(0.1*inputvariables.very_ROI/inputvariables.GridLength) + (double)l/inputvariables.Number_Of_Threads * (inputvariables.very_ROI/inputvariables.GridLength-round(0.1*inputvariables.very_ROI/inputvariables.GridLength)-(1+round(0.1*inputvariables.very_ROI/inputvariables.GridLength))));
+		unsigned int yr = static_cast<unsigned int>(1+round(0.1*inputvariables.very_ROI/inputvariables.GridLength) + (l+1.0)/inputvariables.Number_Of_Threads * (inputvariables.very_ROI/inputvariables.GridLength-round(0.1*inputvariables.very_ROI/inputvariables.GridLength)-(1+round(0.1*inputvariables.very_ROI/inputvariables.GridLength)))-1);
+		// Possible Error when Number_Of_Threads is large and GridLength is large: yl == yr or even yl>yr.
+		threads.push_back(std::thread(calculateInitialGuess_Thread_Iteration, inputvariables.Number_Of_Threads, Reference, Deformed, fptr_img1, std::ref(DispX), std::ref(DispY), std::ref(Ux), std::ref(Vx), std::ref(Uy), std::ref(Vy), std::ref(Uxy), std::ref(Vxy), std::ref(Uxx), std::ref(Vxx), std::ref(Uyy), std::ref(Vyy), std::ref(CorrelationCoefficient), std::ref(Computed_Points), inputvariables.SplineDegree, inputvariables.SubsetLength, inputvariables.GridLength, inputvariables.offset, xl, xr, yl, yr, inputvariables.MaxPixelYVertical, inputvariables.abs_tolerance_threshold, inputvariables.rel_tolerance_threshold, inputvariables.ShapeFunction, inputvariables.minimum_corrcoeff_IG, HorizontalDifference_DeformedReference, VerticalDifference_DeformedReference));
 	}  
 	
 	for (auto& th : threads) 

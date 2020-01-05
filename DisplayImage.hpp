@@ -18,10 +18,14 @@
 //#include <fstream>
 
 #include "InputOut.hpp"
+#include "DIC.hpp"
 #include "pixeltranslation.hpp"
 #include "nonlineariteration.hpp"
 #include "PointsWithValue.hpp"
 #include "PositionDirection.hpp"
+#include "InputVariables.hpp"
+#include "ExperimentalSetupVariables.hpp"
+#include "CalibrationValues.hpp"
 #include "calculateN.hpp"
 
 extern "C" {

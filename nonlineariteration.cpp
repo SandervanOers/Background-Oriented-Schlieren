@@ -667,7 +667,7 @@ static std::vector<double> iteration_quadratic_LM(const cv::Mat &img, float *fpt
         double Correlation_Coefficient_old = Correlation_Coefficient_ZNSSD(fm, sum_f_minus_fm_squared, gm, sum_g_minus_gm_squared, f_values, g_values);
         Correlation_Coefficient_old = 1.0-0.5*Correlation_Coefficient_old;
 
-		cv::Mat Hessian(12, 12,CV_64F, cv::Scalar(0));
+		cv::Mat Hessian(12, 12, CV_64F, cv::Scalar(0));
 		cv::Mat Jacobian(12,1, CV_64F, cv::Scalar(0));
 		calculate_Hessian_Jacobian_quadratic(Hessian, Jacobian, img, fptr_img1, P0, SplineDegree, SubsetLength, Indexi, Indexj, f_values, fm, sum_f_minus_fm_squared, g_values, gm, sum_g_minus_gm_squared, lambda);
         while (iterations < max_iterations && nu < max_val_nu && (abs_tolerance > abs_tolerance_threshold || rel_tolerance > rel_tolerance_threshold) && data_uniform == 0)
@@ -750,7 +750,6 @@ static std::vector<double> iteration_quadratic_LM(const cv::Mat &img, float *fpt
 		{
 			returnvector.push_back(Correlation_Coefficient_old);
 		}
-		//std::cout << "end" << std::endl;
         return returnvector;
 }
 /*--------------------------------------------------------------------------*/
