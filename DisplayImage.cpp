@@ -12,7 +12,6 @@ int main(int argc, char** argv )
 	}
 	std::cout << std::endl << "\033[1;32mInput Parsed\033[0m\n" << std::endl;
 	/*--------------------------------------------------------------------------*/
-	unsigned int DIC_needed = 1;
 	if (inputvariables.DICNeeded == 1)
 	{
 		// Read Images from Disk
@@ -37,7 +36,6 @@ int main(int argc, char** argv )
 	cv::Mat GridY = load_matrix(inputvariables.path, "GridY", 1);
 	cv::Mat CC = load_matrix(inputvariables.path, "CorrelationCoefficient", 1);
 	std::cout << std::endl << "\033[1;32mLoading Matrices Completed\033[0m\n" << std::endl;   
-
 	/*--------------------------------------------------------------------------*/
 
 	if (inputvariables.ordering==1)
@@ -87,11 +85,11 @@ int main(int argc, char** argv )
 	/*--------------------------------------------------------------------------*/
 	//CalibrationFigures(GridX, GridY, DX, DY, CC, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, inputvariables.path);
 	/*--------------------------------------------------------------------------*/
-	unsigned int calibration_needed = 0;
 	CalibrationValues calibrationValues;
 	if (inputvariables.CalibrationNeeded==1)
 	{
 		std::vector<double> CalibrationNumbers = Calibration2(GridX, GridY, DX, DY, CC, experimentalsetupvariables.focal_length, Lengths, experimentalsetupvariables.Distance_From_Pixels_To_Meters, experimentalsetupvariables.n_0, experimentalsetupvariables.n_1, experimentalsetupvariables.n, inputvariables.path, corr_cut_off);
+		//std::vector<double> CalibrationNumbers = Calibration(GridX, GridY, DX, DY, CC, experimentalsetupvariables.focal_length, Lengths, experimentalsetupvariables.Distance_From_Pixels_To_Meters, experimentalsetupvariables.n_0, experimentalsetupvariables.n_1, experimentalsetupvariables.n, inputvariables.path, corr_cut_off);
 		calibrationValues.a = CalibrationNumbers[0];
 		calibrationValues.b = CalibrationNumbers[1];
 		calibrationValues.c = CalibrationNumbers[2];
@@ -240,16 +238,16 @@ cv::Mat load_matrix(std::string path, std::string filename, const int &skiplines
     std::ifstream file(path+"/"+filename+".csv");
     std::ifstream file1(path+"/"+filename+".csv");
 	int line = 0;
-	int numberofrows, numberofcols;
+	unsigned int numberofrows, numberofcols;
     for(CSVIterator loop(file); loop != CSVIterator(); ++loop)
     {
 		if (line>=skiplines)
 		{
-			numberofrows = (*loop).size();
+			numberofrows = static_cast<unsigned int>((*loop).size());
 		}
 		line++;
     }
-	numberofcols = line-skiplines;
+	numberofcols = static_cast<unsigned int>(line-skiplines);
 	
 	cv::Mat In(numberofcols, numberofrows, CV_64FC1);
 	line = 0;
@@ -268,6 +266,7 @@ cv::Mat load_matrix(std::string path, std::string filename, const int &skiplines
     }
 	return In;
 }
+
 /*--------------------------------------------------------------------------*/
 bool sort_by_C_value (const  Points_With_Value &lhs, const Points_With_Value &rhs)
 {

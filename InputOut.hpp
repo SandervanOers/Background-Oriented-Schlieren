@@ -20,6 +20,6 @@ extern int readinput(unsigned int argc, char *argv[], InputVariables &inputvaria
 /*--------------------------------------------------------------------------*/
 extern int checkImageDataFromFile(const cv::String &path, cv::Mat &img, cv::Mat &img1, const unsigned int &xStart, const unsigned int &xEnd, const unsigned int &yStart, const unsigned int &yEnd, const unsigned int &SubsetLength, const unsigned int &offset, unsigned int &xStart_ROI, unsigned int &yStart_ROI, unsigned int &horx_ROI, unsigned int &very_ROI, const unsigned int &ordering);
 /*--------------------------------------------------------------------------*/
-extern int readImageDataFromFile(cv::Mat &img, cv::Mat &img1, const InputVariables &inputvariables);
+extern int readImageDataFromFile(cv::Mat &img, cv::Mat &img1, InputVariables &inputvariables);
 /*--------------------------------------------------------------------------*/
 #endif

@@ -19,6 +19,8 @@ struct InputVariables {
 	double abs_tolerance_threshold;
 	double rel_tolerance_threshold;
 	double minimum_corrcoeff_IG;
+	unsigned int xDiff;
+	unsigned int yDiff;
 	
 	unsigned int xStart_ROI;
 	unsigned int yStart_ROI;

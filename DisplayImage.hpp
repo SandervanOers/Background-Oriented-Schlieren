@@ -40,8 +40,6 @@ static cv::Mat load_matrix(std::string path, std::string filename, const int &sk
 /*--------------------------------------------------------------------------*/
 static bool sort_by_C_value (const Points_With_Value &lhs, const Points_With_Value &rhs);
 /*--------------------------------------------------------------------------*/
-static void compute_Save_GridX_Y(const cv::Size &Size, const unsigned int &xStart_ROI, const unsigned int &yStart_ROI, const unsigned int &GridLength, const std::string path);
-/*--------------------------------------------------------------------------*/
 class CSVRow
 {
     public:

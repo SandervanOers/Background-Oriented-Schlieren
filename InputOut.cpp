@@ -346,7 +346,7 @@ extern int checkinput(unsigned int argc, char *argv[], std::string &pathname_str
 	return 1;
 }
 /*--------------------------------------------------------------------------*/
-extern int readImageDataFromFile(cv::Mat &img, cv::Mat &img1, const InputVariables &inputvariables)
+extern int readImageDataFromFile(cv::Mat &img, cv::Mat &img1, InputVariables &inputvariables)
 {
     std::vector<cv::String> filenames;
 	cv::String path1;
@@ -377,7 +377,7 @@ extern int readImageDataFromFile(cv::Mat &img, cv::Mat &img1, const InputVariabl
          cv::Mat im = cv::imread(filenames[k] , IMREAD_GRAYSCALE );
          if (im.empty()) continue; //only proceed if sucsessful
 		 // Change Here
-         im = im(Range(inputvariables.yStart,inputvariables.yEnd),Range(inputvariables.xStart,inputvariables.xEnd));
+         //im = im(Range(inputvariables.yStart,inputvariables.yEnd),Range(inputvariables.xStart,inputvariables.xEnd));
          data.push_back(im);
          std::cout << filenames[k] << std::endl;
     }
@@ -392,13 +392,18 @@ extern int readImageDataFromFile(cv::Mat &img, cv::Mat &img1, const InputVariabl
         (data.at(1)).copyTo(img);
         (data.at(0)).copyTo(img1);
     }
-	/*
+	
 	// Restrict Template to specified Region
-	img = img(Range(yStart,yEnd),Range(xStart,xEnd));
-	// We do not want to restrict the Deformed Image (we might miss data)
-	// TO DO: Need to rewrite nonlineariteration.cpp to use img1.cols and img1.rows instead of img.cols and img.rows since interpol.c needs width and height of image.
-	img1 = img1(Range(yStart,yEnd),Range(xStart,xEnd));
-	 * */
+	img = img(Range(inputvariables.yStart,inputvariables.yEnd),Range(inputvariables.xStart,inputvariables.xEnd));
+	
+	
+	//inputvariables.xDiff = 0;
+	//inputvariables.yDiff = 0;
+	//img1 = img1(Range(inputvariables.yStart,inputvariables.yEnd),Range(inputvariables.xStart,inputvariables.xEnd));
+	
+	inputvariables.xDiff = inputvariables.xStart;
+	inputvariables.yDiff = inputvariables.yStart;
+
     imwrite(inputvariables.path+"/Template.png", img);
     imwrite(inputvariables.path+"/Deformed.png", img1);
 

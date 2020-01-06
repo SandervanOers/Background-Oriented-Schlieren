@@ -1,6 +1,6 @@
 # include "pixeltranslation.hpp"
 /*--------------------------------------------------------------------------*/
-std::vector<double> calculatePixelTranslationRandom_SinglePoint(const cv::Mat &Reference, const cv::Mat &Deformed, const unsigned int &SubsetLength, const unsigned int &Indexi, const unsigned int &Indexj, const unsigned int &MaxPixelYVertical, const unsigned int &HorizontalDifference_DeformedReference, const unsigned int &VerticalDifference_DeformedReference)
+std::vector<double> calculatePixelTranslationRandom_SinglePoint(const cv::Mat &Reference, const cv::Mat &Deformed, const unsigned int &SubsetLength, const unsigned int &Indexi, const unsigned int &Indexj, const unsigned int &MaxPixelYVertical, const unsigned int &xStart, const unsigned int &yStart)
 {
 	cv::Mat temp = Reference(cv::Range(Indexj-SubsetLength/2,Indexj+SubsetLength/2+1), cv::Range(Indexi-SubsetLength/2, Indexi+SubsetLength/2+1));
 
@@ -14,24 +14,22 @@ std::vector<double> calculatePixelTranslationRandom_SinglePoint(const cv::Mat &R
 	if (stddev_pxl>=1)
 	{
 		unsigned int dyl, dyr;
-		if (Indexj>MaxPixelYVertical)
+		if (Indexj+yStart>MaxPixelYVertical)
 		{
-			dyl = Indexj-MaxPixelYVertical;
+			dyl = Indexj+yStart-MaxPixelYVertical;
 		}
 		else
 		{
 			dyl = 0;
 		}		
-		if (Indexj+MaxPixelYVertical+1 < static_cast<unsigned int>(Deformed.rows) )
+		if (Indexj+MaxPixelYVertical+1+yStart < static_cast<unsigned int>(Deformed.rows) )
 		{
-			dyr = Indexj+MaxPixelYVertical+1;
+			dyr = Indexj+MaxPixelYVertical+1+yStart;
 		}
 		else
 		{
 			dyr = Deformed.rows;
 		}
-		//dyl = 0;
-		//dyr = Deformed.rows;
 		cv::Mat Deformed2 = Deformed(cv::Range(dyl,dyr), cv::Range::all());
 		
 		cv::Mat result;
@@ -42,8 +40,10 @@ std::vector<double> calculatePixelTranslationRandom_SinglePoint(const cv::Mat &R
 		// Localizing the best match with minMaxLoc
 		cv::minMaxLoc( result, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat() );
 		matchLoc = maxLoc;
-		DispY = (double)matchLoc.y + (SubsetLength/2) + dyl-(double)Indexj;// + (double)(VerticalDifference_DeformedReference/2);
-		DispX = (double)matchLoc.x + SubsetLength/2 - (double)Indexi;// + (double)(HorizontalDifference_DeformedReference/2);
+		//DispY = (double)matchLoc.y + (SubsetLength/2) + dyl -(double)Indexj;
+		//DispX = (double)matchLoc.x + SubsetLength/2 - (double)Indexi;
+		DispY = (double)matchLoc.y + (SubsetLength/2) + dyl -(double)Indexj - (double)yStart;
+		DispX = (double)matchLoc.x + SubsetLength/2 - (double)Indexi - (double)xStart;
 		CorrelationCoefficient = maxVal;
 	}
     std::vector<double> ReturnVector;
@@ -53,7 +53,7 @@ std::vector<double> calculatePixelTranslationRandom_SinglePoint(const cv::Mat &R
     return ReturnVector;
 }
 /*--------------------------------------------------------------------------*/
-void calculateInitialGuess_Thread_Iteration(const unsigned int &Number_Of_Threads, const cv::Mat &Reference, const cv::Mat &Deformed, float *fptr_img1, cv::Mat &DispX, cv::Mat &DispY, cv::Mat &Ux, cv::Mat &Vx, cv::Mat &Uy, cv::Mat &Vy, cv::Mat &Uxy, cv::Mat &Vxy, cv::Mat &Uxx, cv::Mat &Vxx, cv::Mat &Uyy, cv::Mat &Vyy, cv::Mat &CorrelationCoefficient, cv::Mat &Computed_Points, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const unsigned int &offset, const unsigned int &xl, const unsigned int &xr, const unsigned int &yl, const unsigned int &yr, const unsigned int &MaxPixelYVertical, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold, const unsigned int &ShapeFunction, const double &minimum_corrcoeff, const unsigned int &HorizontalDifference_DeformedReference, const unsigned int &VerticalDifference_DeformedReference)
+void calculateInitialGuess_Thread_Iteration(const unsigned int &Number_Of_Threads, const cv::Mat &Reference, const cv::Mat &Deformed, float *fptr_img1, cv::Mat &DispX, cv::Mat &DispY, cv::Mat &Ux, cv::Mat &Vx, cv::Mat &Uy, cv::Mat &Vy, cv::Mat &Uxy, cv::Mat &Vxy, cv::Mat &Uxx, cv::Mat &Vxx, cv::Mat &Uyy, cv::Mat &Vyy, cv::Mat &CorrelationCoefficient, cv::Mat &Computed_Points, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const unsigned int &offset, const unsigned int &xl, const unsigned int &xr, const unsigned int &yl, const unsigned int &yr, const unsigned int &MaxPixelYVertical, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold, const unsigned int &ShapeFunction, const double &minimum_corrcoeff_IG, const unsigned int &xStart, const unsigned int &yStart)
 {
 	thread_local std::uniform_int_distribution<unsigned> ux(xl, xr);
     thread_local std::uniform_int_distribution<unsigned> uy(yl, yr);
@@ -76,8 +76,7 @@ void calculateInitialGuess_Thread_Iteration(const unsigned int &Number_Of_Thread
         unsigned int Indexi = offset+SubsetLength/2 + i * GridLength;
         unsigned int Indexj = offset+SubsetLength/2 + j * GridLength;
         std::vector <double> Displ;
-        Displ = calculatePixelTranslationRandom_SinglePoint(Reference, Deformed, SubsetLength, Indexi, Indexj, MaxPixelYVertical, HorizontalDifference_DeformedReference, VerticalDifference_DeformedReference);
-        //Displ = calculatePixelTranslationRandom_SinglePoint(Reference(cv::Range(Indexj-SubsetLength/2,Indexj+SubsetLength/2+1), cv::Range(Indexi-SubsetLength/2, Indexi+SubsetLength/2+1)), Deformed, SubsetLength, Indexi, Indexj);
+        Displ = calculatePixelTranslationRandom_SinglePoint(Reference, Deformed, SubsetLength, Indexi, Indexj, MaxPixelYVertical, xStart, yStart);
 		
 		List_Of_Initial_Guesses.insert(std::pair<double, Points_With_Location_And_Data>(Displ[2],Points_With_Location_And_Data(Displ[0], Displ[1], i, j) ));
 	}
@@ -97,10 +96,11 @@ void calculateInitialGuess_Thread_Iteration(const unsigned int &Number_Of_Thread
 		// Use the Initial Guess to Calculate the Iterated Solution 
 		std::vector<double> InitialCondition = {DX, DY, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		
+		std::cout << "DX = " << DX << ", DY = " << DY << ", CC = " << CC << std::endl;
 		// TO DO: Need to rewrite nonlineariteration.cpp to use img1.cols and img1.rows instead of img.cols and img.rows since interpol.c needs width and height of image.
-		std::vector<double> point1 = iteration(Reference, fptr_img1, I, J, InitialCondition, SplineDegree, SubsetLength, GridLength, abs_tolerance_threshold, rel_tolerance_threshold, ShapeFunction);
-		//std::cout << "CC = " << CC << ", point1.back() " << point1.back() << std::endl;
-		if (point1.back()>CC && point1.back()>minimum_corrcoeff)
+		std::vector<double> point1 = iteration(Reference, fptr_img1, Deformed.rows, Deformed.cols, I, J, InitialCondition, SplineDegree, SubsetLength, GridLength, abs_tolerance_threshold, rel_tolerance_threshold, ShapeFunction, xStart, yStart);
+		std::cout << "DX = " << point1[0] << ", DY = " << point1[1] << ", CC = " << point1[12] << std::endl << std::endl;
+		if (point1.back()>CC && point1.back()>minimum_corrcoeff_IG)
 		{
 			better_solution = 1;
 			DispX.at<double>(J,I) = point1[0];
@@ -183,7 +183,6 @@ extern std::vector<cv::Mat> calculateInitialGuess_Iteration2(const cv::Mat &Refe
 extern std::vector<cv::Mat> calculateInitialGuess_Iteration(const cv::Mat &Reference, const cv::Mat &Deformed, float *fptr_img1, const InputVariables &inputvariables)
 {
 
-	//std::cout << "Computing Initial Guess" << std::endl;
 	cv::Mat DispX(inputvariables.very_ROI/inputvariables.GridLength+1, inputvariables.horx_ROI/inputvariables.GridLength+1, CV_64F, 0.0);
     cv::Mat DispY(inputvariables.very_ROI/inputvariables.GridLength+1, inputvariables.horx_ROI/inputvariables.GridLength+1, CV_64F, 0.0);
     cv::Mat CorrelationCoefficient(inputvariables.very_ROI/inputvariables.GridLength+1, inputvariables.horx_ROI/inputvariables.GridLength+1, CV_64F, 0.0);
@@ -199,13 +198,8 @@ extern std::vector<cv::Mat> calculateInitialGuess_Iteration(const cv::Mat &Refer
     cv::Mat Uyy(DispX.size(), CV_64FC1, 0.0);
     cv::Mat Vyy(DispX.size(), CV_64FC1, 0.0);
 	
-	//std::cout << "Reference.rows = " << Reference.rows << ", Reference.cols = " << Reference.cols << std::endl;
-	//std::cout << "Deformed.rows = " << Deformed.rows << ", Deformed.cols = " << Deformed.cols << std::endl;
-	//std::cout << "Horizontal Difference = "<< Deformed.rows - Reference.rows << std::endl;
-	//std::cout << "Vertical Difference = "<< Deformed.cols - Reference.cols << std::endl;
-	
-	unsigned int HorizontalDifference_DeformedReference = Deformed.rows - Reference.rows;
-	unsigned int VerticalDifference_DeformedReference = Deformed.cols - Reference.cols;
+	std::cout << "xStart = " << inputvariables.xStart << std::endl;
+	std::cout << "yStart = " << inputvariables.yStart << std::endl;
 	
 	std::vector<std::thread> threads;
 	for (unsigned int l = 0; l < inputvariables.Number_Of_Threads; l++)
@@ -215,7 +209,8 @@ extern std::vector<cv::Mat> calculateInitialGuess_Iteration(const cv::Mat &Refer
 		unsigned int yl = static_cast<unsigned int>(1+round(0.1*inputvariables.very_ROI/inputvariables.GridLength) + (double)l/inputvariables.Number_Of_Threads * (inputvariables.very_ROI/inputvariables.GridLength-round(0.1*inputvariables.very_ROI/inputvariables.GridLength)-(1+round(0.1*inputvariables.very_ROI/inputvariables.GridLength))));
 		unsigned int yr = static_cast<unsigned int>(1+round(0.1*inputvariables.very_ROI/inputvariables.GridLength) + (l+1.0)/inputvariables.Number_Of_Threads * (inputvariables.very_ROI/inputvariables.GridLength-round(0.1*inputvariables.very_ROI/inputvariables.GridLength)-(1+round(0.1*inputvariables.very_ROI/inputvariables.GridLength)))-1);
 		// Possible Error when Number_Of_Threads is large and GridLength is large: yl == yr or even yl>yr.
-		threads.push_back(std::thread(calculateInitialGuess_Thread_Iteration, inputvariables.Number_Of_Threads, Reference, Deformed, fptr_img1, std::ref(DispX), std::ref(DispY), std::ref(Ux), std::ref(Vx), std::ref(Uy), std::ref(Vy), std::ref(Uxy), std::ref(Vxy), std::ref(Uxx), std::ref(Vxx), std::ref(Uyy), std::ref(Vyy), std::ref(CorrelationCoefficient), std::ref(Computed_Points), inputvariables.SplineDegree, inputvariables.SubsetLength, inputvariables.GridLength, inputvariables.offset, xl, xr, yl, yr, inputvariables.MaxPixelYVertical, inputvariables.abs_tolerance_threshold, inputvariables.rel_tolerance_threshold, inputvariables.ShapeFunction, inputvariables.minimum_corrcoeff_IG, HorizontalDifference_DeformedReference, VerticalDifference_DeformedReference));
+		threads.push_back(std::thread(calculateInitialGuess_Thread_Iteration, inputvariables.Number_Of_Threads, Reference, Deformed, fptr_img1, std::ref(DispX), std::ref(DispY), std::ref(Ux), std::ref(Vx), std::ref(Uy), std::ref(Vy), std::ref(Uxy), std::ref(Vxy), std::ref(Uxx), std::ref(Vxx), std::ref(Uyy), std::ref(Vyy), std::ref(CorrelationCoefficient), std::ref(Computed_Points), inputvariables.SplineDegree, inputvariables.SubsetLength, inputvariables.GridLength, inputvariables.offset, xl, xr, yl, yr, inputvariables.MaxPixelYVertical, inputvariables.abs_tolerance_threshold, inputvariables.rel_tolerance_threshold, inputvariables.ShapeFunction, inputvariables.minimum_corrcoeff_IG, inputvariables.xDiff, inputvariables.yDiff ));//inputvariables.xStart, inputvariables.yStart));
+		
 	}  
 	
 	for (auto& th : threads) 

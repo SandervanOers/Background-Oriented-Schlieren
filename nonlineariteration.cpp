@@ -1,37 +1,35 @@
 # include "nonlineariteration.hpp"
 /*--------------------------------------------------------------------------*/
-static std::vector<double> iteration_rigid_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold);
+static std::vector<double> iteration_rigid_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &img1_rows, const unsigned int &img1_cols, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold, const unsigned int &xStart, const unsigned int &yStart);
 /*--------------------------------------------------------------------------*/
-static std::vector<double> iteration_affine_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold);
+static std::vector<double> iteration_affine_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &img1_rows, const unsigned int &img1_cols, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold, const unsigned int &xStart, const unsigned int &yStart);
 /*--------------------------------------------------------------------------*/
-static std::vector<double> iteration_irregular_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold);
+static std::vector<double> iteration_irregular_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &img1_rows, const unsigned int &img1_cols, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold, const unsigned int &xStart, const unsigned int &yStart);
 /*--------------------------------------------------------------------------*/
-static std::vector<double> iteration_quadratic_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold);
+static std::vector<double> iteration_quadratic_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &img1_rows, const unsigned int &img1_cols, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold, const unsigned int &xStart, const unsigned int &yStart);
 /*--------------------------------------------------------------------------*/
 static double Correlation_Coefficient_ZNSSD(const double &fm, const double &sum_f_minus_fm_squared, const double &gm, const double &sum_g_minus_gm_squared, const std::vector<double> &f_values, const std::vector<double> &g_values);
 /*--------------------------------------------------------------------------*/
-static void calculate_Hessian_Jacobian_quadratic(cv::Mat &Hessian, cv::Mat &Jacobian, const cv::Mat &img, float *fptr_img1, const std::vector<double> &P, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &Indexi, const unsigned int &Indexj, const std::vector<double> &f_values, const double &fm, const double &sum_f_minus_fm_squared, const std::vector<double> &g_values, const double &gm, const double &sum_g_minus_gm_squared, const double &lambda);
-/*--------------------------------------------------------------------------*/
-extern std::vector<double> iteration(const cv::Mat &img, float *fptr_img1, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold, const unsigned int &ShapeFunction)
+extern std::vector<double> iteration(const cv::Mat &img, float *fptr_img1, const unsigned int &img1_rows, const unsigned int &img1_cols, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold, const unsigned int &ShapeFunction, const unsigned int &xStart, const unsigned int &yStart)
 {
     switch(ShapeFunction)
     {
     case 0:
-        return iteration_rigid_LM(img, fptr_img1, i, j, P0, SplineDegree, SubsetLength, GridLength, abs_tolerance_threshold, rel_tolerance_threshold);
+        return iteration_rigid_LM(img, fptr_img1, img1_rows, img1_cols, i, j, P0, SplineDegree, SubsetLength, GridLength, abs_tolerance_threshold, rel_tolerance_threshold, xStart, yStart);
         break;
     case 1:
-        return iteration_affine_LM(img, fptr_img1, i, j, P0, SplineDegree, SubsetLength, GridLength, abs_tolerance_threshold, rel_tolerance_threshold);
+        return iteration_affine_LM(img, fptr_img1, img1_rows, img1_cols, i, j, P0, SplineDegree, SubsetLength, GridLength, abs_tolerance_threshold, rel_tolerance_threshold, xStart, yStart);
 		break;
     case 2:
-        return iteration_irregular_LM(img, fptr_img1, i, j, P0, SplineDegree, SubsetLength, GridLength, abs_tolerance_threshold, rel_tolerance_threshold);
+        return iteration_irregular_LM(img, fptr_img1, img1_rows, img1_cols, i, j, P0, SplineDegree, SubsetLength, GridLength, abs_tolerance_threshold, rel_tolerance_threshold, xStart, yStart);
         break;
     case 3:
-        return iteration_quadratic_LM(img, fptr_img1, i, j, P0, SplineDegree, SubsetLength, GridLength, abs_tolerance_threshold, rel_tolerance_threshold);
+        return iteration_quadratic_LM(img, fptr_img1, img1_rows, img1_cols, i, j, P0, SplineDegree, SubsetLength, GridLength, abs_tolerance_threshold, rel_tolerance_threshold, xStart, yStart);
         break;
     default:
         std::cout << "Shape Function Incorrect" << std::endl;
 		std::cout << "Using Rigid Shape Functions " << std::endl;
-		return iteration_rigid_LM(img, fptr_img1, i, j, P0, SplineDegree, SubsetLength, GridLength, abs_tolerance_threshold, rel_tolerance_threshold);
+		return iteration_rigid_LM(img, fptr_img1, img1_rows, img1_cols, i, j, P0, SplineDegree, SubsetLength, GridLength, abs_tolerance_threshold, rel_tolerance_threshold, xStart, yStart);
         break;
     }
 }
@@ -41,19 +39,6 @@ static double getDerivativeValue(float *fptr_img1, const unsigned int &cols, con
     return (double)InterpolatedValueDerivative(fptr_img1, cols, rows, x+0.5*(1.0-(double)direction), y+0.5*(double)direction, SplineDegree-1*(1-direction), SplineDegree-1*direction)
                 -(double)InterpolatedValueDerivative(fptr_img1, cols, rows, x-0.5*(1.0-(double)direction), y-0.5*(double)direction, SplineDegree-1*(1-direction), SplineDegree-1*direction);
 }
-/*--------------------------------------------------------------------------*/
-/*static double get_sum_f_minus_fm_squared(const cv::Mat &img, const unsigned int &Indexi, const unsigned int &Indexj, const unsigned int &SubsetLength, const double &fm)
-{
-	double sum_f_minus_fm_squared = 0;
-	for (unsigned int ii = Indexi-SubsetLength/2; ii < Indexi+SubsetLength/2+1; ii++)
-	{
-		for (unsigned int jj = Indexj-SubsetLength/2; jj < Indexj+SubsetLength/2+1; jj++)
-		{
-			sum_f_minus_fm_squared += ((double)img.at<float>(jj,ii)-fm)*((double)img.at<float>(jj,ii)-fm);
-		}
-	}
-	return sum_f_minus_fm_squared;
-}*/
 /*--------------------------------------------------------------------------*/
 static std::pair<double, double> get_gm_and_sum_g_minus_gm_squared(const std::vector<double> g_values)
 {
@@ -81,7 +66,7 @@ static std::vector<double> get_f_values(const cv::Mat &img,const unsigned int &I
 	return f_values;
 }
 /*--------------------------------------------------------------------------*/
-static std::vector<double> get_g_values(float *fptr_img1, const std::vector<double> &P, const unsigned int &Indexi, const unsigned int &Indexj, const unsigned int &SubsetLength, const unsigned int &SplineDegree, const unsigned int &img_cols, const unsigned int &img_rows)
+static std::vector<double> get_g_values(float *fptr_img1, const unsigned int &img1_rows, const unsigned int &img1_cols, const std::vector<double> &P, const unsigned int &Indexi, const unsigned int &Indexj, const unsigned int &SubsetLength, const unsigned int &SplineDegree, const unsigned int &xStart, const unsigned int &yStart)
 {
 	std::vector<double> g_values((2*(SubsetLength/2)+1)*(2*(SubsetLength/2)+1));
     double U0 = P[0];
@@ -122,7 +107,7 @@ static std::vector<double> get_g_values(float *fptr_img1, const std::vector<doub
 		for (unsigned int jj = Indexj-SubsetLength/2; jj < Indexj+SubsetLength/2+1; jj++)
 		{
 			double deltay = ((double)jj-(double)Indexj);
-			g_values[k] = InterpolatedValue(fptr_img1, img_cols, img_rows, ii+U0+Ux*deltax+Uy*deltay+Uxy*deltax*deltay+Uxx*deltax*deltax+Uyy*deltay*deltay, jj+V0+Vx*deltax+Vy*deltay+Vxy*deltax*deltay+Vxx*deltax*deltax+Vyy*deltay*deltay, SplineDegree);
+			g_values[k] = InterpolatedValue(fptr_img1, img1_cols, img1_rows, xStart+ii+U0+Ux*deltax+Uy*deltay+Uxy*deltax*deltay+Uxx*deltax*deltax+Uyy*deltay*deltay, yStart+jj+V0+Vx*deltax+Vy*deltay+Vxy*deltax*deltay+Vxx*deltax*deltax+Vyy*deltay*deltay, SplineDegree);
 			k++;
 		}
 	}
@@ -188,7 +173,7 @@ static bool is_data_uniform(const double &sum_g_minus_gm_squared)
 	}
 }
 /*--------------------------------------------------------------------------*/
-static void calculate_Hessian_Jacobian_rigid(cv::Mat &Hessian, cv::Mat &Jacobian, const cv::Mat &img, float *fptr_img1, const std::vector<double> &P, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &Indexi, const unsigned int &Indexj, const std::vector<double> &f_values, const double &fm, const double &sum_f_minus_fm_squared, const std::vector<double> &g_values, const double &gm, const double &sum_g_minus_gm_squared, const double &lambda)
+static void calculate_Hessian_Jacobian_rigid(cv::Mat &Hessian, cv::Mat &Jacobian, float *fptr_img1, const unsigned int &img1_rows, const unsigned int &img1_cols, const std::vector<double> &P, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &Indexi, const unsigned int &Indexj, const std::vector<double> &f_values, const double &fm, const double &sum_f_minus_fm_squared, const std::vector<double> &g_values, const double &gm, const double &sum_g_minus_gm_squared, const double &lambda, const unsigned int &xStart, const unsigned int &yStart)
 {
 	double U0 = P[0];
     double V0 = P[1];
@@ -198,8 +183,8 @@ static void calculate_Hessian_Jacobian_rigid(cv::Mat &Hessian, cv::Mat &Jacobian
 	{
 		for (unsigned int jj = Indexj-SubsetLength/2; jj < Indexj+SubsetLength/2+1; jj++)
 		{
-					double xder = getDerivativeValue(fptr_img1, img.cols, img.rows, ii+U0, jj+V0, SplineDegree, 0);
-					double yder = getDerivativeValue(fptr_img1, img.cols, img.rows, ii+U0, jj+V0, SplineDegree, 1);
+					double xder = getDerivativeValue(fptr_img1, img1_cols, img1_rows, xStart+ii+U0, yStart+jj+V0, SplineDegree, 0);
+					double yder = getDerivativeValue(fptr_img1, img1_cols, img1_rows, xStart+ii+U0, yStart+jj+V0, SplineDegree, 1);
 					/// Hessian Matrix [dg/dU0 dg/dU0, dg/dU0 dg/dV0;
 					///					dg/dV0 dg/dU0, dg/dV0 dg/dV0]
 					Hessian.at<double>(0,0) += xder*xder*(1.0+lambda);
@@ -217,7 +202,7 @@ static void calculate_Hessian_Jacobian_rigid(cv::Mat &Hessian, cv::Mat &Jacobian
 	Hessian *= 1.0/sqrt(sum_g_minus_gm_squared);
 }
 /*--------------------------------------------------------------------------*/
-static void calculate_Hessian_Jacobian_affine(cv::Mat &Hessian, cv::Mat &Jacobian, const cv::Mat &img, float *fptr_img1, const std::vector<double> &P, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &Indexi, const unsigned int &Indexj, const std::vector<double> &f_values, const double &fm, const double &sum_f_minus_fm_squared, const std::vector<double> &g_values, const double &gm, const double &sum_g_minus_gm_squared, const double &lambda)
+static void calculate_Hessian_Jacobian_affine(cv::Mat &Hessian, cv::Mat &Jacobian, float *fptr_img1, const unsigned int &img1_rows, const unsigned int &img1_cols, const std::vector<double> &P, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &Indexi, const unsigned int &Indexj, const std::vector<double> &f_values, const double &fm, const double &sum_f_minus_fm_squared, const std::vector<double> &g_values, const double &gm, const double &sum_g_minus_gm_squared, const double &lambda, const unsigned int &xStart, const unsigned int &yStart)
 {
 	double U0 = P[0];
     double V0 = P[1];
@@ -234,8 +219,8 @@ static void calculate_Hessian_Jacobian_affine(cv::Mat &Hessian, cv::Mat &Jacobia
 		{
 
                     double deltay = ((double)jj-(double)Indexj);
-                    double xder = getDerivativeValue(fptr_img1, img.cols, img.rows, ii+U0+Ux*deltax+Uy*deltay, jj+V0+Vx*deltax+Vy*deltay, SplineDegree, 0);
-                    double yder = getDerivativeValue(fptr_img1, img.cols, img.rows, ii+U0+Ux*deltax+Uy*deltay, jj+V0+Vx*deltax+Vy*deltay, SplineDegree, 1);
+                    double xder = getDerivativeValue(fptr_img1, img1_cols, img1_rows, xStart+ii+U0+Ux*deltax+Uy*deltay, yStart+jj+V0+Vx*deltax+Vy*deltay, SplineDegree, 0);
+                    double yder = getDerivativeValue(fptr_img1, img1_cols, img1_rows, xStart+ii+U0+Ux*deltax+Uy*deltay, yStart+jj+V0+Vx*deltax+Vy*deltay, SplineDegree, 1);
 
                     /// Hessian Matrix [dg/dU0 dg/dU0, dg/dU0 dg/dV0, dg/dU0 dg/dUx, dg/dU0 dg/dVx, dg/dU0 dg/Uy, dg/dU0 dg/Vy;
                     ///                 dg/dV0 dg/dU0, dg/dV0 dg/dV0, dg/dV0 dg/dUx, dg/dV0 dg/dVx, dg/dV0 dg/Uy, dg/dV0 dg/Vy;
@@ -298,7 +283,7 @@ static void calculate_Hessian_Jacobian_affine(cv::Mat &Hessian, cv::Mat &Jacobia
 	Hessian *= 1.0/sqrt(sum_g_minus_gm_squared);
 }
 /*--------------------------------------------------------------------------*/
-static void calculate_Hessian_Jacobian_irregular(cv::Mat &Hessian, cv::Mat &Jacobian, const cv::Mat &img, float *fptr_img1, const std::vector<double> &P, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &Indexi, const unsigned int &Indexj, const std::vector<double> &f_values, const double &fm, const double &sum_f_minus_fm_squared, const std::vector<double> &g_values, const double &gm, const double &sum_g_minus_gm_squared, const double &lambda)
+static void calculate_Hessian_Jacobian_irregular(cv::Mat &Hessian, cv::Mat &Jacobian, float *fptr_img1, const unsigned int &img1_rows, const unsigned int &img1_cols, const std::vector<double> &P, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &Indexi, const unsigned int &Indexj, const std::vector<double> &f_values, const double &fm, const double &sum_f_minus_fm_squared, const std::vector<double> &g_values, const double &gm, const double &sum_g_minus_gm_squared, const double &lambda, const unsigned int &xStart, const unsigned int &yStart)
 {
 	double U0 = P[0];
     double V0 = P[1];
@@ -316,8 +301,8 @@ static void calculate_Hessian_Jacobian_irregular(cv::Mat &Hessian, cv::Mat &Jaco
 		for (unsigned int jj = Indexj-SubsetLength/2; jj < Indexj+SubsetLength/2+1; jj++)
 		{
                     double deltay = ((double)jj-(double)Indexj);
-                    double xder = getDerivativeValue(fptr_img1, img.cols, img.rows, ii+U0+Ux*deltax+Uy*deltay+Uxy*deltax*deltay, jj+V0+Vx*deltax+Vy*deltay+Vxy*deltax*deltay, SplineDegree, 0);
-                    double yder = getDerivativeValue(fptr_img1, img.cols, img.rows, ii+U0+Ux*deltax+Uy*deltay+Uxy*deltax*deltay, jj+V0+Vx*deltax+Vy*deltay+Vxy*deltax*deltay, SplineDegree, 1);
+                    double xder = getDerivativeValue(fptr_img1, img1_cols, img1_rows, xStart+ii+U0+Ux*deltax+Uy*deltay+Uxy*deltax*deltay, yStart+jj+V0+Vx*deltax+Vy*deltay+Vxy*deltax*deltay, SplineDegree, 0);
+                    double yder = getDerivativeValue(fptr_img1, img1_cols, img1_rows, xStart+ii+U0+Ux*deltax+Uy*deltay+Uxy*deltax*deltay, yStart+jj+V0+Vx*deltax+Vy*deltay+Vxy*deltax*deltay, SplineDegree, 1);
 
                     /// Hessian Matrix [dg/dU0 dg/dU0, dg/dU0 dg/dV0, dg/dU0 dg/dUx, dg/dU0 dg/dVx, dg/dU0 dg/Uy, dg/dU0 dg/Vy, dg/dU0 dg/dUxy, dg/dU0 dg/dVxy;
                     ///                 dg/dV0 dg/dU0, dg/dV0 dg/dV0, dg/dV0 dg/dUx, dg/dV0 dg/dVx, dg/dV0 dg/Uy, dg/dV0 dg/Vy, dg/dV0 dg/dUxy, dg/dV0 dg/dVxy;
@@ -415,7 +400,7 @@ static void calculate_Hessian_Jacobian_irregular(cv::Mat &Hessian, cv::Mat &Jaco
 	Hessian *= 1.0/sqrt(sum_g_minus_gm_squared);
 }
 /*--------------------------------------------------------------------------*/
-static void calculate_Hessian_Jacobian_quadratic(cv::Mat &Hessian, cv::Mat &Jacobian, const cv::Mat &img, float *fptr_img1, const std::vector<double> &P, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &Indexi, const unsigned int &Indexj, const std::vector<double> &f_values, const double &fm, const double &sum_f_minus_fm_squared, const std::vector<double> &g_values, const double &gm, const double &sum_g_minus_gm_squared, const double &lambda)
+static void calculate_Hessian_Jacobian_quadratic(cv::Mat &Hessian, cv::Mat &Jacobian, float *fptr_img1, const unsigned int &img1_rows, const unsigned int &img1_cols, const std::vector<double> &P, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &Indexi, const unsigned int &Indexj, const std::vector<double> &f_values, const double &fm, const double &sum_f_minus_fm_squared, const std::vector<double> &g_values, const double &gm, const double &sum_g_minus_gm_squared, const double &lambda, const unsigned int &xStart, const unsigned int &yStart)
 {
 	double U0 = P[0];
     double V0 = P[1];
@@ -437,8 +422,8 @@ static void calculate_Hessian_Jacobian_quadratic(cv::Mat &Hessian, cv::Mat &Jaco
 		for (unsigned int jj = Indexj-SubsetLength/2; jj < Indexj+SubsetLength/2+1; jj++)
 		{
 			double deltay = ((double)jj-(double)Indexj);
-			double xder = getDerivativeValue(fptr_img1, img.cols, img.rows, ii+U0+Ux*deltax+Uy*deltay+Uxy*deltax*deltay+Uxx*deltax*deltax+Uyy*deltay*deltay, jj+V0+Vx*deltax+Vy*deltay+Vxy*deltax*deltay+Vxx*deltax*deltax+Vyy*deltay*deltay, SplineDegree, 0);
-			double yder = getDerivativeValue(fptr_img1, img.cols, img.rows, ii+U0+Ux*deltax+Uy*deltay+Uxy*deltax*deltay+Uxx*deltax*deltax+Uyy*deltay*deltay, jj+V0+Vx*deltax+Vy*deltay+Vxy*deltax*deltay+Vxx*deltax*deltax+Vyy*deltay*deltay, SplineDegree, 1);
+			double xder = getDerivativeValue(fptr_img1, img1_cols, img1_rows, xStart+ii+U0+Ux*deltax+Uy*deltay+Uxy*deltax*deltay+Uxx*deltax*deltax+Uyy*deltay*deltay, yStart+jj+V0+Vx*deltax+Vy*deltay+Vxy*deltax*deltay+Vxx*deltax*deltax+Vyy*deltay*deltay, SplineDegree, 0);
+			double yder = getDerivativeValue(fptr_img1, img1_cols, img1_rows, xStart+ii+U0+Ux*deltax+Uy*deltay+Uxy*deltax*deltay+Uxx*deltax*deltax+Uyy*deltay*deltay, yStart+jj+V0+Vx*deltax+Vy*deltay+Vxy*deltax*deltay+Vxx*deltax*deltax+Vyy*deltay*deltay, SplineDegree, 1);
 
 			/// Hessian Matrix  =
 			/// [dg/dU0  dg/dU0, dg/dU0  dg/dV0, dg/dU0  dg/dUx, dg/dU0  dg/dVx, dg/dU0  dg/Uy, dg/dU0  dg/Vy, dg/dU0  dg/dUxy, dg/dU0  dg/dVxy, dg/dU0  dg/dUxx, dg/dU0  dg/dVxx, dg/dU0  dg/dUyy, dg/dU0  dg/dVyy;
@@ -630,7 +615,7 @@ static void calculate_Hessian_Jacobian_quadratic(cv::Mat &Hessian, cv::Mat &Jaco
 	Hessian *= 1.0/sqrt(sum_g_minus_gm_squared);
 }
 /*--------------------------------------------------------------------------*/
-static std::vector<double> iteration_quadratic_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold)
+static std::vector<double> iteration_quadratic_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &img1_rows, const unsigned int &img1_cols, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold, const unsigned int &xStart, const unsigned int &yStart)
 {
 		//std::cout << "start" << std::endl;
         double abs_tolerance = 1;
@@ -661,15 +646,15 @@ static std::vector<double> iteration_quadratic_LM(const cv::Mat &img, float *fpt
 		std::tie(fm, sum_f_minus_fm_squared) = get_gm_and_sum_g_minus_gm_squared(f_values);
 
 		double gm, sum_g_minus_gm_squared;
-		std::vector<double> g_values = get_g_values(fptr_img1, P0, Indexi, Indexj, SubsetLength, SplineDegree, img.cols, img.rows);
+		std::vector<double> g_values = get_g_values(fptr_img1, img1_rows, img1_cols, P0, Indexi, Indexj, SubsetLength, SplineDegree, xStart, yStart);
 		std::tie(gm, sum_g_minus_gm_squared) = get_gm_and_sum_g_minus_gm_squared(g_values);
 		bool data_uniform = (is_data_uniform(sum_f_minus_fm_squared)||is_data_uniform(sum_g_minus_gm_squared));
         double Correlation_Coefficient_old = Correlation_Coefficient_ZNSSD(fm, sum_f_minus_fm_squared, gm, sum_g_minus_gm_squared, f_values, g_values);
         Correlation_Coefficient_old = 1.0-0.5*Correlation_Coefficient_old;
-
+		//std::cout << "Correlation_Coefficient_old = " << Correlation_Coefficient_old << std::endl;
 		cv::Mat Hessian(12, 12, CV_64F, cv::Scalar(0));
 		cv::Mat Jacobian(12,1, CV_64F, cv::Scalar(0));
-		calculate_Hessian_Jacobian_quadratic(Hessian, Jacobian, img, fptr_img1, P0, SplineDegree, SubsetLength, Indexi, Indexj, f_values, fm, sum_f_minus_fm_squared, g_values, gm, sum_g_minus_gm_squared, lambda);
+		calculate_Hessian_Jacobian_quadratic(Hessian, Jacobian, fptr_img1, img1_rows, img1_cols, P0, SplineDegree, SubsetLength, Indexi, Indexj, f_values, fm, sum_f_minus_fm_squared, g_values, gm, sum_g_minus_gm_squared, lambda, xStart, yStart);
         while (iterations < max_iterations && nu < max_val_nu && (abs_tolerance > abs_tolerance_threshold || rel_tolerance > rel_tolerance_threshold) && data_uniform == 0)
         {
             iterations++;
@@ -678,7 +663,7 @@ static std::vector<double> iteration_quadratic_LM(const cv::Mat &img, float *fpt
 
             std::vector<double> Suggested_Solution = {U0+X.at<double>(0), V0+X.at<double>(1), Ux+X.at<double>(2), Vx+X.at<double>(3), Uy+X.at<double>(4), Vy+X.at<double>(5),  Uxy+X.at<double>(6), Vxy+X.at<double>(7), Uxx+X.at<double>(8), Vxx+X.at<double>(9), Uyy+X.at<double>(10), Vyy+X.at<double>(11)};
 			double suggested_gm, suggested_sum_g_minus_gm_squared;
-			std::vector<double> suggested_g_values = get_g_values(fptr_img1,  Suggested_Solution, Indexi, Indexj, SubsetLength, SplineDegree, img.cols, img.rows);
+			std::vector<double> suggested_g_values = get_g_values(fptr_img1, img1_rows, img1_cols,  Suggested_Solution, Indexi, Indexj, SubsetLength, SplineDegree, xStart, yStart);
 			std::tie(suggested_gm, suggested_sum_g_minus_gm_squared) = get_gm_and_sum_g_minus_gm_squared(suggested_g_values);
 			double Suggested_Correlation_Coefficient = Correlation_Coefficient_ZNSSD(fm, sum_f_minus_fm_squared, gm, sum_g_minus_gm_squared, f_values, suggested_g_values);
             Suggested_Correlation_Coefficient = 1.0-0.5*Suggested_Correlation_Coefficient;
@@ -712,7 +697,7 @@ static std::vector<double> iteration_quadratic_LM(const cv::Mat &img, float *fpt
                 lambda /= 3.0;
 
 				// Recompute Hessian and Jacobian
-				calculate_Hessian_Jacobian_quadratic(Hessian, Jacobian, img, fptr_img1, Suggested_Solution, SplineDegree, SubsetLength, Indexi, Indexj, f_values, fm, sum_f_minus_fm_squared, g_values, gm, sum_g_minus_gm_squared, lambda);
+				calculate_Hessian_Jacobian_quadratic(Hessian, Jacobian, fptr_img1, img1_rows, img1_cols, Suggested_Solution, SplineDegree, SubsetLength, Indexi, Indexj, f_values, fm, sum_f_minus_fm_squared, g_values, gm, sum_g_minus_gm_squared, lambda, xStart, yStart);
             }
             else
             {
@@ -730,6 +715,7 @@ static std::vector<double> iteration_quadratic_LM(const cv::Mat &img, float *fpt
 				lambda = lambda_new;
             }
         }
+		//std::cout << "Correlation_Coefficient_new = " << Correlation_Coefficient_old << std::endl<< std::endl;
 
         std::vector<double> returnvector;
         returnvector.push_back(U0);
@@ -753,7 +739,7 @@ static std::vector<double> iteration_quadratic_LM(const cv::Mat &img, float *fpt
         return returnvector;
 }
 /*--------------------------------------------------------------------------*/
-static std::vector<double> iteration_irregular_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold)
+static std::vector<double> iteration_irregular_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &img1_rows, const unsigned int &img1_cols, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold, const unsigned int &xStart, const unsigned int &yStart)
 {
 
         double abs_tolerance = 1;
@@ -779,7 +765,7 @@ static std::vector<double> iteration_irregular_LM(const cv::Mat &img, float *fpt
 		std::vector<double> f_values = get_f_values(img, Indexi, Indexj, SubsetLength);
 		std::tie(fm, sum_f_minus_fm_squared) = get_gm_and_sum_g_minus_gm_squared(f_values);
 		double gm, sum_g_minus_gm_squared;
-		std::vector<double> g_values = get_g_values(fptr_img1, P0, Indexi, Indexj, SubsetLength, SplineDegree, img.cols, img.rows);
+		std::vector<double> g_values = get_g_values(fptr_img1, img1_rows, img1_cols, P0, Indexi, Indexj, SubsetLength, SplineDegree, xStart, yStart);
 		std::tie(gm, sum_g_minus_gm_squared) = get_gm_and_sum_g_minus_gm_squared(g_values);
 		bool data_uniform = (is_data_uniform(sum_f_minus_fm_squared)||is_data_uniform(sum_g_minus_gm_squared));
         double Correlation_Coefficient_old = Correlation_Coefficient_ZNSSD(fm, sum_f_minus_fm_squared, gm, sum_g_minus_gm_squared, f_values, g_values);
@@ -787,7 +773,7 @@ static std::vector<double> iteration_irregular_LM(const cv::Mat &img, float *fpt
 
 		cv::Mat Hessian(8, 8,CV_64F, cv::Scalar(0));
 		cv::Mat Jacobian(8,1, CV_64F, cv::Scalar(0));
-		calculate_Hessian_Jacobian_irregular(Hessian, Jacobian, img, fptr_img1, P0, SplineDegree, SubsetLength, Indexi, Indexj, f_values, fm, sum_f_minus_fm_squared, g_values, gm, sum_g_minus_gm_squared, lambda);
+		calculate_Hessian_Jacobian_irregular(Hessian, Jacobian, fptr_img1, img1_rows, img1_cols, P0, SplineDegree, SubsetLength, Indexi, Indexj, f_values, fm, sum_f_minus_fm_squared, g_values, gm, sum_g_minus_gm_squared, lambda, xStart, yStart);
 
         while (iterations < max_iterations && nu < max_val_nu && (abs_tolerance > abs_tolerance_threshold || rel_tolerance > rel_tolerance_threshold) && data_uniform == 0)
         {
@@ -797,7 +783,7 @@ static std::vector<double> iteration_irregular_LM(const cv::Mat &img, float *fpt
 
             std::vector<double> Suggested_Solution = {U0+X.at<double>(0), V0+X.at<double>(1), Ux+X.at<double>(2), Vx+X.at<double>(3), Uy+X.at<double>(4), Vy+X.at<double>(5),  Uxy+X.at<double>(6), Vxy+X.at<double>(7)};
 			double suggested_gm, suggested_sum_g_minus_gm_squared;
-			std::vector<double> suggested_g_values = get_g_values(fptr_img1,  Suggested_Solution, Indexi, Indexj, SubsetLength, SplineDegree, img.cols, img.rows);
+			std::vector<double> suggested_g_values = get_g_values(fptr_img1, img1_rows, img1_cols,  Suggested_Solution, Indexi, Indexj, SubsetLength, SplineDegree, xStart, yStart);
 			std::tie(suggested_gm, suggested_sum_g_minus_gm_squared) = get_gm_and_sum_g_minus_gm_squared(suggested_g_values);
 			double Suggested_Correlation_Coefficient = Correlation_Coefficient_ZNSSD(fm, sum_f_minus_fm_squared, gm, sum_g_minus_gm_squared, f_values, suggested_g_values);
             Suggested_Correlation_Coefficient = 1.0-0.5*Suggested_Correlation_Coefficient;
@@ -827,7 +813,7 @@ static std::vector<double> iteration_irregular_LM(const cv::Mat &img, float *fpt
                 lambda /= 3.0;
 
 				// Recompute Hessian and Jacobian
-				calculate_Hessian_Jacobian_irregular(Hessian, Jacobian, img, fptr_img1, Suggested_Solution, SplineDegree, SubsetLength, Indexi, Indexj, f_values, fm, sum_f_minus_fm_squared, g_values, gm, sum_g_minus_gm_squared, lambda);
+				calculate_Hessian_Jacobian_irregular(Hessian, Jacobian, fptr_img1, img1_rows, img1_cols, Suggested_Solution, SplineDegree, SubsetLength, Indexi, Indexj, f_values, fm, sum_f_minus_fm_squared, g_values, gm, sum_g_minus_gm_squared, lambda, xStart, yStart);
             }
             else
             {
@@ -868,7 +854,7 @@ static std::vector<double> iteration_irregular_LM(const cv::Mat &img, float *fpt
         return returnvector;
 }
 /*--------------------------------------------------------------------------*/
-static std::vector<double> iteration_affine_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold)
+static std::vector<double> iteration_affine_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &img1_rows, const unsigned int &img1_cols, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold, const unsigned int &xStart, const unsigned int &yStart)
 {
         double abs_tolerance = 1;
         double rel_tolerance = 1;
@@ -891,7 +877,7 @@ static std::vector<double> iteration_affine_LM(const cv::Mat &img, float *fptr_i
 		std::vector<double> f_values = get_f_values(img, Indexi, Indexj, SubsetLength);
 		std::tie(fm, sum_f_minus_fm_squared) = get_gm_and_sum_g_minus_gm_squared(f_values);
 		double gm, sum_g_minus_gm_squared;
-		std::vector<double> g_values = get_g_values(fptr_img1, P0, Indexi, Indexj, SubsetLength, SplineDegree, img.cols, img.rows);
+		std::vector<double> g_values = get_g_values(fptr_img1, img1_rows, img1_cols, P0, Indexi, Indexj, SubsetLength, SplineDegree, xStart, yStart);
 		std::tie(gm, sum_g_minus_gm_squared) = get_gm_and_sum_g_minus_gm_squared(g_values);
 		bool data_uniform = (is_data_uniform(sum_f_minus_fm_squared)||is_data_uniform(sum_g_minus_gm_squared));
         double Correlation_Coefficient_old = Correlation_Coefficient_ZNSSD(fm, sum_f_minus_fm_squared, gm, sum_g_minus_gm_squared, f_values, g_values);
@@ -899,7 +885,7 @@ static std::vector<double> iteration_affine_LM(const cv::Mat &img, float *fptr_i
 
 		cv::Mat Hessian(8, 8,CV_64F, cv::Scalar(0));
 		cv::Mat Jacobian(8,1, CV_64F, cv::Scalar(0));
-		calculate_Hessian_Jacobian_affine(Hessian, Jacobian, img, fptr_img1, P0, SplineDegree, SubsetLength, Indexi, Indexj, f_values, fm, sum_f_minus_fm_squared, g_values, gm, sum_g_minus_gm_squared, lambda);
+		calculate_Hessian_Jacobian_affine(Hessian, Jacobian, fptr_img1, img1_rows, img1_cols, P0, SplineDegree, SubsetLength, Indexi, Indexj, f_values, fm, sum_f_minus_fm_squared, g_values, gm, sum_g_minus_gm_squared, lambda, xStart, yStart);
 
         while (iterations < max_iterations && nu < max_val_nu && (abs_tolerance > abs_tolerance_threshold || rel_tolerance > rel_tolerance_threshold) && data_uniform == 0)
         {
@@ -909,7 +895,7 @@ static std::vector<double> iteration_affine_LM(const cv::Mat &img, float *fptr_i
 
             std::vector<double> Suggested_Solution = {U0+X.at<double>(0), V0+X.at<double>(1), Ux+X.at<double>(2), Vx+X.at<double>(3), Uy+X.at<double>(4), Vy+X.at<double>(5)};
 			double suggested_gm, suggested_sum_g_minus_gm_squared;
-			std::vector<double> suggested_g_values = get_g_values(fptr_img1,  Suggested_Solution, Indexi, Indexj, SubsetLength, SplineDegree, img.cols, img.rows);
+			std::vector<double> suggested_g_values = get_g_values(fptr_img1, img1_rows, img1_cols,  Suggested_Solution, Indexi, Indexj, SubsetLength, SplineDegree, xStart, yStart);
 			std::tie(suggested_gm, suggested_sum_g_minus_gm_squared) = get_gm_and_sum_g_minus_gm_squared(suggested_g_values);
 			double Suggested_Correlation_Coefficient = Correlation_Coefficient_ZNSSD(fm, sum_f_minus_fm_squared, gm, sum_g_minus_gm_squared, f_values, suggested_g_values);
             Suggested_Correlation_Coefficient = 1.0-0.5*Suggested_Correlation_Coefficient;
@@ -937,7 +923,7 @@ static std::vector<double> iteration_affine_LM(const cv::Mat &img, float *fptr_i
                 lambda /= 3.0;
 
 				// Recompute Hessian and Jacobian
-				calculate_Hessian_Jacobian_affine(Hessian, Jacobian, img, fptr_img1, Suggested_Solution, SplineDegree, SubsetLength, Indexi, Indexj, f_values, fm, sum_f_minus_fm_squared, g_values, gm, sum_g_minus_gm_squared, lambda);
+				calculate_Hessian_Jacobian_affine(Hessian, Jacobian, fptr_img1, img1_rows, img1_cols, Suggested_Solution, SplineDegree, SubsetLength, Indexi, Indexj, f_values, fm, sum_f_minus_fm_squared, g_values, gm, sum_g_minus_gm_squared, lambda, xStart, yStart);
             }
             else
             {
@@ -978,7 +964,7 @@ static std::vector<double> iteration_affine_LM(const cv::Mat &img, float *fptr_i
         return returnvector;
 }
 /*--------------------------------------------------------------------------*/
-static std::vector<double> iteration_rigid_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold)
+static std::vector<double> iteration_rigid_LM(const cv::Mat &img, float *fptr_img1, const unsigned int &img1_rows, const unsigned int &img1_cols, const unsigned int &i, const unsigned int &j, const std::vector<double> &P0, const unsigned int &SplineDegree, const unsigned int &SubsetLength, const unsigned int &GridLength, const double &abs_tolerance_threshold, const double &rel_tolerance_threshold, const unsigned int &xStart, const unsigned int &yStart)
 {
         double abs_tolerance = 1;
         double rel_tolerance = 1;
@@ -997,7 +983,7 @@ static std::vector<double> iteration_rigid_LM(const cv::Mat &img, float *fptr_im
 		std::vector<double> f_values = get_f_values(img, Indexi, Indexj, SubsetLength);
 		std::tie(fm, sum_f_minus_fm_squared) = get_gm_and_sum_g_minus_gm_squared(f_values);
 		double gm, sum_g_minus_gm_squared;
-		std::vector<double> g_values = get_g_values(fptr_img1, P0, Indexi, Indexj, SubsetLength, SplineDegree, img.cols, img.rows);
+		std::vector<double> g_values = get_g_values(fptr_img1, img1_rows, img1_cols, P0, Indexi, Indexj, SubsetLength, SplineDegree, xStart, yStart);
 		std::tie(gm, sum_g_minus_gm_squared) = get_gm_and_sum_g_minus_gm_squared(g_values);
 		bool data_uniform = (is_data_uniform(sum_f_minus_fm_squared)||is_data_uniform(sum_g_minus_gm_squared));
         double Correlation_Coefficient_old = Correlation_Coefficient_ZNSSD(fm, sum_f_minus_fm_squared, gm, sum_g_minus_gm_squared, f_values, g_values);
@@ -1005,7 +991,7 @@ static std::vector<double> iteration_rigid_LM(const cv::Mat &img, float *fptr_im
 
 		cv::Mat Hessian(2, 2, CV_64F, cv::Scalar(0));
 		cv::Mat Jacobian(2,1, CV_64F, cv::Scalar(0));
-		calculate_Hessian_Jacobian_rigid(Hessian, Jacobian, img, fptr_img1, P0, SplineDegree, SubsetLength, Indexi, Indexj, f_values, fm, sum_f_minus_fm_squared, g_values, gm, sum_g_minus_gm_squared, lambda);
+		calculate_Hessian_Jacobian_rigid(Hessian, Jacobian, fptr_img1, img1_rows, img1_cols, P0, SplineDegree, SubsetLength, Indexi, Indexj, f_values, fm, sum_f_minus_fm_squared, g_values, gm, sum_g_minus_gm_squared, lambda, xStart, yStart);
         while (iterations < max_iterations && nu < max_val_nu && (abs_tolerance > abs_tolerance_threshold || rel_tolerance > rel_tolerance_threshold) && data_uniform == 0)
         {
             iterations++;
@@ -1014,7 +1000,7 @@ static std::vector<double> iteration_rigid_LM(const cv::Mat &img, float *fptr_im
 
             std::vector<double> Suggested_Solution = {U0+X.at<double>(0), V0+X.at<double>(1)};
 			double suggested_gm, suggested_sum_g_minus_gm_squared;
-			std::vector<double> suggested_g_values = get_g_values(fptr_img1,  Suggested_Solution, Indexi, Indexj, SubsetLength, SplineDegree, img.cols, img.rows);
+			std::vector<double> suggested_g_values = get_g_values(fptr_img1, img1_rows, img1_cols,  Suggested_Solution, Indexi, Indexj, SubsetLength, SplineDegree, xStart, yStart);
 			std::tie(suggested_gm, suggested_sum_g_minus_gm_squared) = get_gm_and_sum_g_minus_gm_squared(suggested_g_values);
 			double Suggested_Correlation_Coefficient = Correlation_Coefficient_ZNSSD(fm, sum_f_minus_fm_squared, gm, sum_g_minus_gm_squared, f_values, suggested_g_values);
             Suggested_Correlation_Coefficient = 1.0-0.5*Suggested_Correlation_Coefficient;
@@ -1036,7 +1022,7 @@ static std::vector<double> iteration_rigid_LM(const cv::Mat &img, float *fptr_im
                 lambda /= 3.0;
 
 				// Recompute Hessian and Jacobian
-				calculate_Hessian_Jacobian_rigid(Hessian, Jacobian, img, fptr_img1, Suggested_Solution, SplineDegree, SubsetLength, Indexi, Indexj, f_values, fm, sum_f_minus_fm_squared, g_values, gm, sum_g_minus_gm_squared, lambda);
+				calculate_Hessian_Jacobian_rigid(Hessian, Jacobian, fptr_img1, img1_rows, img1_cols, Suggested_Solution, SplineDegree, SubsetLength, Indexi, Indexj, f_values, fm, sum_f_minus_fm_squared, g_values, gm, sum_g_minus_gm_squared, lambda, xStart, yStart);
             }
             else
             {

@@ -12,7 +12,6 @@ extern void DIC(const cv::Mat &img, const cv::Mat &img1, const InputVariables &i
 	std::cout << "\033[1;32mB-splines coefficients calculated\033[0m\n" << std::endl;
 	/*--------------------------------------------------------------------------*/
 
-	// TO DO: Need to rewrite nonlineariteration.cpp to use img1.cols and img1.rows instead of img.cols and img.rows since interpol.c needs width and height of image.
 	std::vector<cv::Mat> IG = calculateInitialGuess_Iteration(img, img1, fptr_img1, inputvariables);
 	cv::Mat DispX = IG[0].clone();
 	cv::Mat DispY = IG[1].clone();
@@ -93,7 +92,7 @@ extern void DIC(const cv::Mat &img, const cv::Mat &img1, const InputVariables &i
             }
 			//auto tr3 = std::chrono::high_resolution_clock::now();
 			//std::cout << "before" << std::endl;
-            std::vector<double> point2 = iteration(img, fptr_img1, (*i).x, (*i).y, InitialCondition, inputvariables.SplineDegree, inputvariables.SubsetLength, inputvariables.GridLength, inputvariables.abs_tolerance_threshold, inputvariables.rel_tolerance_threshold, inputvariables.ShapeFunction);
+            std::vector<double> point2 = iteration(img, fptr_img1, img1.rows, img1.cols, (*i).x, (*i).y, InitialCondition, inputvariables.SplineDegree, inputvariables.SubsetLength, inputvariables.GridLength, inputvariables.abs_tolerance_threshold, inputvariables.rel_tolerance_threshold, inputvariables.ShapeFunction, inputvariables.xDiff, inputvariables.yDiff);//inputvariables.xStart, inputvariables.yStart);
 			//std::cout << "after" << std::endl;
 			//auto tr4 = std::chrono::high_resolution_clock::now();
 			//std::chrono::duration<double> elapsed_seconds = tr4-tr3;
