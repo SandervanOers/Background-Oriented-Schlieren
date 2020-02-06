@@ -456,9 +456,7 @@ It seems that when we choose an initial condition that falls in the permissible 
 \section{Gladstone-Dale vs Lorentz-Lorenz}
 
 \section{Digital Image Correlation}
-B-splines
-2nd order
-reliability guided
+Digital Image Correlation (DIC) is a well known technique \cite{sutton2009image} to obtain deformation maps from images. We use second-order shape functions \cite{lu2000deformation} to handle large nonlinear deformations. To attain sub-pixel accuracy we interpolate our images with B-splines \cite{thevenaz2000interpolation, unser1999splines, thevenaz2000image}. To obtain the deformations we optimize a Correlation Coefficient [SOURCE]. We solve this nonlinear least-squares problem  by (1) providing an initial guess and (2) solving an iterative scheme. As an initial guess we perform Template Matching \cite{lewis1995industrial,opencv_library} on a limited set of points to obtain rigid deformations with pixel accuracy. After applying DIC to obtain sub-pixel deformations, we use reliability guided DIC \cite{pan2012incremental} to determine the initial guesses. As iterative scheme we use the Levenberg–Marquardt algorithm. 
 
 \section{Experimental}
 Best practices to get good quality images
@@ -482,10 +480,52 @@ with constraints $1.333 \leq n_i \leq 1.4$. For each measurement $\underline{\De
 \section{Experimental Procedure}
 Calibration
 \section{Results}
+In this section we show three applications of the new method: (1) A static two-layer fluid with large nonlinear deformations, (2) A static stratified fluid and (3) a dynamic fluid with wave attractor.
+
+In the first application, in \ref{fig:0side}, we want to measure the background density of a two-layer fluid system. We filled the bottom half of a tank with Wadden Sea water (with an index of refraction of 1.338, measured by a refractometer) and the upper half of the tank with tap water (with an index of refraction of 1.333, also measured by the refractometer). We kept the interface between the two layers sharp by filling the upper half of the tank through a sponge. The observed deformations of the dot pattern through this interface are large. Through the use of the second-order shape functions in the DIC procedure, we can still determine these deformations. Figure \ref{fig:ndeformed0side} shows the index of refraction field $n$. 
 
 \subsection{Background Density}
+\label{subsec:bacden}
+\begin{figure}[htbp]
+\begin{subfigure}{.5\linewidth}
+%		\centering \includegraphics[width = \textwidth]{}
+		\subcaption{Reference Image: Filled with air}\label{fig:air0side}
+\end{subfigure}%
+\begin{subfigure}{.5\linewidth}
+%	\centering \includegraphics[width = \textwidth]{}
+	\subcaption{Calibration Image Image: Filled with water with known $n$}\label{fig:fresh0side}
+\end{subfigure}\\
+\begin{subfigure}{.5\linewidth}
+%		\centering \includegraphics[width = \textwidth]{}
+		\subcaption{Deformed Image: Filled with salt water with unknown $n$-field }\label{fig:twolayer0side}
+\end{subfigure}%
+\begin{subfigure}{.5\linewidth}
+%	\centering \includegraphics[width = \textwidth]{}
+	\subcaption{Index of Refraction $n$ for Calibration Image}\label{fig:ncalibration0side}
+\end{subfigure}\\
+\begin{subfigure}{.5\linewidth}
+%		\centering \includegraphics[width = \textwidth]{}
+		\subcaption{$\Delta x$ from DIC}\label{fig:dx0side}
+\end{subfigure}%
+\begin{subfigure}{.5\linewidth}
+%	\centering \includegraphics[width = \textwidth]{}
+		\subcaption{$\Delta y$ from DIC}\label{fig:dy0side}
+\end{subfigure}\\
+\begin{subfigure}{.5\linewidth}
+%		\centering \includegraphics[width = \textwidth]{}
+		\subcaption{Index of Refraction $n$ for Deformed Image}\label{fig:ndeformed0side}
+\end{subfigure}%
+\begin{subfigure}{.5\linewidth}
+%	\centering \includegraphics[width = \textwidth]{}
+		\subcaption{Correlation Coefficient from DIC}\label{fig:C0side}
+\end{subfigure}
+\caption{The procedure for obtaining the index of refraction field $n$. We obtain three images: one Reference Image (\ref{fig:air0side}) filled with air, one Calibration Image (\ref{fig:fresh0side}) filled with water without salts and one Deformed Image (\ref{fig:twolayer0side}) filled with water with an unknown $n$-field. Applying DIC between the Reference Image and the Correlation image, we find the displacements $D=(\Delta x, \Delta y)$. Using these displacements $D$ in (\ref{eq:calmin}), we obtain the parameters $\underline{\alpha}$. After calibration, the resulting $n$-field is uniform (\ref{fig:ncalibration0side}). Applying DIC between the Reference Image and the Correlation Image, we find the displacements $\Delta x$ (\ref{fig:dx0side}) and $\Delta y$ (\ref{fig:dy0side}) with corresponding Correlation Coefficient (\ref{fig:C0side}).  Using these displacements in (\ref{eq:nmin}), we obtain the unknown index of refraction field $n$ (\ref{fig:ndeformed0side}).}
+\label{fig:0side}
+\end{figure}
 
-WA
+In the second application, in Reference, 
+
+
 \section{Discussion}
 
 definition planes -> doesn't have to be parallel. in particular 6th plane can be different, extra parameters to estimate in $\alpha$ (calibration). \\
