@@ -1,17 +1,17 @@
 \documentclass{article}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\DeclareMathOperator{\sign}{sign}
 \usepackage{geometry}
 \usepackage{subcaption}
 \usepackage{standalone}
 \usepackage{xcolor}
 \usepackage{enumitem}
-%\setlist{noitemsep}
-%\setlist[1]{labelindent=\parindent}
-%\setlist[1]{itemsep=0pt,topsep=0pt}
+%\overfullrule=5pt
 \setlist{nosep}
 \usepackage{tikz}
-\usetikzlibrary{patterns,snakes}
+\usetikzlibrary{patterns}
+\usetikzlibrary{decorations.pathreplacing}
 
 \usepackage{footnote}
 \usepackage{csquotes}
@@ -25,6 +25,12 @@
 
 \section{Introduction}
 
+
+Since we are working with fluids we use the Lorentz-Lorenz equation to relate the index of refraction $n$ to the density $\rho$,
+\begin{equation}
+ 	\frac{n^2-1}{n^2+2} \frac{1}{\rho} = \mbox{ constant}.
+\end{equation}
+
 \section{Simple Model}
 Consider the experimental set up as shown in Figure \ref{fig:schviepalira}. Light rays travel from a camera, through a water tank onto a background with a random dot pattern.  We describe the camera as a pinhole camera. We place the origin of the Cartesian coordinate system at the pinhole, the location where all light rays falling on the ccd sensor pass through. The $z$-axis is perpendicular to the experimental setup, i.e. such that a light ray traveling along the z-axis will not be refracted by the set-up. We want to determine the position where the light rays ends up, $x_6$. The light ray exits the camera with a position $x_1 = 0$ and an angle $\theta_x$. %The $x$-axis points opposite to gravity.
 
@@ -36,7 +42,7 @@ Consider the experimental set up as shown in Figure \ref{fig:schviepalira}. Ligh
 
 \begin{figure}[hpbt]
 	\includestandalone{schematicsetupangle}
-	\caption{A schematic view of a path of a light ray (not to scale). The light ray in the reference state is indicated by a solid line, the light ray after filling the tank with water by a dashed line. The numbers indicate the planes through which the light ray propagates: 0, the ccd sensor inside the camera; 1, the camera pinhole; 2, the start of the first glass plate; 3, the end of the first glass plate; 4, the start of the second glass plate; 5, the end of the second glass plate; 6, the screen from which the light rays originate.  $n_0$, $n_1$ and $n_2$ are the index of refraction of, respectively, air, material of the tank and the fluid. The lengths (in the $z$-direction)  	are: $L_c$, the distance from camera to the first glass plate; $L_g$, the width of the glass plates; $L_t$ the width of the tank; $L_s$, the distance from the second glass plate to the screen.}	
+	\caption{A schematic view of a path of a light ray (not to scale). The light ray in the reference state is indicated by a solid line, the light ray after filling the tank with water by a dashed line. The numbers indicate the planes through which the light ray propagates: 0, the ccd sensor inside the camera; 1, the camera pinhole; 2, the start of the first glass plate; 3, the end of the first glass plate; 4, the start of the second glass plate; 5, the end of the second glass plate; 6, the screen from which the light rays originate.  $n_0$, $n_1$ and $n_2$ are the index of refraction of, respectively, air, material of the tank and the fluid. The lengths (in the $z$-direction) are: $L_c$, the distance from camera to the first glass plate; $L_g$, the width of the glass plates; $L_t$ the width of the tank; $L_s$, the distance from the second glass plate to the screen.}	
 \label{fig:schviepalira}	
 \end{figure}
 
@@ -97,36 +103,36 @@ The angle $\theta_x$, the displacement $\Delta x$ and unknown index of refractio
 Figure \ref{fig:simmod} shows the results when using (\ref{eq:invdexcon2}) to obtain the index of refraction $n$. We have two frontal images of the experimental setup; (1) Figure \ref{fig:air0simplefrontal}, without water, and (2) Figure \ref{fig:fresh0simplefrontal}, with water.  Applying a Digital Image Correlation (DIC) method we obtain (1) the correlation coefficient, a measure of the reliability of the method, (2) the horizontal displacements $\Delta x$, and (3) the vertical displacements $\Delta y$. Where coordinates where $\Delta x = 0$ and $\Delta y = 0$ are the location of the $z-axis$. We calculate the angles $\theta_x$ and $\theta_y$ with respect to this $z$-axis. Using (\ref{eq:invdexcon2}) we can compute the index of refraction $n$. Figure \ref{fig:nfromdxsimplefrontal} shows $n$ obtained from the horizontal displacements $\Delta x$.  Figure \ref{fig:nfromdysimplefrontal} shows $n$ obtained from the vertical displacements $\Delta y$. In Figure \ref{fig:nfrontal} we combine the horizontal and vertical displacements to obtain $n$.
 
 \begin{figure}[htbp]
-\begin{subfigure}{.5\linewidth}
-		\centering \includegraphics[width = \textwidth]{Refsimplefrontal}
+\begin{subfigure}{.45\linewidth}
+		\centering \includegraphics[width = \textwidth,keepaspectratio]{Refsimplefrontal}
 		\subcaption{Reference Image: Filled with air}\label{fig:air0simplefrontal}
 \end{subfigure}%
-\begin{subfigure}{.5\linewidth}
-	\centering \includegraphics[width = \textwidth]{deformedsimplefrontal}
+\begin{subfigure}{.45\linewidth}
+	\centering \includegraphics[width = \textwidth,keepaspectratio]{deformedsimplefrontal}
 	\subcaption{Deformed Image: Filled with water}\label{fig:fresh0simplefrontal}
 \end{subfigure}\\
-\begin{subfigure}{.5\linewidth}
+\begin{subfigure}{.45\linewidth}
 	\centering \includegraphics[width = \textwidth]{CCsimplefrontal}
 	\subcaption{Correlation Coefficient from DIC}\label{fig:CCsimplefrontal}
 \end{subfigure}%
-\begin{subfigure}{.5\linewidth}
-	\centering \includegraphics[width = \textwidth]{DXsimplefrontal}
+\begin{subfigure}{.45\linewidth}
+	\centering \includegraphics[width = \textwidth,keepaspectratio]{DXsimplefrontal}
 	\subcaption{$\Delta x$ from DIC}\label{fig:DXsimplefrontal}
 \end{subfigure}\\
-	\begin{subfigure}{.5\linewidth}
-	\centering \includegraphics[width = \textwidth]{DYsimplefrontal}
+	\begin{subfigure}{.45\linewidth}
+	\centering \includegraphics[width = \textwidth,keepaspectratio]{DYsimplefrontal}
 	\subcaption{$\Delta y$ from DIC}\label{fig:DYsimplefrontal}
 \end{subfigure}%
-\begin{subfigure}{.5\linewidth}
-	\centering \includegraphics[width = \textwidth]{nfromdxsimplefrontal}
+\begin{subfigure}{.45\linewidth}
+	\centering \includegraphics[width = \textwidth,keepaspectratio]{nfromdxsimplefrontal}
 	\subcaption{$n$ from $\Delta x$}\label{fig:nfromdxsimplefrontal}
 \end{subfigure}\\
-\begin{subfigure}{.5\linewidth}
-	\centering \includegraphics[width = \textwidth]{nfromdysimplefrontal}
+\begin{subfigure}{.45\linewidth}
+	\centering \includegraphics[width = \textwidth,keepaspectratio]{nfromdysimplefrontal}
 	\subcaption{$n$ from $\Delta y$}\label{fig:nfromdysimplefrontal}
 \end{subfigure}%
-\begin{subfigure}{.5\linewidth}
-	\centering \includegraphics[width = \textwidth]{nsimplefrontal}
+\begin{subfigure}{.45\linewidth}
+	\centering \includegraphics[width = \textwidth,keepaspectratio]{nsimplefrontal}
 	\subcaption{$n$ from $\sqrt{\Delta x^2+\Delta y^2}$}\label{fig:nfrontal}
 \end{subfigure}
 \caption{Simple Model Result. When the angle $\theta_x$ is near zero, large errors in $n$ appear. }
@@ -231,7 +237,7 @@ In the application presented in this paper, the optical axis does not coincide w
 		\frac{d \underline{r}}{d s} = \frac{\underline{T}}{n}, \qquad
 		\frac{d \underline{T}}{d s} = \nabla n.
 \end{equation}
-We apply a Runge–Kutta fourth-order method to solve this system. Appendix \ref{app:RKS} gives the details.
+We apply a Runge–Kutta fourth-order method to solve this system. %Appendix \ref{app:RKS} gives the details.
 
 \subsection{Relating Refractive Index to Ray Path}
 \label{subsec:RayPath}
@@ -311,53 +317,12 @@ To find the angle of incidence, $\theta_1$, between the incoming light ray and t
 \end{equation}
 We apply Snell's law (\ref{eq:snellslaw}) to find the angle of refraction, $\theta_2$. The index of refraction of the medium through which the incoming ray travels is $n_I$, the index of refraction of the medium through wich the outgoing ray travels is $n_T$. To find the direction cosines of the outgoing ray, $\underline{T}$, we calculate 
 \begin{align}
-	S &= sign \cos \theta_1, \\
+	S &= \sign \cos \theta_1, \\
 	\sin \theta_2 &= \frac{n_I}{n_T} \sqrt{1-\cos^2 \theta_1}, \\
 	\cos \theta_2 &= \sqrt{1-\left(\frac{n_I}{n_T}\right)^2(1-\cos^2 \theta_1)} \\
 	\underline{T} &= \frac{n_I}{n_T} \underline{I} + \left(\frac{n_I}{n_T} \cos \theta_1 - S \cos\theta_2\right)\underline{\hat{n}},	
 \end{align}
 where $S$, the sign of $\cos\theta_1$ ensures we stay in the right quadrant.
-
-\subsubsection{Rotation Matrix}
-\label{subsubsec:rotmat}
-{\color{red} Work in Progress, you can skip this} \\
-A rotation through an angle of $\theta$ around an axis defined by the unit vector $\underline{\hat{r}} = r_x \underline{\hat{i}} + r_y \underline{\hat{j}} + r_z \underline{\hat{k}}$ can be represented by a quaternion
-\begin{equation}
-	\underline{q} = \cos\frac{\theta}{2} + (r_x \underline{\hat{i}} + r_y \underline{\hat{j}} + r_z \underline{\hat{k}} ) \sin \frac{\theta}{2}.
-\end{equation} 
-A unit quaternion has norm one. The rotation matrix $Q$ for a unit quaternion $\underline{q} = q_0 + q_1 \underline{\hat{i}} + q_2 \underline{\hat{j}} + q_3 \underline{\hat{k}}$ is
-\begin{equation}
-	Q = \left[ \begin{array}{ccc} 1-2(q_2^2+q_3^2) & 2(q_1 q_2 - q_0 q_3) & 2(q_1 q_3 + q_0 q_2) \\ 2 (q_1 q_2 + q_0 q_3) & 1-2(q_1^2+q_3^2) & 2( q_2 q_3 - q_0 q_1) \\ 2(q_1 q_3-q_0 q_2) & 2 (q_2 q_3 + q_0 q_1) & 1 - 2 (q_1^2+q_2^2) \end{array} \right]
-\end{equation}
-
-The rotation angle is
-\begin{equation}
-	\cos \theta = a \cdot 0 + b \cdot 0 + c \cdot 1
-\end{equation}
-and the rotation vector
-\begin{equation}
-	\underline{\hat{r}} = - \frac{b}{\sqrt{a^2+b^2}} \underline{\hat{i}} + \frac{a}{\sqrt{a^2+b^2}}  \underline{\hat{j}} + 0  \underline{\hat{k}}.
-\end{equation}
-
-\subsubsection{Intersection Light Rays and Planes: Inhomogeneous medium}
-{\color{red} Work in Progress, you can skip this} \\
-A light ray traveling through an inhomogeneous medium does not travel in a straight line. The path is governed by (\ref{eq:sys6foeq}). To simplify (\ref{eq:sys6foeq}), we can use that there is a direction in the experimental setup that has no variation in index of refraction $n$, which is the direction of the unit normal of the different planes. To use this simplification, we want to transform our direction cosines in our original coordinate system, $xyz$ into direction cosines in a new coordinate system, $XYZ$. In this new coordinate system, the $Z$-axis is opposite to the unit normal vector $\underline{\hat{n}}$. To find this transformation matrix, we use quaternions.
-
-\subsubsection{Procedure Varying n}
-{\color{red} Work in Progress, you can skip this} \\
-Given $n(x,y)$. Old coordinates: x,y,z. New coordinates u,v,w.
-\begin{enumerate}
-	\item Determine Coordinate Transformation according to \ref{subsubsec:rotmat}. \\
-	\item Transform Initial Position to new coordinates u,v  \\
-	\item Initiate n field in new coordinates u,v \\
-	\item  Apply Snell's Law in old coordinates (x,y,z) using the new n(u,v) \\
-	\item Transform Refracted Rays to new coordinates u, v, w \\
-	\item  Runge-Kutta \\
-	\item  Obtain grad n = ( dn/du, dn/dv, dn/dw) \\
-	\item  Transform incoming rays back to coordinates x y z \\
-	\item  Apply Snell's Law in old coordinates (x,y,z) using the new n(u,v) \\
-	\item Transform Final Positions to new old coordinates x, y, z \\
-\end{enumerate} 
 
 \subsection{Displacements}
 Previous subsections combine to give the forward model: $\underline{X}(n,\underline{\alpha}, \underline{x})$. Given an index of refraction field $n$, parameters $\underline{\alpha}$ and coordinates $\underline{x} = (x,y)$, we can calculate the location on the screen where the light rays end up. $\underline{\alpha}$ are the parameters that define the planes $a$, $b$, $c$ and $L_m$. We use $L_m$ instead of $d$ since we want our parameters to be (linearly) independent. Also, $L_m$ has a clear geometric meaning.
@@ -411,7 +376,7 @@ It seems that when we choose an initial condition that falls in the permissible 
 \end{figure}
 \begin{figure}[htbp]
 		\centering \includegraphics[width = \textwidth]{leastsquaresbc.png}
-		\caption{$\log_{10}S(b,c)$}\label{fig:Sac}
+		\caption{$\log_{10}S(b,c)$}\label{fig:Sbc}
 \end{figure}
 \begin{figure}[htbp]
 		\centering \includegraphics[width = \textwidth]{leastsquaresbd.png}
@@ -452,9 +417,6 @@ It seems that when we choose an initial condition that falls in the permissible 
 %	\label{fig:cal}
 %\end{figure}
 
-
-\section{Gladstone-Dale vs Lorentz-Lorenz}
-
 \section{Digital Image Correlation}
 Digital Image Correlation (DIC) is a well known technique \cite{sutton2009image} to obtain deformation maps from images. We use second-order shape functions \cite{lu2000deformation} to handle large nonlinear deformations. To attain sub-pixel accuracy we interpolate our images with B-splines \cite{thevenaz2000interpolation, unser1999splines, thevenaz2000image}. To obtain the deformations we optimize a Correlation Coefficient [SOURCE]. We solve this nonlinear least-squares problem  by (1) providing an initial guess and (2) solving an iterative scheme. As an initial guess we perform Template Matching \cite{lewis1995industrial,opencv_library} on a limited set of points to obtain rigid deformations with pixel accuracy. After applying DIC to obtain sub-pixel deformations, we use reliability guided DIC \cite{pan2012incremental} to determine the initial guesses. As iterative scheme we use the Levenberg–Marquardt algorithm. 
 
@@ -466,9 +428,9 @@ random dot pattern -> grey -> histogram no over/under saturation
 \section{Inverse Model}
 Looking at our Forward Model (\ref{eq:ForwardModel}), we know
 \begin{enumerate}
-	\item $\underline{\alpha}$, the parameters of our experimental setup (after calibration), \\
-	\item $\underline{x}$, the coordinates on our ccd-sensor, \\
-	\item $\underline{\Delta x}$, the measured displacement (after DIC), \\
+	\item $\underline{\alpha}$, the parameters of our experimental setup (after calibration), 
+	\item $\underline{x}$, the coordinates on our ccd-sensor, 
+	\item $\underline{\Delta x}$, the measured displacement (after DIC), 
 	\item $n_0$, the index of refraction of the reference state.
 \end{enumerate}
 The unknown is the index of refraction field $n$. Unlike the simple model (\ref{eq:invdexcon2}), we cannot invert the forward model to obtain an expression for the index of refraction $n$. We treat the problem of finding $n$ as an optimization problem:
@@ -477,15 +439,12 @@ The unknown is the index of refraction field $n$. Unlike the simple model (\ref{
 \min_{n_i}  S = \min_{n_i} (X_{j}(n, \underline{\alpha}, \underline{x}_i+\underline{\Delta x}_i) - X_{j}(n_0, \underline{\alpha}, \underline{x}_i))^2, 
 \end{equation}
 with constraints $1.333 \leq n_i \leq 1.4$. For each measurement $\underline{\Delta x}_i$ we solve (\ref{eq:nmin}) to find $n_i$.
-\section{Experimental Procedure}
-Calibration
+
 \section{Results}
 In this section we show three applications of the new method: (1) A static two-layer fluid with large nonlinear deformations, (2) A static stratified fluid and (3) a dynamic fluid with wave attractor.
 
-In the first application, in \ref{fig:0side}, we want to measure the background density of a two-layer fluid system. We filled the bottom half of a tank with Wadden Sea water (with an index of refraction of 1.338, measured by a refractometer) and the upper half of the tank with tap water (with an index of refraction of 1.333, also measured by the refractometer). We kept the interface between the two layers sharp by filling the upper half of the tank through a sponge. The observed deformations of the dot pattern through this interface are large. Through the use of the second-order shape functions in the DIC procedure, we can still determine these deformations. Figure \ref{fig:ndeformed0side} shows the index of refraction field $n$. 
+In the first application, in \ref{fig:0side}, we want to measure the background density of a two-layer fluid system. We filled the bottom half of a tank with Wadden Sea water (with an index of refraction of 1.338, measured by a refractometer) and the upper half of the tank with tap water (with an index of refraction of 1.333, also measured by the refractometer). We kept the interface between the two layers sharp by filling the upper half of the tank through a sponge. The observed deformations of the dot pattern through this interface are large. Through the use of the second-order shape functions in the DIC procedure, we can still determine these deformations. Figure \ref{fig:ndeformed0side} shows the index of refraction field $n$. The expected theoretical density profile is an error function. We see this in Figure \ref{fig:ndeformed0side}.
 
-\subsection{Background Density}
-\label{subsec:bacden}
 \begin{figure}[htbp]
 \begin{subfigure}{.5\linewidth}
 %		\centering \includegraphics[width = \textwidth]{}
@@ -519,12 +478,78 @@ In the first application, in \ref{fig:0side}, we want to measure the background 
 %	\centering \includegraphics[width = \textwidth]{}
 		\subcaption{Correlation Coefficient from DIC}\label{fig:C0side}
 \end{subfigure}
-\caption{The procedure for obtaining the index of refraction field $n$. We obtain three images: one Reference Image (\ref{fig:air0side}) filled with air, one Calibration Image (\ref{fig:fresh0side}) filled with water without salts and one Deformed Image (\ref{fig:twolayer0side}) filled with water with an unknown $n$-field. Applying DIC between the Reference Image and the Correlation image, we find the displacements $D=(\Delta x, \Delta y)$. Using these displacements $D$ in (\ref{eq:calmin}), we obtain the parameters $\underline{\alpha}$. After calibration, the resulting $n$-field is uniform (\ref{fig:ncalibration0side}). Applying DIC between the Reference Image and the Correlation Image, we find the displacements $\Delta x$ (\ref{fig:dx0side}) and $\Delta y$ (\ref{fig:dy0side}) with corresponding Correlation Coefficient (\ref{fig:C0side}).  Using these displacements in (\ref{eq:nmin}), we obtain the unknown index of refraction field $n$ (\ref{fig:ndeformed0side}).}
+\caption{The procedure for obtaining the index of refraction field $n$. We obtain three images: one Reference Image (\ref{fig:air0side}) filled with air, one Calibration Image (\ref{fig:fresh0side}) filled with water without salts and one Deformed Image (\ref{fig:twolayer0side}) filled with water with an unknown $n$-field. Applying DIC between the Reference Image and the Correlation image, we find the displacements $D=(\Delta x, \Delta y)$. Using these displacements $D$ in (\ref{eq:calmin}), we obtain the parameters $\underline{\alpha}$. After calibration, the resulting $n$-field is uniform (\ref{fig:ncalibration0side}). Applying DIC between the Reference Image and the Deformed Image, we find the displacements $\Delta x$ (\ref{fig:dx0side}) and $\Delta y$ (\ref{fig:dy0side}) with corresponding Correlation Coefficient (\ref{fig:C0side}).  Using these displacements in (\ref{eq:nmin}), we obtain the unknown index of refraction field $n$ (\ref{fig:ndeformed0side}).}
 \label{fig:0side}
 \end{figure}
 
-In the second application, in Reference, 
+In the second application, in Reference, we want to measure the background density of a continuously stratified fluid. We filled a tank through the double bucket method. After taking a Reference Image, a Calibration Image and a Deformed Image, we repositioned the camera for a Synthetic Schlieren measurement. After oscillating the tank, we measured the angles of the internal waves propagating in the fluid. Table Reference shows the forcing frequencies $\omega$ and angles $\beta$. Through
+\begin{equation}
+	N = \omega \cos \beta
+\end{equation}
+we determined the buoyancy frequency $N$, obtained from Synthetic Schlieren. Through
+\begin{equation}
+	N^2 = - \frac{g}{\rho_0}\frac{d \rho_0}{d z}
+\end{equation}
+we determined the buoyancy frequency $N$, obtained from our new method. 
 
+\begin{figure}[htbp]
+\begin{subfigure}{.5\linewidth}
+%		\centering \includegraphics[width = \textwidth]{}
+		\subcaption{Deformed Image: Filled with salt water with unknown $n$-field }\label{fig:strat0side}
+\end{subfigure}%
+\begin{subfigure}{.5\linewidth}
+%	\centering \includegraphics[width = \textwidth]{}
+		\subcaption{Correlation Coefficient from DIC}\label{fig:stratC0side}
+\end{subfigure} \\
+\begin{subfigure}{.5\linewidth}
+%		\centering \includegraphics[width = \textwidth]{}
+		\subcaption{$\Delta x$ from DIC}\label{fig:stratdx0side}
+\end{subfigure}%
+\begin{subfigure}{.5\linewidth}
+%	\centering \includegraphics[width = \textwidth]{}
+		\subcaption{$\Delta y$ from DIC}\label{fig:stratdy0side}
+\end{subfigure}\\
+\begin{subfigure}{.5\linewidth}
+%		\centering \includegraphics[width = \textwidth]{}
+		\subcaption{Index of Refraction $n$ for Deformed Image}\label{fig:stratndeformed0side}
+\end{subfigure}%
+\begin{subfigure}{.5\linewidth}
+%		\centering \includegraphics[width = \textwidth]{}
+		\subcaption{Background Density $\rho_0$ for Deformed Image}\label{fig:stratrho0deformed0side}
+\end{subfigure}
+\caption{Determining the background density for a continuously stratified fluid. After taking three images, with the Deformed Image \ref{fig:strat0side}, we obtain the displacements $\Delta x$ in Figure \ref{fig:stratdx0side} and $\Delta y$ in Figure \ref{fig:stratdy0side} from DIC. After calibration we obtain the index of refraction field $n$ in Figure \ref{fig:stratndeformed0side}. Using the Lorentz-Lorenz relation we obtain the density profile \ref{fig:stratrho0deformed0side} with buoyancy frequency $N$ of NUMBER. }
+\label{figs:strat0side}
+\end{figure}
+
+In the third application, we measured the density field of a wave attractor \cite{maas1997observation}. Figure \ref{figs:WA0side} shows the measured density fields over one period of a (1,1) Wave Attractor. 
+\begin{figure}[htbp]
+\begin{subfigure}{.5\linewidth}
+%		\centering \includegraphics[width = \textwidth]{}
+		\subcaption{0}\label{fig:WA0side}
+\end{subfigure}%
+\begin{subfigure}{.5\linewidth}
+%	\centering \includegraphics[width = \textwidth]{}
+		\subcaption{P/6}\label{fig:WA6side}
+\end{subfigure} \\
+\begin{subfigure}{.5\linewidth}
+%		\centering \includegraphics[width = \textwidth]{}
+		\subcaption{P/3}\label{fig:WA3side}
+\end{subfigure}%
+\begin{subfigure}{.5\linewidth}
+%	\centering \includegraphics[width = \textwidth]{}
+		\subcaption{P/2}\label{fig:WA2side}
+\end{subfigure} \\
+\begin{subfigure}{.5\linewidth}
+%		\centering \includegraphics[width = \textwidth]{}
+		\subcaption{2P/3}\label{fig:WA23side}
+\end{subfigure}%
+\begin{subfigure}{.5\linewidth}
+%	\centering \includegraphics[width = \textwidth]{}
+		\subcaption{5P/6}\label{fig:WA56side}
+\end{subfigure} 
+\caption{Density Fields over one period of a Wave Attractor. The forcing frequency was NUMBER. }
+\label{figs:WA0side}
+\end{figure}
 
 \section{Discussion}
 
@@ -534,10 +559,54 @@ non plane water tank: measure without tank, with tank with air -> (calibration) 
 
 \printbibliography[heading=bibintoc]
 
-\appendix
 
-\section{Runge-Kutta Scheme}
-\label{app:RKS}
-We choose a step size $h$. These are steps over the arc-length $s$. We use an index $p$ to indicate each step: $s^{p+1} = s^{p} + h$.
+%\appendix
+
+%\section{Runge-Kutta Scheme}
+%\label{app:RKS}
+%We choose a step size $h$. These are steps over the arc-length $s$. We use an index $p$ to indicate each step: $s^{p+1} = s^{p} + h$.
+
+
+%\subsubsection{Rotation Matrix}
+%\label{subsubsec:rotmat}
+%{\color{red} Work in Progress, you can skip this} \\
+%A rotation through an angle of $\theta$ around an axis defined by the unit vector $\underline{\hat{r}} = r_x \underline{\hat{i}} + r_y \underline{\hat{j}} + r_z \underline{\hat{k}}$ can be represented by a quaternion
+%\begin{equation}
+%	\underline{q} = \cos\frac{\theta}{2} + (r_x \underline{\hat{i}} + r_y \underline{\hat{j}} + r_z \underline{\hat{k}} ) \sin \frac{\theta}{2}.
+%\end{equation} 
+%A unit quaternion has norm one. The rotation matrix $Q$ for a unit quaternion $\underline{q} = q_0 + q_1 \underline{\hat{i}} + q_2 \underline{\hat{j}} + q_3 \underline{\hat{k}}$ is
+%\begin{equation}
+%	Q = \left[ \begin{array}{ccc} 1-2(q_2^2+q_3^2) & 2(q_1 q_2 - q_0 q_3) & 2(q_1 q_3 + q_0 q_2) \\ 2 (q_1 q_2 + q_0 q_3) & 1-2(q_1^2+q_3^2) & 2( q_2 q_3 - q_0 q_1) \\ 2(q_1 q_3-q_0 q_2) & 2 (q_2 q_3 + q_0 q_1) & 1 - 2 (q_1^2+q_2^2) \end{array} \right]
+%\end{equation}
+
+%The rotation angle is
+%\begin{equation}
+%	\cos \theta = a \cdot 0 + b \cdot 0 + c \cdot 1
+%\end{equation}
+%and the rotation vector
+%\begin{equation}
+%	\underline{\hat{r}} = - \frac{b}{\sqrt{a^2+b^2}} \underline{\hat{i}} + \frac{a}{\sqrt{a^2+b^2}}  \underline{\hat{j}} + 0  \underline{\hat{k}}.
+%\end{equation}
+
+%\subsubsection{Intersection Light Rays and Planes: Inhomogeneous medium}
+%{\color{red} Work in Progress, you can skip this} \\
+%A light ray traveling through an inhomogeneous medium does not travel in a straight line. The path is governed by (\ref{eq:sys6foeq}). To simplify (\ref{eq:sys6foeq}), we can use that there is a direction in the experimental setup that has no variation in index of refraction $n$, which is the direction of the unit normal of the different planes. To use this simplification, we want to transform our direction cosines in our original coordinate system, $xyz$ into direction cosines in a new coordinate system, $XYZ$. In this new coordinate system, the $Z$-axis is opposite to the unit normal vector $\underline{\hat{n}}$. To find this transformation matrix, we use quaternions.
+
+%\subsubsection{Procedure Varying n}
+%{\color{red} Work in Progress, you can skip this} \\
+%Given $n(x,y)$. Old coordinates: x,y,z. New coordinates u,v,w.
+%\begin{enumerate}
+%	\item Determine Coordinate Transformation according to \ref{subsubsec:rotmat}. \\
+%	\item Transform Initial Position to new coordinates u,v  \\
+%	\item Initiate n field in new coordinates u,v \\
+%	\item  Apply Snell's Law in old coordinates (x,y,z) using the new n(u,v) \\
+%	\item Transform Refracted Rays to new coordinates u, v, w \\
+%	\item  Runge-Kutta \\
+%	\item  Obtain grad n = ( dn/du, dn/dv, dn/dw) \\
+%	\item  Transform incoming rays back to coordinates x y z \\
+%	\item  Apply Snell's Law in old coordinates (x,y,z) using the new n(u,v) \\
+%	\item Transform Final Positions to new old coordinates x, y, z \\
+%\end{enumerate} 
+
 
 \end{document}

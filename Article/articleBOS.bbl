@@ -1,0 +1,474 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global}
+    \entry{opencv_library}{article}{}
+      \name{author}{1}{}{%
+        {{hash=7cb92723a011baf2e0abeeb403d03960}{%
+           family={Bradski},
+           familyi={B\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{7cb92723a011baf2e0abeeb403d03960}
+      \strng{fullhash}{7cb92723a011baf2e0abeeb403d03960}
+      \strng{bibnamehash}{7cb92723a011baf2e0abeeb403d03960}
+      \strng{authorbibnamehash}{7cb92723a011baf2e0abeeb403d03960}
+      \strng{authornamehash}{7cb92723a011baf2e0abeeb403d03960}
+      \strng{authorfullhash}{7cb92723a011baf2e0abeeb403d03960}
+      \field{sortinit}{B}
+      \field{sortinithash}{8de16967003c7207dae369d874f1456e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Dr. Dobb's Journal of Software Tools}
+      \field{title}{{The OpenCV Library}}
+      \field{year}{2000}
+      \keyw{bibtex-import}
+    \endentry
+    \entry{dalziel2000whole}{article}{}
+      \name{author}{3}{}{%
+        {{hash=7f750baca5d9b14b81644fba16906dbd}{%
+           family={Dalziel},
+           familyi={D\bibinitperiod},
+           given={SB},
+           giveni={S\bibinitperiod}}}%
+        {{hash=013deda1bc5e821fcaafdc1cf3fec09d}{%
+           family={Hughes},
+           familyi={H\bibinitperiod},
+           given={Graham\bibnamedelima O},
+           giveni={G\bibinitperiod\bibinitdelim O\bibinitperiod}}}%
+        {{hash=eee43620133c784cbc791f9088b8dc27}{%
+           family={Sutherland},
+           familyi={S\bibinitperiod},
+           given={Bruce\bibnamedelima R},
+           giveni={B\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{0dd18a449821b4907756a9a558dcd26c}
+      \strng{fullhash}{0dd18a449821b4907756a9a558dcd26c}
+      \strng{bibnamehash}{0dd18a449821b4907756a9a558dcd26c}
+      \strng{authorbibnamehash}{0dd18a449821b4907756a9a558dcd26c}
+      \strng{authornamehash}{0dd18a449821b4907756a9a558dcd26c}
+      \strng{authorfullhash}{0dd18a449821b4907756a9a558dcd26c}
+      \field{sortinit}{D}
+      \field{sortinithash}{c438b3d5d027251ba63f5ed538d98af5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Experiments in fluids}
+      \field{number}{4}
+      \field{title}{Whole-field density measurements by ‘synthetic schlieren’}
+      \field{volume}{28}
+      \field{year}{2000}
+      \field{pages}{322\bibrangedash 335}
+      \range{pages}{14}
+    \endentry
+    \entry{holm2011geometric}{book}{}
+      \name{author}{1}{}{%
+        {{hash=54da33665d182072fc9af545bafcc456}{%
+           family={Holm},
+           familyi={H\bibinitperiod},
+           given={Darryl\bibnamedelima D},
+           giveni={D\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {World Scientific Publishing Company}%
+      }
+      \strng{namehash}{54da33665d182072fc9af545bafcc456}
+      \strng{fullhash}{54da33665d182072fc9af545bafcc456}
+      \strng{bibnamehash}{54da33665d182072fc9af545bafcc456}
+      \strng{authorbibnamehash}{54da33665d182072fc9af545bafcc456}
+      \strng{authornamehash}{54da33665d182072fc9af545bafcc456}
+      \strng{authorfullhash}{54da33665d182072fc9af545bafcc456}
+      \field{sortinit}{H}
+      \field{sortinithash}{6db6145dae8dc9e1271a8d556090b50a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Geometric mechanics: Part I: Dynamics and symmetry}
+      \field{year}{2011}
+    \endentry
+    \entry{lewis1995industrial}{article}{}
+      \name{author}{1}{}{%
+        {{hash=6b99a49678f06cf0c212364ceaf29545}{%
+           family={Lewis},
+           familyi={L\bibinitperiod},
+           given={JP},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{6b99a49678f06cf0c212364ceaf29545}
+      \strng{fullhash}{6b99a49678f06cf0c212364ceaf29545}
+      \strng{bibnamehash}{6b99a49678f06cf0c212364ceaf29545}
+      \strng{authorbibnamehash}{6b99a49678f06cf0c212364ceaf29545}
+      \strng{authornamehash}{6b99a49678f06cf0c212364ceaf29545}
+      \strng{authorfullhash}{6b99a49678f06cf0c212364ceaf29545}
+      \field{sortinit}{L}
+      \field{sortinithash}{dad3efd0836470093a7b4a7bb756eb8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Fast normalized cross-correlation}
+      \field{title}{Industrial Light \& Magic}
+      \field{volume}{2011}
+      \field{year}{1995}
+    \endentry
+    \entry{lu2000deformation}{article}{}
+      \name{author}{2}{}{%
+        {{hash=a3dc9bcfb5487bf8014255e1339e1a5a}{%
+           family={Lu},
+           familyi={L\bibinitperiod},
+           given={H},
+           giveni={H\bibinitperiod}}}%
+        {{hash=d1feb4b144af8c7bad0025f0cf25716f}{%
+           family={Cary},
+           familyi={C\bibinitperiod},
+           given={PD},
+           giveni={P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{d3f15e3063c7ae8b212b8e2394342d57}
+      \strng{fullhash}{d3f15e3063c7ae8b212b8e2394342d57}
+      \strng{bibnamehash}{d3f15e3063c7ae8b212b8e2394342d57}
+      \strng{authorbibnamehash}{d3f15e3063c7ae8b212b8e2394342d57}
+      \strng{authornamehash}{d3f15e3063c7ae8b212b8e2394342d57}
+      \strng{authorfullhash}{d3f15e3063c7ae8b212b8e2394342d57}
+      \field{sortinit}{L}
+      \field{sortinithash}{dad3efd0836470093a7b4a7bb756eb8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Experimental mechanics}
+      \field{number}{4}
+      \field{title}{Deformation measurements by digital image correlation: implementation of a second-order displacement gradient}
+      \field{volume}{40}
+      \field{year}{2000}
+      \field{pages}{393\bibrangedash 400}
+      \range{pages}{8}
+    \endentry
+    \entry{maas1997observation}{article}{}
+      \name{author}{4}{}{%
+        {{hash=7fd28a52fd1d68656c4080133a9cf0e0}{%
+           family={Maas},
+           familyi={M\bibinitperiod},
+           given={Leo\bibnamedelima RM},
+           giveni={L\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=35d348ff908b64d6aa59ee79f5312fce}{%
+           family={Benielli},
+           familyi={B\bibinitperiod},
+           given={Dominique},
+           giveni={D\bibinitperiod}}}%
+        {{hash=c84d1c930e20a5be41cc4d966c70fbf4}{%
+           family={Sommeria},
+           familyi={S\bibinitperiod},
+           given={Joel},
+           giveni={J\bibinitperiod}}}%
+        {{hash=e8af28620460a730a42c3b1b973898f3}{%
+           family={Lam},
+           familyi={L\bibinitperiod},
+           given={Frans-Peter\bibnamedelima A},
+           giveni={F\bibinithyphendelim P\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Nature Publishing Group}%
+      }
+      \strng{namehash}{952bbe7cd8b067aba3b056b6f4234a0a}
+      \strng{fullhash}{89ceb5f20fece8c22d8e098f1a120553}
+      \strng{bibnamehash}{952bbe7cd8b067aba3b056b6f4234a0a}
+      \strng{authorbibnamehash}{952bbe7cd8b067aba3b056b6f4234a0a}
+      \strng{authornamehash}{952bbe7cd8b067aba3b056b6f4234a0a}
+      \strng{authorfullhash}{89ceb5f20fece8c22d8e098f1a120553}
+      \field{sortinit}{M}
+      \field{sortinithash}{2e5c2f51f7fa2d957f3206819bf86dc3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Nature}
+      \field{number}{6642}
+      \field{title}{Observation of an internal wave attractor in a confined, stably stratified fluid}
+      \field{volume}{388}
+      \field{year}{1997}
+      \field{pages}{557\bibrangedash 561}
+      \range{pages}{5}
+    \endentry
+    \entry{nemoto1992measurement}{article}{}
+      \name{author}{1}{}{%
+        {{hash=36e3dde0dd4cb7a7562a17dbc4f6c634}{%
+           family={Nemoto},
+           familyi={N\bibinitperiod},
+           given={Shojiro},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Optical Society of America}%
+      }
+      \strng{namehash}{36e3dde0dd4cb7a7562a17dbc4f6c634}
+      \strng{fullhash}{36e3dde0dd4cb7a7562a17dbc4f6c634}
+      \strng{bibnamehash}{36e3dde0dd4cb7a7562a17dbc4f6c634}
+      \strng{authorbibnamehash}{36e3dde0dd4cb7a7562a17dbc4f6c634}
+      \strng{authornamehash}{36e3dde0dd4cb7a7562a17dbc4f6c634}
+      \strng{authorfullhash}{36e3dde0dd4cb7a7562a17dbc4f6c634}
+      \field{sortinit}{N}
+      \field{sortinithash}{98cf339a479c0454fe09153a08675a15}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Applied optics}
+      \field{number}{31}
+      \field{title}{Measurement of the refractive index of liquid using laser beam displacement}
+      \field{volume}{31}
+      \field{year}{1992}
+      \field{pages}{6690\bibrangedash 6694}
+      \range{pages}{5}
+    \endentry
+    \entry{pan2012incremental}{article}{}
+      \name{author}{3}{}{%
+        {{hash=95c96de3d7a254ef14f49bff7df44179}{%
+           family={Pan},
+           familyi={P\bibinitperiod},
+           given={Bing},
+           giveni={B\bibinitperiod}}}%
+        {{hash=a3da850c0e3bb214c278561b13d5970c}{%
+           family={Dafang},
+           familyi={D\bibinitperiod},
+           given={Wu},
+           giveni={W\bibinitperiod}}}%
+        {{hash=e1d0dd705939917ca8e30e8d9417c811}{%
+           family={Yong},
+           familyi={Y\bibinitperiod},
+           given={Xia},
+           giveni={X\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{bfadad4672af727cc5917fe204889f8e}
+      \strng{fullhash}{bfadad4672af727cc5917fe204889f8e}
+      \strng{bibnamehash}{bfadad4672af727cc5917fe204889f8e}
+      \strng{authorbibnamehash}{bfadad4672af727cc5917fe204889f8e}
+      \strng{authornamehash}{bfadad4672af727cc5917fe204889f8e}
+      \strng{authorfullhash}{bfadad4672af727cc5917fe204889f8e}
+      \field{sortinit}{P}
+      \field{sortinithash}{bb5b15f2db90f7aef79bb9e83defefcb}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Optics and Lasers in Engineering}
+      \field{number}{4}
+      \field{title}{Incremental calculation for large deformation measurement using reliability-guided digital image correlation}
+      \field{volume}{50}
+      \field{year}{2012}
+      \field{pages}{586\bibrangedash 592}
+      \range{pages}{7}
+    \endentry
+    \entry{southwell1982ray}{article}{}
+      \name{author}{1}{}{%
+        {{hash=1f72057fef22b45f255e4c856c4d1335}{%
+           family={Southwell},
+           familyi={S\bibinitperiod},
+           given={WH},
+           giveni={W\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Optical Society of America}%
+      }
+      \strng{namehash}{1f72057fef22b45f255e4c856c4d1335}
+      \strng{fullhash}{1f72057fef22b45f255e4c856c4d1335}
+      \strng{bibnamehash}{1f72057fef22b45f255e4c856c4d1335}
+      \strng{authorbibnamehash}{1f72057fef22b45f255e4c856c4d1335}
+      \strng{authornamehash}{1f72057fef22b45f255e4c856c4d1335}
+      \strng{authorfullhash}{1f72057fef22b45f255e4c856c4d1335}
+      \field{sortinit}{S}
+      \field{sortinithash}{c319cff79d99c853d775f88277d4e45f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{JOSA}
+      \field{number}{7}
+      \field{title}{Ray tracing in gradient-index media}
+      \field{volume}{72}
+      \field{year}{1982}
+      \field{pages}{908\bibrangedash 911}
+      \range{pages}{4}
+    \endentry
+    \entry{sutton2009image}{book}{}
+      \name{author}{3}{}{%
+        {{hash=bf4a37057e0f25c8f302e7f0b5e79b92}{%
+           family={Sutton},
+           familyi={S\bibinitperiod},
+           given={Michael\bibnamedelima A},
+           giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=b749be7bfc6d1361a1276fc6fcafd9d3}{%
+           family={Orteu},
+           familyi={O\bibinitperiod},
+           given={Jean\bibnamedelima Jose},
+           giveni={J\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=91e92467d05211e6146cbacbaae86992}{%
+           family={Schreier},
+           familyi={S\bibinitperiod},
+           given={Hubert},
+           giveni={H\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer Science \& Business Media}%
+      }
+      \strng{namehash}{074bf2c96f8096efa8f240147c14c5e7}
+      \strng{fullhash}{074bf2c96f8096efa8f240147c14c5e7}
+      \strng{bibnamehash}{074bf2c96f8096efa8f240147c14c5e7}
+      \strng{authorbibnamehash}{074bf2c96f8096efa8f240147c14c5e7}
+      \strng{authornamehash}{074bf2c96f8096efa8f240147c14c5e7}
+      \strng{authorfullhash}{074bf2c96f8096efa8f240147c14c5e7}
+      \field{sortinit}{S}
+      \field{sortinithash}{c319cff79d99c853d775f88277d4e45f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Image correlation for shape, motion and deformation measurements: basic concepts, theory and applications}
+      \field{year}{2009}
+    \endentry
+    \entry{thevenaz2000interpolation}{article}{}
+      \name{author}{3}{}{%
+        {{hash=ad022c5f82d5204a42c028c8bf448a5b}{%
+           family={Th{é}venaz},
+           familyi={T\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod}}}%
+        {{hash=8b9de0e878ad9bd3c62bdbe9188d5194}{%
+           family={Blu},
+           familyi={B\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod}}}%
+        {{hash=172c41094560b83a54710cded167b6a6}{%
+           family={Unser},
+           familyi={U\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{c93046417b380b8c9b9984bf189c462f}
+      \strng{fullhash}{c93046417b380b8c9b9984bf189c462f}
+      \strng{bibnamehash}{c93046417b380b8c9b9984bf189c462f}
+      \strng{authorbibnamehash}{c93046417b380b8c9b9984bf189c462f}
+      \strng{authornamehash}{c93046417b380b8c9b9984bf189c462f}
+      \strng{authorfullhash}{c93046417b380b8c9b9984bf189c462f}
+      \field{extraname}{1}
+      \field{sortinit}{T}
+      \field{sortinithash}{51f9faf24c60c62ca764a77f78cf5666}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{{IEEE} Transactions on Medical Imaging}
+      \field{month}{7}
+      \field{number}{7}
+      \field{title}{Interpolation Revisited}
+      \field{volume}{19}
+      \field{year}{2000}
+      \field{pages}{739\bibrangedash 758}
+      \range{pages}{20}
+    \endentry
+    \entry{thevenaz2000image}{article}{}
+      \name{author}{3}{}{%
+        {{hash=9b66e3499c160beeac370a347c7859db}{%
+           family={Th{é}venaz},
+           familyi={T\bibinitperiod},
+           given={Philippe},
+           giveni={P\bibinitperiod}}}%
+        {{hash=1252ed25137fd3fb056e3e8d74b4c481}{%
+           family={Blu},
+           familyi={B\bibinitperiod},
+           given={Thierry},
+           giveni={T\bibinitperiod}}}%
+        {{hash=f8c2e37553f0e8266bcc62ccb15065f4}{%
+           family={Unser},
+           familyi={U\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Citeseer}%
+      }
+      \strng{namehash}{7dbcaf9cdf4e0b47a649968f70ef5333}
+      \strng{fullhash}{7dbcaf9cdf4e0b47a649968f70ef5333}
+      \strng{bibnamehash}{7dbcaf9cdf4e0b47a649968f70ef5333}
+      \strng{authorbibnamehash}{7dbcaf9cdf4e0b47a649968f70ef5333}
+      \strng{authornamehash}{7dbcaf9cdf4e0b47a649968f70ef5333}
+      \strng{authorfullhash}{7dbcaf9cdf4e0b47a649968f70ef5333}
+      \field{extraname}{2}
+      \field{sortinit}{T}
+      \field{sortinithash}{51f9faf24c60c62ca764a77f78cf5666}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Handbook of medical imaging, processing and analysis}
+      \field{number}{1}
+      \field{title}{Image interpolation and resampling}
+      \field{volume}{1}
+      \field{year}{2000}
+      \field{pages}{393\bibrangedash 420}
+      \range{pages}{28}
+    \endentry
+    \entry{unser1999splines}{article}{}
+      \name{author}{1}{}{%
+        {{hash=f8c2e37553f0e8266bcc62ccb15065f4}{%
+           family={Unser},
+           familyi={U\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{f8c2e37553f0e8266bcc62ccb15065f4}
+      \strng{fullhash}{f8c2e37553f0e8266bcc62ccb15065f4}
+      \strng{bibnamehash}{f8c2e37553f0e8266bcc62ccb15065f4}
+      \strng{authorbibnamehash}{f8c2e37553f0e8266bcc62ccb15065f4}
+      \strng{authornamehash}{f8c2e37553f0e8266bcc62ccb15065f4}
+      \strng{authorfullhash}{f8c2e37553f0e8266bcc62ccb15065f4}
+      \field{sortinit}{U}
+      \field{sortinithash}{77a6935510e008adcf5b555e7b4f0711}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Signal processing magazine}
+      \field{number}{6}
+      \field{title}{Splines: A perfect fit for signal and image processing}
+      \field{volume}{16}
+      \field{year}{1999}
+      \field{pages}{22\bibrangedash 38}
+      \range{pages}{17}
+    \endentry
+    \entry{weyl1954analysis}{article}{}
+      \name{author}{1}{}{%
+        {{hash=f22b2c1e3868396973625ac29ad5af29}{%
+           family={Weyl},
+           familyi={W\bibinitperiod},
+           given={FJ},
+           giveni={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{f22b2c1e3868396973625ac29ad5af29}
+      \strng{fullhash}{f22b2c1e3868396973625ac29ad5af29}
+      \strng{bibnamehash}{f22b2c1e3868396973625ac29ad5af29}
+      \strng{authorbibnamehash}{f22b2c1e3868396973625ac29ad5af29}
+      \strng{authornamehash}{f22b2c1e3868396973625ac29ad5af29}
+      \strng{authorfullhash}{f22b2c1e3868396973625ac29ad5af29}
+      \field{sortinit}{W}
+      \field{sortinithash}{1af34bd8c148ffb32de1494636b49713}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Physical measurements in gas dynamics and combustion. Princeton University Press, Princeton, New Jersey}
+      \field{title}{Analysis of optical methods}
+      \field{year}{1954}
+      \field{pages}{3\bibrangedash 25}
+      \range{pages}{23}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
