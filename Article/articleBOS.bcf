@@ -2182,21 +2182,22 @@
     <bcf:datasource type="file" datatype="bibtex">articleBOS.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1">nemoto1992measurement</bcf:citekey>
-    <bcf:citekey order="2">holm2011geometric</bcf:citekey>
-    <bcf:citekey order="3">weyl1954analysis</bcf:citekey>
-    <bcf:citekey order="3">dalziel2000whole</bcf:citekey>
+    <bcf:citekey order="1">dalziel2000whole</bcf:citekey>
+    <bcf:citekey order="2">nemoto1992measurement</bcf:citekey>
+    <bcf:citekey order="3">holm2011geometric</bcf:citekey>
+    <bcf:citekey order="4">weyl1954analysis</bcf:citekey>
     <bcf:citekey order="4">dalziel2000whole</bcf:citekey>
-    <bcf:citekey order="5">southwell1982ray</bcf:citekey>
-    <bcf:citekey order="6">sutton2009image</bcf:citekey>
-    <bcf:citekey order="7">lu2000deformation</bcf:citekey>
-    <bcf:citekey order="8">thevenaz2000interpolation</bcf:citekey>
-    <bcf:citekey order="8">unser1999splines</bcf:citekey>
-    <bcf:citekey order="8">thevenaz2000image</bcf:citekey>
-    <bcf:citekey order="9">lewis1995industrial</bcf:citekey>
-    <bcf:citekey order="9">opencv_library</bcf:citekey>
-    <bcf:citekey order="10">pan2012incremental</bcf:citekey>
-    <bcf:citekey order="11">maas1997observation</bcf:citekey>
+    <bcf:citekey order="5">dalziel2000whole</bcf:citekey>
+    <bcf:citekey order="6">southwell1982ray</bcf:citekey>
+    <bcf:citekey order="7">sutton2009image</bcf:citekey>
+    <bcf:citekey order="8">lu2000deformation</bcf:citekey>
+    <bcf:citekey order="9">thevenaz2000interpolation</bcf:citekey>
+    <bcf:citekey order="9">unser1999splines</bcf:citekey>
+    <bcf:citekey order="9">thevenaz2000image</bcf:citekey>
+    <bcf:citekey order="10">lewis1995industrial</bcf:citekey>
+    <bcf:citekey order="10">opencv_library</bcf:citekey>
+    <bcf:citekey order="11">pan2012incremental</bcf:citekey>
+    <bcf:citekey order="12">maas1997observation</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">

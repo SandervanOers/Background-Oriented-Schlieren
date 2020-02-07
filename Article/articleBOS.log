@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7300 64-bit) (preloaded format=pdflatex 2020.2.7)  7 FEB 2020 13:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7300 64-bit) (preloaded format=pdflatex 2020.2.7)  7 FEB 2020 14:41
 entering extended mode
 **./articleBOS.tex
 (articleBOS.tex
@@ -1036,12 +1036,12 @@ Package biblatex Info: ... file 'articleBOS.bbl' found.
 (articleBOS.bbl)
 Package biblatex Info: Reference section=0 on input line 22.
 Package biblatex Info: Reference segment=0 on input line 22.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 29.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 32.
 
  ("C:\Program Files\MiKTeX 2.9\tex/latex/amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 29.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 32.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex/latex/amsfonts\umsb.fd"
@@ -1059,112 +1059,115 @@ File: schematicsetupangle.tex Graphic file (type tex)
 <Refsimplefrontal.png, id=18, 1365.1pt x 1033.8625pt>
 File: Refsimplefrontal.png Graphic file (type png)
 <use Refsimplefrontal.png>
-Package pdftex.def Info: Refsimplefrontal.png  used on input line 107.
+Package pdftex.def Info: Refsimplefrontal.png  used on input line 110.
 (pdftex.def)             Requested size: 193.50076pt x 146.53816pt.
 <deformedsimplefrontal.png, id=19, 1365.1pt x 1033.8625pt>
 File: deformedsimplefrontal.png Graphic file (type png)
 <use deformedsimplefrontal.png>
-Package pdftex.def Info: deformedsimplefrontal.png  used on input line 111.
+Package pdftex.def Info: deformedsimplefrontal.png  used on input line 114.
 (pdftex.def)             Requested size: 193.50076pt x 146.53816pt.
 <CCsimplefrontal.png, id=20, 1595.9625pt x 895.84688pt>
 File: CCsimplefrontal.png Graphic file (type png)
 <use CCsimplefrontal.png>
-Package pdftex.def Info: CCsimplefrontal.png  used on input line 115.
+Package pdftex.def Info: CCsimplefrontal.png  used on input line 118.
 (pdftex.def)             Requested size: 193.50076pt x 108.60422pt.
 <DXsimplefrontal.png, id=21, 1589.94pt x 895.84688pt>
 File: DXsimplefrontal.png Graphic file (type png)
 <use DXsimplefrontal.png>
-Package pdftex.def Info: DXsimplefrontal.png  used on input line 119.
+Package pdftex.def Info: DXsimplefrontal.png  used on input line 122.
 (pdftex.def)             Requested size: 193.50076pt x 109.02797pt.
 <DYsimplefrontal.png, id=22, 1581.65906pt x 895.84688pt>
 File: DYsimplefrontal.png Graphic file (type png)
 <use DYsimplefrontal.png>
-Package pdftex.def Info: DYsimplefrontal.png  used on input line 123.
+Package pdftex.def Info: DYsimplefrontal.png  used on input line 126.
 (pdftex.def)             Requested size: 193.50076pt x 109.58841pt.
 <nfromdxsimplefrontal.png, id=23, 1592.19844pt x 886.81313pt>
 File: nfromdxsimplefrontal.png Graphic file (type png)
 <use nfromdxsimplefrontal.png>
-Package pdftex.def Info: nfromdxsimplefrontal.png  used on input line 127.
+Package pdftex.def Info: nfromdxsimplefrontal.png  used on input line 130.
 (pdftex.def)             Requested size: 193.50076pt x 107.76614pt.
 <nfromdysimplefrontal.png, id=24, 1592.95125pt x 892.83563pt>
 File: nfromdysimplefrontal.png Graphic file (type png)
 <use nfromdysimplefrontal.png>
-Package pdftex.def Info: nfromdysimplefrontal.png  used on input line 131.
+Package pdftex.def Info: nfromdysimplefrontal.png  used on input line 134.
 (pdftex.def)             Requested size: 193.50076pt x 108.44351pt.
 <nsimplefrontal.png, id=25, 1604.99625pt x 877.02657pt>
 File: nsimplefrontal.png Graphic file (type png)
 <use nsimplefrontal.png>
-Package pdftex.def Info: nsimplefrontal.png  used on input line 135.
+Package pdftex.def Info: nsimplefrontal.png  used on input line 138.
 (pdftex.def)             Requested size: 193.50076pt x 105.7338pt.
 
 
-LaTeX Warning: Float too large for page by 10.12149pt on input line 140.
+LaTeX Warning: Float too large for page by 10.12149pt on input line 143.
 
 <dndx.png, id=26, 1927.2pt x 995.97093pt>
 File: dndx.png Graphic file (type png)
 <use dndx.png>
-Package pdftex.def Info: dndx.png  used on input line 149.
+Package pdftex.def Info: dndx.png  used on input line 152.
 (pdftex.def)             Requested size: 430.00462pt x 222.21452pt.
 <dndt.png, id=27, 1927.2pt x 995.97093pt>
 File: dndt.png Graphic file (type png)
 <use dndt.png>
-Package pdftex.def Info: dndt.png  used on input line 155.
+Package pdftex.def Info: dndt.png  used on input line 158.
 (pdftex.def)             Requested size: 430.00462pt x 222.21452pt.
 [3] [4 <./Refsimplefrontal.png (PNG copy)> <./deformedsimplefrontal.png (PNG co
 py)> <./CCsimplefrontal.png (PNG copy)> <./DXsimplefrontal.png (PNG copy)> <./D
 Ysimplefrontal.png (PNG copy)> <./nfromdxsimplefrontal.png (PNG copy)> <./nfrom
 dysimplefrontal.png (PNG copy)> <./nsimplefrontal.png (PNG copy)>] [5 <./dndx.p
-ng (PNG copy)> <./dndt.png (PNG copy)>] [6
+ng (PNG copy)> <./dndt.png (PNG copy)>] [6] [7
 
-] [7] [8] [9]
-<leastsquaresab.png, id=60, 1564.34438pt x 904.1278pt>
+] [8] [9] [10]
+<leastsquaresab.png, id=63, 1564.34438pt x 904.1278pt>
 File: leastsquaresab.png Graphic file (type png)
 <use leastsquaresab.png>
-Package pdftex.def Info: leastsquaresab.png  used on input line 366.
+Package pdftex.def Info: leastsquaresab.png  used on input line 369.
 (pdftex.def)             Requested size: 430.00462pt x 248.51865pt.
-<leastsquaresac.png, id=61, 1557.56906pt x 902.6222pt>
+<leastsquaresac.png, id=64, 1557.56906pt x 902.6222pt>
 File: leastsquaresac.png Graphic file (type png)
 <use leastsquaresac.png>
-Package pdftex.def Info: leastsquaresac.png  used on input line 370.
+Package pdftex.def Info: leastsquaresac.png  used on input line 373.
 (pdftex.def)             Requested size: 430.00462pt x 249.17908pt.
-<leastsquaresad.png, id=62, 1555.31062pt x 897.3525pt>
+<leastsquaresad.png, id=65, 1555.31062pt x 897.3525pt>
 File: leastsquaresad.png Graphic file (type png)
 <use leastsquaresad.png>
-Package pdftex.def Info: leastsquaresad.png  used on input line 374.
+Package pdftex.def Info: leastsquaresad.png  used on input line 377.
 (pdftex.def)             Requested size: 430.00462pt x 248.09402pt.
-<leastsquaresbc.png, id=63, 1557.56906pt x 908.64468pt>
+<leastsquaresbc.png, id=66, 1557.56906pt x 908.64468pt>
 File: leastsquaresbc.png Graphic file (type png)
 <use leastsquaresbc.png>
-Package pdftex.def Info: leastsquaresbc.png  used on input line 378.
+Package pdftex.def Info: leastsquaresbc.png  used on input line 381.
 (pdftex.def)             Requested size: 430.00462pt x 250.84166pt.
-<leastsquaresbd.png, id=64, 1555.31062pt x 903.375pt>
+<leastsquaresbd.png, id=67, 1555.31062pt x 903.375pt>
 File: leastsquaresbd.png Graphic file (type png)
 <use leastsquaresbd.png>
-Package pdftex.def Info: leastsquaresbd.png  used on input line 382.
+Package pdftex.def Info: leastsquaresbd.png  used on input line 385.
 (pdftex.def)             Requested size: 430.00462pt x 249.75908pt.
-<leastsquarescd.png, id=65, 1569.61406pt x 897.3525pt>
+<leastsquarescd.png, id=68, 1569.61406pt x 897.3525pt>
 File: leastsquarescd.png Graphic file (type png)
 <use leastsquarescd.png>
-Package pdftex.def Info: leastsquarescd.png  used on input line 386.
+Package pdftex.def Info: leastsquarescd.png  used on input line 389.
 (pdftex.def)             Requested size: 430.00462pt x 245.83476pt.
- [10] [11 <./leastsquaresab.png> <./leastsquaresac.png>] [12 <./leastsquaresad.
-png> <./leastsquaresbc.png>] [13 <./leastsquaresbd.png> <./leastsquarescd.png>]
- [14
+ [11] [12 <./leastsquaresab.png> <./leastsquaresac.png>] [13 <./leastsquaresad.
+png> <./leastsquaresbc.png>] [14 <./leastsquaresbd.png> <./leastsquarescd.png>]
+ [15
 
-] [15] [16] [17]
-(articleBOS.aux)
+] [16] [17]
+[18] (articleBOS.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package logreq Info: Writing requests to 'articleBOS.run.xml'.
 \openout1 = `articleBOS.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 25641 strings out of 481565
- 501082 string characters out of 2923409
- 1121975 words of memory out of 3000000
- 40417 multiletter control sequences out of 15000+200000
+ 25643 strings out of 481565
+ 501126 string characters out of 2923409
+ 1122995 words of memory out of 3000000
+ 40419 multiletter control sequences out of 15000+200000
  540546 words of font info for 56 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 67i,13n,81p,1190b,1612s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 67i,13n,81p,1299b,1616s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKT
@@ -1182,9 +1185,9 @@ onts/type1/public/amsfonts/cm/cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
 amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
 cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/
 msbm10.pfb>
-Output written on articleBOS.pdf (17 pages, 5549952 bytes).
+Output written on articleBOS.pdf (18 pages, 5551402 bytes).
 PDF statistics:
- 148 PDF objects out of 1000 (max. 8388607)
+ 151 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  93 words of extra memory for PDF output out of 10000 (max. 10000000)
 

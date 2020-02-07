@@ -7,8 +7,8 @@
 \usepackage{standalone}
 \usepackage{xcolor}
 \usepackage{enumitem}
-%\overfullrule=5pt
 \setlist{nosep}
+
 \usepackage{tikz}
 \usetikzlibrary{patterns}
 \usetikzlibrary{decorations.pathreplacing}
@@ -24,7 +24,9 @@
 \section{Abstract}
 
 \section{Introduction}
+Synthetic Schlieren \cite{dalziel2000whole} is used to obtain density gradient fields of stratified flows. Density fields can be obtained indirectly by Synthetic Schlieren, by solving a Poisson equation. 
 
+The two critical steps are: (1) To view the experimental setup under an angle and (2) To calibrate our model.
 
 Since we are working with fluids we use the Lorentz-Lorenz equation to relate the index of refraction $n$ to the density $\rho$,
 \begin{equation}
@@ -83,7 +85,7 @@ The angle $\theta_x$, the displacement $\Delta x$ and unknown index of refractio
 %The index of refraction of the glass plate $n_1$ is constant. The angle under which the light ray propagates changes instantaneously, obeying Snell's law
 %\begin{equation}
 %\label{eq:snelllaw}
-%n_0 \sin \theta_x = n_1 \sin \theta_2.
+%n_0 \sin \theta_x = n_1 \sin \theta_T.
 %\end{equation}
 %For a constant index of refraction in the water tank $n_2$ the position $x_6$ is
 %\begin{equation}
@@ -311,18 +313,18 @@ To intersect with a plane, the final position $\underline{p}$ must lie on that p
 Substituting this $l$ into (\ref{eq:linedef}) yields the location where each light rays intersects with the plane.
 
 \subsubsection{Snell's Law}
-To find the angle of incidence, $\theta_1$, between the incoming light ray and the plane, we compute
+To find the angle of incidence, $\theta_I$, between the incoming light ray and the plane, we compute
 \begin{equation}
-	\cos \theta_1 = \underline{\hat{n}} \cdot \underline{I}.
+	\cos \theta_I = \underline{\hat{n}} \cdot \underline{I}.
 \end{equation}
-We apply Snell's law (\ref{eq:snellslaw}) to find the angle of refraction, $\theta_2$. The index of refraction of the medium through which the incoming ray travels is $n_I$, the index of refraction of the medium through wich the outgoing ray travels is $n_T$. To find the direction cosines of the outgoing ray, $\underline{T}$, we calculate 
+We apply Snell's law (\ref{eq:snellslaw}) to find the angle of refraction, $\theta_T$. The index of refraction of the medium through which the incoming ray travels is $n_I$, the index of refraction of the medium through wich the outgoing ray travels is $n_T$. To find the direction cosines of the outgoing ray, $\underline{T}$, we calculate 
 \begin{align}
-	S &= \sign \cos \theta_1, \\
-	\sin \theta_2 &= \frac{n_I}{n_T} \sqrt{1-\cos^2 \theta_1}, \\
-	\cos \theta_2 &= \sqrt{1-\left(\frac{n_I}{n_T}\right)^2(1-\cos^2 \theta_1)} \\
-	\underline{T} &= \frac{n_I}{n_T} \underline{I} + \left(\frac{n_I}{n_T} \cos \theta_1 - S \cos\theta_2\right)\underline{\hat{n}},	
+	S &= \sign \cos \theta_I, \\
+	\sin \theta_T &= \frac{n_I}{n_T} \sqrt{1-\cos^2 \theta_I}, \\
+	\cos \theta_T &= \sqrt{1-\left(\frac{n_I}{n_T}\right)^2(1-\cos^2 \theta_I)} \\
+	\underline{T} &= \frac{n_I}{n_T} \underline{I} + \left(\frac{n_I}{n_T} \cos \theta_I - S \cos\theta_T\right)\underline{\hat{n}},	
 \end{align}
-where $S$, the sign of $\cos\theta_1$ ensures we stay in the right quadrant.
+where $S$, the sign of $\cos\theta_I$ ensures we stay in the right quadrant.
 
 \subsection{Displacements}
 Previous subsections combine to give the forward model: $\underline{X}(n,\underline{\alpha}, \underline{x})$. Given an index of refraction field $n$, parameters $\underline{\alpha}$ and coordinates $\underline{x} = (x,y)$, we can calculate the location on the screen where the light rays end up. $\underline{\alpha}$ are the parameters that define the planes $a$, $b$, $c$ and $L_m$. We use $L_m$ instead of $d$ since we want our parameters to be (linearly) independent. Also, $L_m$ has a clear geometric meaning.
@@ -350,7 +352,7 @@ Looking at our Forward Model (\ref{eq:ForwardModel}), we know
 The unknowns are the parameters $\underline{\alpha} = (a, b, c, L_m)$. Since we have only four parameters to estimate and many measurements (each grid point yields a separate equation), we have an over-determined system. We use a least-squares approach to find those $\underline{\alpha}$ that minimize the sum of squares of the residuals. The forward model depends nonlinearly on the parameters $\alpha$ and the measurements $\underline{\Delta x}$. For each measurement $\underline{\Delta x}$ we have a measure of reliability, the correlation coefficient, which we use as a weight $w$ in the least squares procedure
 \begin{equation}
 \label{eq:calmin} 
-\min_{\underline{\alpha}}  S = \min_{\underline{\alpha}} \sum_i w_i X_{j}(n_1, \underline{\alpha}, \underline{x}_i+\underline{\Delta x}_i) - X_{j}(n_0, \underline{\alpha}, \underline{x}_i)^2, 
+\min_{\underline{\alpha}}  S = \min_{\underline{\alpha}} \sum_i w_i \left(X_{j}(n_1, \underline{\alpha}, \underline{x}_i+\underline{\Delta x}_i) - X_{j}(n_0, \underline{\alpha}, \underline{x}_i)\right)^2, 
 \end{equation}
 with constraints (1) $L_c > 0$ and (2) $L_m \geq L_c + 2 L_g + L_t + L_s$, the experimental setup is in front of the camera; (3) $c < 0$, the unit normal vector of the planes points in the negative $z$-axis. Combining these constraints implies $d>0$. The sum is over all measured displacements. The weights $w_i$ are $0$ when $CC < 0.8$ and $1$ otherwise. We use only the displacements in the $x$-direction, since that is the direction with the largest angles and thus largest signal.
 
@@ -388,37 +390,9 @@ It seems that when we choose an initial condition that falls in the permissible 
 \end{figure}
 
 \clearpage
-%\begin{figure}[htbp]
-%	\begin{subfigure}{.5\linewidth}
-%		\centering \includegraphics[width = \textwidth]{leastsquaresab.png}
-%		\subcaption{$S(a,b)$}\label{fig:Sab}
-%	\end{subfigure}%
-%	\begin{subfigure}{.5\linewidth}
-%	\centering \includegraphics[width = \textwidth]{leastsquaresac.png}
-%	\subcaption{$S(a,c)$}\label{fig:Sac}
-%	\end{subfigure}\\
-%	\begin{subfigure}{.5\linewidth}
-%	\centering \includegraphics[width = \textwidth]{leastsquaresad.png}
-%	\subcaption{$S(a,d)$}\label{fig:SaLm}
-%	\end{subfigure}%
-%	\begin{subfigure}{.5\linewidth}
-%		\centering \includegraphics[width = \textwidth]{leastsquaresbc.png}
-%		\subcaption{$S(b,c)$}\label{fig:Sac}
-%	\end{subfigure}\\
-%	\begin{subfigure}{.5\linewidth}
-%	\centering \includegraphics[width = \textwidth]{leastsquaresbd.png}
-%	\subcaption{$S(b,d)$}\label{fig:SbLm}
-%	\end{subfigure}%
-%	\begin{subfigure}{.5\linewidth}
-%		\centering \includegraphics[width = \textwidth]{leastsquarescd.png}
-%		\subcaption{$S(c,d)$}\label{fig:ScLm}
-%	\end{subfigure}
-%	\caption{Calibration: $S$ as a function of $\underline{\alpha}$.}
-%	\label{fig:cal}
-%\end{figure}
 
 \section{Digital Image Correlation}
-Digital Image Correlation (DIC) is a well known technique \cite{sutton2009image} to obtain deformation maps from images. We use second-order shape functions \cite{lu2000deformation} to handle large nonlinear deformations. To attain sub-pixel accuracy we interpolate our images with B-splines \cite{thevenaz2000interpolation, unser1999splines, thevenaz2000image}. To obtain the deformations we optimize a Correlation Coefficient [SOURCE]. We solve this nonlinear least-squares problem  by (1) providing an initial guess and (2) solving an iterative scheme. As an initial guess we perform Template Matching \cite{lewis1995industrial,opencv_library} on a limited set of points to obtain rigid deformations with pixel accuracy. After applying DIC to obtain sub-pixel deformations, we use reliability guided DIC \cite{pan2012incremental} to determine the initial guesses. As iterative scheme we use the Levenberg–Marquardt algorithm. 
+Digital Image Correlation (DIC) is a well known technique \cite{sutton2009image} to obtain deformation maps from images. We use second-order shape functions \cite{lu2000deformation} to handle large nonlinear deformations. To attain sub-pixel accuracy we interpolate our images with B-splines \cite{thevenaz2000interpolation, unser1999splines, thevenaz2000image}. To obtain the deformations we optimize a Correlation Coefficient, the ZNSSD [SOURCE]. We solve this nonlinear least-squares problem  by (1) providing an initial guess and (2) solving an iterative scheme. As an initial guess we perform Template Matching \cite{lewis1995industrial,opencv_library} on a limited set of points to obtain rigid deformations with pixel accuracy. After applying DIC to obtain sub-pixel deformations, we use reliability guided DIC \cite{pan2012incremental} to determine the initial guesses. As iterative scheme we use the Levenberg–Marquardt algorithm. 
 
 \section{Experimental}
 Best practices to get good quality images
@@ -477,8 +451,12 @@ In the first application, in \ref{fig:0side}, we want to measure the background 
 \begin{subfigure}{.5\linewidth}
 %	\centering \includegraphics[width = \textwidth]{}
 		\subcaption{Correlation Coefficient from DIC}\label{fig:C0side}
+\end{subfigure} \\
+\begin{subfigure}{.5\linewidth}
+%	\centering \includegraphics[width = \textwidth]{}
+		\subcaption{$n$ profiles for Calibration and Deformed Images}\label{fig:nprofiles0side}
 \end{subfigure}
-\caption{The procedure for obtaining the index of refraction field $n$. We obtain three images: one Reference Image (\ref{fig:air0side}) filled with air, one Calibration Image (\ref{fig:fresh0side}) filled with water without salts and one Deformed Image (\ref{fig:twolayer0side}) filled with water with an unknown $n$-field. Applying DIC between the Reference Image and the Correlation image, we find the displacements $D=(\Delta x, \Delta y)$. Using these displacements $D$ in (\ref{eq:calmin}), we obtain the parameters $\underline{\alpha}$. After calibration, the resulting $n$-field is uniform (\ref{fig:ncalibration0side}). Applying DIC between the Reference Image and the Deformed Image, we find the displacements $\Delta x$ (\ref{fig:dx0side}) and $\Delta y$ (\ref{fig:dy0side}) with corresponding Correlation Coefficient (\ref{fig:C0side}).  Using these displacements in (\ref{eq:nmin}), we obtain the unknown index of refraction field $n$ (\ref{fig:ndeformed0side}).}
+\caption{The procedure for obtaining the index of refraction field $n$. We obtain three images: one Reference Image (\ref{fig:air0side}) filled with air, one Calibration Image (\ref{fig:fresh0side}) filled with water without salts and one Deformed Image (\ref{fig:twolayer0side}) filled with water with an unknown $n$-field. Applying DIC between the Reference Image and the Correlation image, we find the displacements $D=(\Delta x, \Delta y)$. Using these displacements $D$ in (\ref{eq:calmin}), we obtain the parameters $\underline{\alpha}$. After calibration, the resulting $n$-field is uniform (\ref{fig:ncalibration0side}). Applying DIC between the Reference Image and the Deformed Image, we find the displacements $\Delta x$ (\ref{fig:dx0side}) and $\Delta y$ (\ref{fig:dy0side}) with corresponding Correlation Coefficient (\ref{fig:C0side}).  Using these displacements in (\ref{eq:nmin}), we obtain the unknown index of refraction field $n$ (\ref{fig:ndeformed0side}). Horizontally averaging the index of refraction fields $n$ yields the profiles in \ref{fig:nprofiles0side}.}
 \label{fig:0side}
 \end{figure}
 
@@ -516,7 +494,7 @@ we determined the buoyancy frequency $N$, obtained from our new method.
 \begin{subfigure}{.5\linewidth}
 %		\centering \includegraphics[width = \textwidth]{}
 		\subcaption{Background Density $\rho_0$ for Deformed Image}\label{fig:stratrho0deformed0side}
-\end{subfigure}
+\end{subfigure} 
 \caption{Determining the background density for a continuously stratified fluid. After taking three images, with the Deformed Image \ref{fig:strat0side}, we obtain the displacements $\Delta x$ in Figure \ref{fig:stratdx0side} and $\Delta y$ in Figure \ref{fig:stratdy0side} from DIC. After calibration we obtain the index of refraction field $n$ in Figure \ref{fig:stratndeformed0side}. Using the Lorentz-Lorenz relation we obtain the density profile \ref{fig:stratrho0deformed0side} with buoyancy frequency $N$ of NUMBER. }
 \label{figs:strat0side}
 \end{figure}
