@@ -24,11 +24,13 @@
 \section{Abstract}
 
 \section{Introduction}
+
+
 Synthetic Schlieren \cite{dalziel2000whole} is used to obtain density gradient fields of stratified flows. Density fields can be obtained indirectly by Synthetic Schlieren, by solving a Poisson equation. 
 
 The two critical steps are: (1) To view the experimental setup under an angle and (2) To calibrate our model.
 
-Since we are working with fluids we use the Lorentz-Lorenz equation to relate the index of refraction $n$ to the density $\rho$,
+Since we are working with fluids we use the Lorentz-Lorenz equation to relate the index of refraction $n$ to the density $\rho$ \cite{lorentz1916theory, tan2015dependence},
 \begin{equation}
  	\frac{n^2-1}{n^2+2} \frac{1}{\rho} = \mbox{ constant}.
 \end{equation}
@@ -392,7 +394,30 @@ It seems that when we choose an initial condition that falls in the permissible 
 \clearpage
 
 \section{Digital Image Correlation}
-Digital Image Correlation (DIC) is a well known technique \cite{sutton2009image} to obtain deformation maps from images. We use second-order shape functions \cite{lu2000deformation} to handle large nonlinear deformations. To attain sub-pixel accuracy we interpolate our images with B-splines \cite{thevenaz2000interpolation, unser1999splines, thevenaz2000image}. To obtain the deformations we optimize a Correlation Coefficient, the ZNSSD [SOURCE]. We solve this nonlinear least-squares problem  by (1) providing an initial guess and (2) solving an iterative scheme. As an initial guess we perform Template Matching \cite{lewis1995industrial,opencv_library} on a limited set of points to obtain rigid deformations with pixel accuracy. After applying DIC to obtain sub-pixel deformations, we use reliability guided DIC \cite{pan2012incremental} to determine the initial guesses. As iterative scheme we use the Levenberg–Marquardt algorithm. 
+Digital Image Correlation (DIC) is a well known technique \cite{sutton2009image} to obtain deformation maps from images. We use second-order shape functions \cite{lu2000deformation} to handle large nonlinear deformations. To attain sub-pixel accuracy we interpolate our images with B-splines \cite{thevenaz2000interpolation, unser1999splines, thevenaz2000image}. To obtain the deformations we optimize a Correlation Coefficient, the ZNSSD \cite{sutton2009image}. We solve this nonlinear least-squares problem  by (1) providing an initial guess and (2) solving an iterative scheme. As an initial guess we perform Template Matching \cite{lewis1995industrial,opencv_library} on a limited set of points to obtain rigid deformations with pixel accuracy. After applying DIC to obtain sub-pixel deformations, we use reliability guided DIC \cite{pan2012incremental} with a propagation function \cite{zhou2012propagation} to determine the initial guesses. As iterative scheme we use the Levenberg–Marquardt algorithm. 
+
+
+\begin{table}[htbp]
+\caption{Digital Image Correlation }
+\label{tab:esterrmagn}
+\centering
+\begin{tabular}{ll}
+Noise & \\
+Subset Size & \\
+Grid Size 	& \\
+Measurements Points & \\
+Total Number of Images & \\
+Number of Averaged Images & \\
+Displacements & \\
+\qquad Spatial Resolution & x pixels, x mm \\
+\qquad Resolution & x pixels (x mm) \\
+Index of Refraction & \\
+\qquad Smoothing Method & \\
+\qquad Resolution & x \\
+\end{tabular}
+\end{table}
+
+Table \ref{tab:esterrmagn} shows the typical DIC parameters used in our experiments. Additionally, the accuracy of the obtained displacements is given.
 
 \section{Experimental}
 Best practices to get good quality images
@@ -415,9 +440,9 @@ The unknown is the index of refraction field $n$. Unlike the simple model (\ref{
 with constraints $1.333 \leq n_i \leq 1.4$. For each measurement $\underline{\Delta x}_i$ we solve (\ref{eq:nmin}) to find $n_i$.
 
 \section{Results}
-In this section we show three applications of the new method: (1) A static two-layer fluid with large nonlinear deformations, (2) A static stratified fluid and (3) a dynamic fluid with wave attractor.
+In this section we show three applications of the new method: (1) A static two-layer fluid with large nonlinear deformations, (2) A static stratified fluid and (3) a dynamic fluid/flow? with wave attractor.
 
-In the first application, in \ref{fig:0side}, we want to measure the background density of a two-layer fluid system. We filled the bottom half of a tank with Wadden Sea water (with an index of refraction of 1.338, measured by a refractometer) and the upper half of the tank with tap water (with an index of refraction of 1.333, also measured by the refractometer). We kept the interface between the two layers sharp by filling the upper half of the tank through a sponge. The observed deformations of the dot pattern through this interface are large. Through the use of the second-order shape functions in the DIC procedure, we can still determine these deformations. Figure \ref{fig:ndeformed0side} shows the index of refraction field $n$. The expected theoretical density profile is an error function. We see this in Figure \ref{fig:ndeformed0side}.
+In the first application, in \ref{fig:0side}, we want to measure the background density of a two-layer fluid system. We filled the bottom half of a tank with Wadden Sea water (with an index of refraction of 1.338) \footnote{Measured by a refractometer: The Atago Urine Specific Gravity Refractometer with a refractive index range of 1.333-1.356 and a resolution of 0.0005.} and the upper half of the tank with tap water (with an index of refraction of 1.333). We kept the interface between the two layers sharp by filling the upper half of the tank through a sponge. The observed deformations of the dot pattern through this interface are large. Through the use of the second-order shape functions in the DIC procedure, we can still determine these deformations. Figure \ref{fig:ndeformed0side} shows the index of refraction field $n$. The expected theoretical density profile is an error function. We see this in Figure \ref{fig:ndeformed0side}.
 
 \begin{figure}[htbp]
 \begin{subfigure}{.5\linewidth}

@@ -128,6 +128,31 @@
       \field{volume}{2011}
       \field{year}{1995}
     \endentry
+    \entry{lorentz1916theory}{book}{}
+      \name{author}{1}{}{%
+        {{hash=3f3d7a77ccb649d6453d39b821adb9bf}{%
+           family={Lorentz},
+           familyi={L\bibinitperiod},
+           given={Hendrik\bibnamedelima Antoon},
+           giveni={H\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Teubner}%
+      }
+      \strng{namehash}{3f3d7a77ccb649d6453d39b821adb9bf}
+      \strng{fullhash}{3f3d7a77ccb649d6453d39b821adb9bf}
+      \strng{bibnamehash}{3f3d7a77ccb649d6453d39b821adb9bf}
+      \strng{authorbibnamehash}{3f3d7a77ccb649d6453d39b821adb9bf}
+      \strng{authornamehash}{3f3d7a77ccb649d6453d39b821adb9bf}
+      \strng{authorfullhash}{3f3d7a77ccb649d6453d39b821adb9bf}
+      \field{sortinit}{L}
+      \field{sortinithash}{dad3efd0836470093a7b4a7bb756eb8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The Theory of Electrons and Its Applications to the Phenomena of Light and Radiant Heart: A Course of Lectures Delivered in Columbia University, New York in March and April, 1906}
+      \field{volume}{29}
+      \field{year}{1916}
+    \endentry
     \entry{lu2000deformation}{article}{}
       \name{author}{2}{}{%
         {{hash=a3dc9bcfb5487bf8014255e1339e1a5a}{%
@@ -337,6 +362,40 @@
       \field{title}{Image correlation for shape, motion and deformation measurements: basic concepts, theory and applications}
       \field{year}{2009}
     \endentry
+    \entry{tan2015dependence}{article}{}
+      \name{author}{2}{}{%
+        {{hash=8f349ce30f7caf3d24455f3c3095ec3b}{%
+           family={Tan},
+           familyi={T\bibinitperiod},
+           given={Chan-Yuan},
+           giveni={C\bibinithyphendelim Y\bibinitperiod}}}%
+        {{hash=2d16897acca5490d2047120fe06b0dab}{%
+           family={Huang},
+           familyi={H\bibinitperiod},
+           given={Yao-Xiong},
+           giveni={Y\bibinithyphendelim X\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {ACS Publications}%
+      }
+      \strng{namehash}{fa5abfc8ba2cc3db55235fc84ea9f8e2}
+      \strng{fullhash}{fa5abfc8ba2cc3db55235fc84ea9f8e2}
+      \strng{bibnamehash}{fa5abfc8ba2cc3db55235fc84ea9f8e2}
+      \strng{authorbibnamehash}{fa5abfc8ba2cc3db55235fc84ea9f8e2}
+      \strng{authornamehash}{fa5abfc8ba2cc3db55235fc84ea9f8e2}
+      \strng{authorfullhash}{fa5abfc8ba2cc3db55235fc84ea9f8e2}
+      \field{sortinit}{T}
+      \field{sortinithash}{51f9faf24c60c62ca764a77f78cf5666}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Chemical \& Engineering Data}
+      \field{number}{10}
+      \field{title}{Dependence of refractive index on concentration and temperature in electrolyte solution, polar solution, nonpolar solution, and protein solution}
+      \field{volume}{60}
+      \field{year}{2015}
+      \field{pages}{2827\bibrangedash 2833}
+      \range{pages}{7}
+    \endentry
     \entry{thevenaz2000interpolation}{article}{}
       \name{author}{3}{}{%
         {{hash=ad022c5f82d5204a42c028c8bf448a5b}{%
@@ -467,6 +526,40 @@
       \field{year}{1954}
       \field{pages}{3\bibrangedash 25}
       \range{pages}{23}
+    \endentry
+    \entry{zhou2012propagation}{article}{}
+      \name{author}{2}{}{%
+        {{hash=6a9f4a5abdf0e9fc92ab8ad6229c0b5e}{%
+           family={Zhou},
+           familyi={Z\bibinitperiod},
+           given={Yihao},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=de8961713f7c102777141bed361d5d9a}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Yan\bibnamedelima Qiu},
+           giveni={Y\bibinitperiod\bibinitdelim Q\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{ceeb8a97a798e90bcbc913c138f6afe6}
+      \strng{fullhash}{ceeb8a97a798e90bcbc913c138f6afe6}
+      \strng{bibnamehash}{ceeb8a97a798e90bcbc913c138f6afe6}
+      \strng{authorbibnamehash}{ceeb8a97a798e90bcbc913c138f6afe6}
+      \strng{authornamehash}{ceeb8a97a798e90bcbc913c138f6afe6}
+      \strng{authorfullhash}{ceeb8a97a798e90bcbc913c138f6afe6}
+      \field{sortinit}{Z}
+      \field{sortinithash}{8f7b480688e809b50b6f6577b16f3db5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Optics and Lasers in Engineering}
+      \field{number}{12}
+      \field{title}{Propagation function for accurate initialization and efficiency enhancement of digital image correlation}
+      \field{volume}{50}
+      \field{year}{2012}
+      \field{pages}{1789\bibrangedash 1797}
+      \range{pages}{9}
     \endentry
   \enddatalist
 \endrefsection
