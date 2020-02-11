@@ -231,6 +231,35 @@
       \field{pages}{557\bibrangedash 561}
       \range{pages}{5}
     \endentry
+    \entry{meier2002computerized}{article}{}
+      \name{author}{1}{}{%
+        {{hash=a76bdb0a5d43effd212ceb5576097461}{%
+           family={Meier},
+           familyi={M\bibinitperiod},
+           given={GEA},
+           giveni={G\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{a76bdb0a5d43effd212ceb5576097461}
+      \strng{fullhash}{a76bdb0a5d43effd212ceb5576097461}
+      \strng{bibnamehash}{a76bdb0a5d43effd212ceb5576097461}
+      \strng{authorbibnamehash}{a76bdb0a5d43effd212ceb5576097461}
+      \strng{authornamehash}{a76bdb0a5d43effd212ceb5576097461}
+      \strng{authorfullhash}{a76bdb0a5d43effd212ceb5576097461}
+      \field{sortinit}{M}
+      \field{sortinithash}{2e5c2f51f7fa2d957f3206819bf86dc3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Experiments in fluids}
+      \field{number}{1}
+      \field{title}{Computerized background-oriented schlieren}
+      \field{volume}{33}
+      \field{year}{2002}
+      \field{pages}{181\bibrangedash 187}
+      \range{pages}{7}
+    \endentry
     \entry{nemoto1992measurement}{article}{}
       \name{author}{1}{}{%
         {{hash=36e3dde0dd4cb7a7562a17dbc4f6c634}{%
@@ -298,6 +327,35 @@
       \field{year}{2012}
       \field{pages}{586\bibrangedash 592}
       \range{pages}{7}
+    \endentry
+    \entry{raffel2015background}{article}{}
+      \name{author}{1}{}{%
+        {{hash=54a9ad924481051b623e25e9f428b33c}{%
+           family={Raffel},
+           familyi={R\bibinitperiod},
+           given={Markus},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{54a9ad924481051b623e25e9f428b33c}
+      \strng{fullhash}{54a9ad924481051b623e25e9f428b33c}
+      \strng{bibnamehash}{54a9ad924481051b623e25e9f428b33c}
+      \strng{authorbibnamehash}{54a9ad924481051b623e25e9f428b33c}
+      \strng{authornamehash}{54a9ad924481051b623e25e9f428b33c}
+      \strng{authorfullhash}{54a9ad924481051b623e25e9f428b33c}
+      \field{sortinit}{R}
+      \field{sortinithash}{b9c68a358aea118dfa887b6e902414a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Experiments in Fluids}
+      \field{number}{3}
+      \field{title}{Background-oriented schlieren (BOS) techniques}
+      \field{volume}{56}
+      \field{year}{2015}
+      \field{pages}{60}
+      \range{pages}{1}
     \endentry
     \entry{southwell1982ray}{article}{}
       \name{author}{1}{}{%

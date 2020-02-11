@@ -24,18 +24,20 @@
 \section{Abstract}
 
 \section{Introduction}
+The Background Oriented Schlieren technique (BOS) is an optical density visualization technique \cite{meier2002computerized,raffel2015background}. First described in \cite{dalziel2000whole}, where it was called Synthetic Schlieren (SS). This technique provides whole-field measurements of density gradients. One of the strengths of this technique was the simplicity of the experimental setup. Parts of the traditional, more extensive optical setups were replaced by digital image analysis. 
 
+In a typical BOS or SS application, we image perturbations, or waves, traveling through a fluid. Two or more images are compared using Digital Image Correlation (DIC) [refs]. This comparison yields the displacements between the images. These displacements are related to the changes in the gradients of the index of refraction using a ray tracing model. These gradients of the index of refraction are related to the gradients of the density by experimentally determined data [refs], by the Gladstone-Dale relation for gases [refs] or by the Lorentz-Lorenz equation for liquids [refs]. The density field is sometimes obtained from the gradients of the density perturbations by solving a Poisson equation [refs].
 
-Synthetic Schlieren \cite{dalziel2000whole} is used to obtain density gradient fields of stratified flows. Density fields can be obtained indirectly by Synthetic Schlieren, by solving a Poisson equation. 
+In this paper we present a modification to the BOS or SS technique to directly measure the density field. We take images of static situations:  (1) before filling a tank in the experimental setup with (stratified) fluids, (2) after filling the tank with a calibration fluid and (3) after filling the tank with (stratified) fluids. Then we take images of the dynamic situations: we image, as in BOS or SS, the perturbations, or waves, traveling through a fluid. We perform DIC to obtain displacements between the static images. Using a ray tracing model we relate these displacements to the index of refraction. These static images give us the background index of refraction. We also perform DIC to obtain the displacements between the dynamic images and a static image.
 
-The two critical steps are: (1) To view the experimental setup under an angle and (2) To calibrate our model.
+The challenge of this new method was to have enough accuracy in our measurements and models to ensure that our results were useful. Determining the value of the density is more sensitive to noise than determining the density gradients of perturbations in a BOS or SS application. We also wanted to preserve the experimental simplicity of the BOS or SS method. In Section \ref{sec:simmod} we perform a naive application of the BOS or SS technique to try to measure the index of refraction of homogeneous water. We analyze a simple ray tracing model to determine why our naive approach failed. We show that light rays, traveling from the background through the fluid to the camera, should not travel in nearly straight lines (as in BOS or SS) but should have large deflections. We should either rotate the fluid tank or rotate (and move) our camera. We should not be placing our camera right in front of the fluid tank. 
 
-Since we are working with fluids we use the Lorentz-Lorenz equation to relate the index of refraction $n$ to the density $\rho$ \cite{lorentz1916theory, tan2015dependence},
-\begin{equation}
- 	\frac{n^2-1}{n^2+2} \frac{1}{\rho} = \mbox{ constant}.
-\end{equation}
+To obtain the required accuracy in determining the density field we optimized all the steps in our method. In Section \ref{sec:formod} we derive our ray tracing model relating displacements to the index of refraction. We call this our forward model: given an index of refraction field and experimental parameters, we can compute the displacement field of our experimental setup. This ray tracing model is a 3D model that allows the camera to be placed under an angle with respect to the fluid tank. In Section \ref{sec:cal} we describe our calibration procedure. This calibration step allows us to determine very accurately certain parameters in our forward model.  In Section \ref{sec:DIC} we discuss DIC. We provide references to papers that discuss techniques that allowed us to get the most of our DIC procedure. We also provide information about our settings for a typical DIC calculation. In Section \ref{sec:exp} we briefly discuss the experimental setup. We also discuss best practices to get the most out of our experiments. In Section \ref{sec:invmod} we discuss how to solve our inverse model: how to obtain the index of refraction from the experimentally obtained displacements and our forward model. 
+
+The two novel critical steps are: (1) To view the experimental setup under an angle and (2) To calibrate our model. 
 
 \section{Simple Model}
+\label{sec:simmod}
 Consider the experimental set up as shown in Figure \ref{fig:schviepalira}. Light rays travel from a camera, through a water tank onto a background with a random dot pattern.  We describe the camera as a pinhole camera. We place the origin of the Cartesian coordinate system at the pinhole, the location where all light rays falling on the ccd sensor pass through. The $z$-axis is perpendicular to the experimental setup, i.e. such that a light ray traveling along the z-axis will not be refracted by the set-up. We want to determine the position where the light rays ends up, $x_6$. The light ray exits the camera with a position $x_1 = 0$ and an angle $\theta_x$. %The $x$-axis points opposite to gravity.
 
 %\begin{figure}[hpbt]
@@ -176,6 +178,7 @@ Concluding, Figures \ref{fig:dndx} and \ref{fig:dndt} indicate that the worst an
 
 \clearpage 
 \section{Forward Model}
+\label{sec:formod}
 In this section we build a forward model, relating an index of refraction field $n$, position on the ccd-sensor $\underline{x}$ and parameters $\underline{\alpha}$ to the coordinates $\underline{X}$ where the light rays hits the screen. We seek a model $\underline{X}(n, \underline{\alpha}, \underline{x})$. This is an extension of (\ref{eq:simplex6}). 
 
 In Subsection \ref{subsec:rayequ} we derive the equations governing 3-dimensional ray optics in an inhomogeneous medium. In Subsection \ref{subsec:RayPath} we use these equations to construct the full ray path from the camera through the tank to the screen.
@@ -339,6 +342,7 @@ We take our forward model twice, once for a known index of refraction (typically
 This equation holds for each measured displacement $\underline{\Delta x} = (\Delta x, \Delta y)$. From (\ref{eq:directioncosines}) we see that light rays with different locations on the ccd-sensor have different angles with which they leave the camera. Due to the different index of refraction in the tank, they do end up in the same location on the screen.
 
 \section{Calibration}
+\label{sec:cal}
 In our forward model in Section \ref{subsec:RayPath}, we have used the parameters describing a plane $a$, $b$ and $c$ and $L_m$. However, when setting up a new experiment, these are not known. To obtain these, we perform a calibration step. This calibration determines the parameters very precisely and gives us a lot of experimental freedom. For example, we do not have to align the camera, or even measure the position of the camera relative to the water tank. We use calibration for this.
 
 The calibration consists of performing one extra measurement (two in total): we take a reference image, the tank without water (filled with air) and a deformed image, the tank filled with water with a known index of refraction. The easiest is water without any salts. Performing DIC yields us the displacements $\Delta \underline{x}$. This allows us to determine the parameters $\underline{\alpha}.$
@@ -394,6 +398,7 @@ It seems that when we choose an initial condition that falls in the permissible 
 \clearpage
 
 \section{Digital Image Correlation}
+\label{sec:DIC}
 Digital Image Correlation (DIC) is a well known technique \cite{sutton2009image} to obtain deformation maps from images. We use second-order shape functions \cite{lu2000deformation} to handle large nonlinear deformations. To attain sub-pixel accuracy we interpolate our images with B-splines \cite{thevenaz2000interpolation, unser1999splines, thevenaz2000image}. To obtain the deformations we optimize a Correlation Coefficient, the ZNSSD \cite{sutton2009image}. We solve this nonlinear least-squares problem  by (1) providing an initial guess and (2) solving an iterative scheme. As an initial guess we perform Template Matching \cite{lewis1995industrial,opencv_library} on a limited set of points to obtain rigid deformations with pixel accuracy. After applying DIC to obtain sub-pixel deformations, we use reliability guided DIC \cite{pan2012incremental} with a propagation function \cite{zhou2012propagation} to determine the initial guesses. As iterative scheme we use the Levenberg–Marquardt algorithm. 
 
 
@@ -420,11 +425,13 @@ Index of Refraction & \\
 Table \ref{tab:esterrmagn} shows the typical DIC parameters used in our experiments. Additionally, the accuracy of the obtained displacements is given.
 
 \section{Experimental}
+\label{sec:exp}
 Best practices to get good quality images
 
 random dot pattern -> grey -> histogram no over/under saturation 
 
 \section{Inverse Model}
+\label{sec:invmod}
 Looking at our Forward Model (\ref{eq:ForwardModel}), we know
 \begin{enumerate}
 	\item $\underline{\alpha}$, the parameters of our experimental setup (after calibration), 
@@ -438,6 +445,11 @@ The unknown is the index of refraction field $n$. Unlike the simple model (\ref{
 \min_{n_i}  S = \min_{n_i} (X_{j}(n, \underline{\alpha}, \underline{x}_i+\underline{\Delta x}_i) - X_{j}(n_0, \underline{\alpha}, \underline{x}_i))^2, 
 \end{equation}
 with constraints $1.333 \leq n_i \leq 1.4$. For each measurement $\underline{\Delta x}_i$ we solve (\ref{eq:nmin}) to find $n_i$.
+
+Since we are working with liquids we use the Lorentz-Lorenz equation to relate the index of refraction $n$ to the density $\rho$ \cite{lorentz1916theory, tan2015dependence},
+\begin{equation}
+ 	\frac{n^2-1}{n^2+2} \frac{1}{\rho} = \mbox{ constant}.
+\end{equation}
 
 \section{Results}
 In this section we show three applications of the new method: (1) A static two-layer fluid with large nonlinear deformations, (2) A static stratified fluid and (3) a dynamic fluid/flow? with wave attractor.
@@ -485,7 +497,17 @@ In the first application, in \ref{fig:0side}, we want to measure the background 
 \label{fig:0side}
 \end{figure}
 
-In the second application, in Reference, we want to measure the background density of a continuously stratified fluid. We filled a tank through the double bucket method. After taking a Reference Image, a Calibration Image and a Deformed Image, we repositioned the camera for a Synthetic Schlieren measurement. After oscillating the tank, we measured the angles of the internal waves propagating in the fluid. Table Reference shows the forcing frequencies $\omega$ and angles $\beta$. Through
+\begin{table}[htbp]
+\caption{Angles $\beta$ of internal wave beams as a function of the forcing frequency $\omega$. These were determined by a Synthetic Schlieren setup.}
+\label{tab:SSintwav}
+\centering
+\begin{tabular}{llllll}
+$\omega$ & 1 & 1 & 1 & 1 & 1  \\
+$\beta$  & 1 & 1 & 1 & 1 & 1
+\end{tabular}
+\end{table}
+
+In the second application, in Reference, we want to measure the background density of a continuously stratified fluid. We filled a tank through the double bucket method. After taking a Reference Image, a Calibration Image and a Deformed Image, we repositioned the camera for a Synthetic Schlieren measurement. After oscillating the tank, we measured the angles of the internal waves propagating in the fluid. Table \ref{tab:SSintwav} shows the forcing frequencies $\omega$ and angles $\beta$. Through
 \begin{equation}
 	N = \omega \cos \beta
 \end{equation}
@@ -559,6 +581,11 @@ In the third application, we measured the density field of a wave attractor \cit
 definition planes -> doesn't have to be parallel. in particular 6th plane can be different, extra parameters to estimate in $\alpha$ (calibration). \\
 non plane water tank: measure without tank, with tank with air -> (calibration) shape of tank, field $L_t$
 -> doesn't even have to be planes
+
+Same experimental equipment as BOS or SS - Can apply this method. All complexity is in the image analysis. \\
+
+Need to say something about paraxial approximation
+
 
 \printbibliography[heading=bibintoc]
 
