@@ -13,7 +13,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{fix-cm}
 %
-\documentclass[draft]{svjour3}                     % onecolumn (standard format)
+\documentclass{svjour3}                     % onecolumn (standard format)
 %\documentclass[smallcondensed]{svjour3}     % onecolumn (ditto)
 %\documentclass[smallextended]{svjour3}       % onecolumn (second format)
 %\documentclass[twocolumn]{svjour3}          % twocolumn
@@ -79,7 +79,8 @@ placed here. }
 
 \institute{Alexander M. van Oers \at
              NIOZ Royal Netherlands Institute for Sea Research and Utrecht University, P.O. Box 59, 1790 AB Texel, The Netherlands \\
-             \emph{Present address:} Netherlands Defence Academy, The Netherlands  %  if needed
+             \emph{Present address:} Faculty of Military Sciences, Netherlands Defence Academy, \\
+             P.O. Box 10000, 1780 CA Den Helder, The Netherlands  %  if needed
            \and
            Leo R.M. Maas \at
               Imau, Inst. for Marine and Atmospheric research Utrecht, Utrecht University, Princetonplein 5, 3584 CC, Utrecht, The Netherlands
@@ -108,7 +109,7 @@ In this paper we present a modification to the BOS or SS technique to directly m
 
 The challenge of this new method is to have enough accuracy in our measurements and models to ensure that our results are useful. Determining the value of the density is more sensitive to noise than determining the density gradients of perturbations in a BOS or SS application. We also want to preserve the experimental simplicity of the BOS or SS method. In Section \ref{sec:simmod} we perform a naive application of the BOS or SS technique to try to measure the index of refraction of homogeneous water. We analyze a simple ray tracing model to determine why our naive approach failed. We show that light rays, traveling from the background through the fluid to the camera, should not travel in nearly straight lines (as in BOS or SS) but should have large deflections. We should either rotate the fluid tank or rotate (and move) our camera. We should not be placing our camera right in front of the fluid tank. 
 
-To obtain the required accuracy in determining the density field we optimize all the steps in our method. In Section \ref{sec:formod} we derive our ray tracing model relating displacements to the index of refraction. We call this our forward model: given an index of refraction field and experimental parameters, we can compute the displacement field of our experimental setup. This ray tracing model is a 3D model that allows the camera to be placed under an angle with respect to the fluid tank. In Section \ref{sec:cal} we describe our calibration procedure. This calibration determines accurately certain parameters in our forward model.  In Section \ref{sec:DIC} we discuss DIC. We provide references to papers that discuss techniques that allow us to get the most of our DIC procedure. We also provide information about our settings for a typical DIC calculation. In Section \ref{sec:exp} we briefly discuss the experimental setup. We also discuss best practices to get the most out of our experiments. In Section \ref{sec:invmod} we discuss how to solve our inverse model: how to obtain the index of refraction from the experimentally obtained displacements and our forward model. 
+To obtain the required accuracy in determining the density field we optimize all the steps in our method.  In Section \ref{sec:formod} we derive our ray tracing model relating displacements to the index of refraction. We call this our forward model: given an index of refraction field and experimental parameters, we can compute the displacement field of our experimental setup. This ray tracing model is a 3D model that allows the camera to be placed under an angle with respect to the fluid tank. In Section \ref{sec:cal} we describe our calibration procedure. This calibration determines accurately certain parameters in our forward model.  In Section \ref{sec:DIC} we discuss DIC. We provide references to papers that discuss techniques that allow us to get the most of our DIC procedure. We also provide information about our settings for a typical DIC calculation. In Section \ref{sec:exp} we briefly discuss the experimental setup. We also discuss best practices to get the most out of our experiments. In Section \ref{sec:invmod} we discuss how to solve our inverse model: how to obtain the index of refraction from the experimentally obtained displacements and our forward model. 
 
 \section{Simple Model}
 \label{sec:simmod}
@@ -208,105 +209,46 @@ Equations (\ref{eq:dexcon2}) and (\ref{eq:invdexcon2}) reveal a problem when det
 
 To solve this, we want $\theta_x$ to not approach zero. Then, according to (\ref{eq:dexcon2}), $\Delta x$ does not approach zero and our calculation of $n$ is not plagued by a fraction that approaches $0/0$. To achieve this, we place our camera at an angle $\alpha$ with respect to the water tank. The angle $\theta_x$ is replaced by $\alpha+\phi_x$, where $\phi_x$ is the angle of the light ray relative to the principal axis of the camera, which is at an angle $\alpha$. %For example, we position our camera at an angle of $\alpha=30^\circ$ relative to the tank. The camera has a viewing range of $[-4,4]^\circ$. Then $\phi_x$ varies from $-4^\circ$ to $4^\circ$.
 
-\begin{figure}[hpbt]
-	\includegraphics[width=\textwidth, keepaspectratio]{dndx.png}
-	\caption{Derivative of $n$ with respect to $\Delta x / L_t$ as a function of $\theta_x$.}	
-	\label{fig:dndx}
-\end{figure}
+%\begin{figure}[hpbt]
+%	\includegraphics[width=\textwidth, keepaspectratio]{dndx.png}
+%	\caption{Derivative of $n$ with respect to $\Delta x / L_t$ as a function of $\theta_x$.}	
+%	\label{fig:dndx}
+%\end{figure}
+%
+%\begin{figure}[hpbt]
+%	\includegraphics[width=\textwidth, keepaspectratio]{dndt.png}
+%	\caption{Derivative of $n$ with respect to $\theta_x$ as a function of $\theta_x$.}		
+%	\label{fig:dndt}
+%\end{figure}
 
 \begin{figure}[hpbt]
-	\includegraphics[width=\textwidth, keepaspectratio]{dndt.png}
-	\caption{Derivative of $n$ with respect to $\theta_x$ as a function of $\theta_x$.}		
-	\label{fig:dndt}
+	\includegraphics[width=\textwidth, keepaspectratio]{diffnsimple.png}
+	\caption{Derivative of $n$ with respect to $\Delta x / L_t$ and $\theta_x$ as a function of $\theta_x$.}		
+	\label{fig:diffnsimple}
 \end{figure}
 
-We want $\Delta x$ to vary with $n$ as much as possible. So, we want $n$ to vary with $\Delta x$ as little as possible.  To find the best angle $\theta_x$ to achieve this, we take the derivative of (\ref{eq:invdexcon2}) with respect to $\Delta x/L_t$ \cite{nemoto1992measurement}. Figure \ref{fig:dndx} show this derivative: $\partial n/\partial (\Delta x/L_t)$ decreases with increasing $\theta_x$. The worst possible angle to measure $\Delta x$ is $0^\circ$.
+We want $\Delta x$ to vary with $n$ as much as possible. So, we want $n$ to vary with $\Delta x$ as little as possible.  To find the best angle $\theta_x$ to achieve this, we take the derivative of (\ref{eq:invdexcon2}) with respect to $\Delta x/L_t$ \cite{nemoto1992measurement}. Figure \ref{fig:diffnsimple} shows this derivative: $\partial n/\partial (\Delta x/L_t)$ decreases with increasing $\theta_x$. The worst possible angle to measure $\Delta x$ is $0^\circ$.
 
-Since there is also an uncertainty in the angle, we want $n$ to vary with $\theta_x$ as little as possible. Figures \ref{fig:dndt} show this derivative. The magnitude of this derivative $\left|\partial n/\partial \theta_x\right|$ first decreases with increasing $\theta_x$, reaches a minimum, then increases again. The worst possible angles to measure at are $0^\circ$ and $90^\circ$. The minimum is reached at $31^\circ$. Any angle between $15^\circ$ and $55^\circ$ yields approximately the same sensitivity of $n$. 
+Since there is also an uncertainty in the angle, we want $n$ to vary with $\theta_x$ as little as possible. Figure \ref{fig:diffnsimple} also shows this derivative. The magnitude of this derivative $\left|\partial n/\partial \theta_x\right|$ first decreases with increasing $\theta_x$, reaches a minimum, then increases again. The worst possible angles to measure at are $0^\circ$ and $90^\circ$. The minimum is reached at $31^\circ$. Any angle between $15^\circ$ and $55^\circ$ yields approximately the same sensitivity of $n$. 
 
-Viewing at too large an angle (e.g. $70^\circ$) makes it hard to see through the water tank. 
+%Viewing at too large an angle (e.g. $70^\circ$) makes it hard to see through the water tank. 
 %As an example, we take an index of refraction $n=1.333$, an index of refraction $n_0 = 1$, a tank width $L_t=0.2[m]$ and an angle $\theta_x=30^\circ$. (\ref{eq:dexcon2}) yields a $\Delta x = 0.0345[m]$. From Figure (\ref{fig:dndx}), $\partial n/\partial (\Delta x/L_t) = 2.831$  at $\theta_x = 30^\circ$. Hence an error of $1[mm]$ in $\Delta x$ causes an error of $0.014$ in $n$. From Figure (\ref{fig:dndt}), $\partial n/\partial \theta_x = -1.466$  at $\theta_x = 30^\circ$. Hence an error of $0.1^\circ$ in $\theta_x$ causes an error of $-0.15$ in $n$. 
 
 %To perform accurate measurements we want to determine $n$ with at least 5 significant digits. To achieve this, we place our camera under an angle to minimize the effect of errors in $\Delta x$ and $\theta_x$ on the index of refraction. 
 
-Concluding, Figures \ref{fig:dndx} and \ref{fig:dndt} indicate that the worst angles to measure are close to zero. Angles between $15^\circ$ and $55^\circ$ result in small errors in $n$. 
+%Concluding, Figures \ref{fig:dndx} and \ref{fig:dndt} indicate that the worst angles to measure are close to zero. Angles between $15^\circ$ and $55^\circ$ result in small errors in $n$. 
  
 \section{Forward Model}
 \label{sec:formod}
-In this section we build a forward model, relating an index of refraction field $n$, position on the ccd-sensor $\underline{x}$ and parameters $\underline{\alpha}$ to the coordinates $\underline{X}$ where the light rays hits the screen. We seek a model $\underline{X}(n, \underline{\alpha}, \underline{x})$. 
-
-In Subsection \ref{subsec:rayequ} we derive the equations governing 3-dimensional ray optics in an inhomogeneous medium. In Subsection \ref{subsec:RayPath} give a mathematical description of all the objects our light rays encounter. In Subsection \ref{subsec:dis} we construct the full ray path from the camera through the tank to the screen
-
-\subsection{Ray Equation} 
-\label{subsec:rayequ}
-In this section we derive equations describing the paths light rays follow in inhomogeneous media. Inhomogeneous media have a index of refraction $n$ that varies with position.
-
-A curved ray path is a space curve, which we can describe by a parametric representation, $\underline{r}(\sigma) = ( x(\sigma), y(\sigma), z(\sigma))$, where $\sigma$ is an arbitrary parameter. The two most used parameters are (1) the path length long the ray $s$ and (2) the axial position $z$. We denote derivatives with respect to the parameter by dots, so $\dot{\underline{x}}(\sigma) = d\underline{x}(\sigma)/d\sigma$. All parameters are functions of $s$.
-
-The optical length $\mathcal{A}$ of a path $\underline{r}(s)$ taken by a ray of light passing from point $A$ to point $B$ in three-dimensional space is defined by
-\begin{equation}
-	\label{eq:defAA}
-	\mathcal{A} = \int_A^B \! n(\underline{r}(s)) \, \mathrm{d}s,
-\end{equation}
-where $n(\underline{r})$ is the index of refraction at the spatial point $\underline{r} \in \mathbb{R}^3$. We choose the element of arc length $\mathrm{d}s$ along the ray path $\underline{r}(s)$ through that point as $\mathrm{d}s^2 = \mathrm{d}\underline{r}(s) \cdot \mathrm{d}\underline{r}(s)$, so that $|\dot{\underline{r}}|=1$.
-
-Applying Fermat's principle \cite{holm2011geometric} yields the eikonal equation for ray optics
-\begin{equation}
-	\label{eq:axialrayequation}
-	\frac{\partial n}{\partial \underline{r}} = \frac{d}{ds} \left(n(\underline{r}) \frac{\mathrm{d}\underline{r}}{\mathrm{d} s} \right).
-\end{equation}
-%Another way to write this ray equation is
-%\begin{equation}
-	%\label{eq:axialrayequationvector}
-	%\nabla n = n \ddot{\underline{r}} + (\nabla n \cdot \dot{\underline{r}}) \dot{\underline{r}}
-%\end{equation}
-Only two of the component equations are independent, since $|\dot{\underline{r}}| = 1$.
- 
-To find the equations used in Synthetic Schlieren \cite{weyl1954analysis,dalziel2000whole}, we first derive the axial eikonal equation. Most optical instruments are designed to posses a line of sight (or primary direction of propagation of light) called the optical axis. In Synthetic Schlieren this optical axis coincides with the direction in which the refractive index $n$ does not vary. Choosing a Cartesian coordinate system such that the $z$-axis coincides with this optical axis, expresses the arc-length $\mathrm{d}s$ in terms of the increment along the optical axis, $\mathrm{d}z$. Our parametric description is now in terms of $z$: $\underline{r}(z) = (x(z), y(z), z)$. From our definition of $\mathrm{d}s$
-\begin{equation}
-	\mathrm{d}s(z) = \sqrt{dx^2(z) + dy^2(z) + dz^2} = \sqrt{1+\dot{x}^2 +\dot{y}^2} d z = \frac{1}{\gamma} d z,
-\end{equation}
-where $\dot{x} = d x / dz$ and $\dot{y} = dy/dz$ and 
-\begin{equation}
-	\label{eq:gamma}
-	\gamma = \frac{d z}{d s} = \frac{1}{\sqrt{1+\dot{x}^2+\dot{y}^2}} = \cos \theta\leq 1,
-\end{equation}
-where $\theta$ is the angle the ray makes with the $z$-axis. Using (\ref{eq:gamma}) in (\ref{eq:axialrayequation}) yields the axial eikonal equation %The position of a ray at a fixed value of $z$ is denoted by $[x,y]^T$.
-\begin{equation}
-	\gamma \frac{d}{dz} \left(n(\underline{r}(z)) \gamma \frac{d \underline{r}(z)}{d z} \right)  = \frac{\partial n(\underline{r}(z))}{\partial \underline{r}}.
-\end{equation}
-This yields three equations, one for each coordinate direction,
-\begin{equation}
-	\label{eq:axraycoord}
-	\begin{aligned}
-		\ddot{x}  = \frac{1}{\gamma^2} \frac{1}{n} \left(\frac{\partial n}{\partial x} - \dot{x} \frac{\partial n}{\partial z} \right), \quad
-		\ddot{y} = \frac{1}{\gamma^2} \frac{1}{n} \left(\frac{\partial n}{\partial y} - \dot{y} \frac{\partial n}{\partial z} \right), \quad
-		\frac{\partial n}{\partial z} = \gamma \frac{d}{dz}\left(n  \gamma\right).
-	\end{aligned}
-\end{equation}	
-Indeed, this system of equations shows that only two equations are independent. In Synthetic Schlieren the variation in $n$ in the $z$-direction, the optical axis, is assumed to be zero. Then (\ref{eq:axraycoord}) reduce to
-\begin{equation}
-	\label{eq:SSeq}
-		\ddot{x} = \left(1+\dot{x}^2+\dot{y}^2\right) \frac{1}{n} \frac{\partial n}{\partial x}, \qquad
-		\ddot{y} = \left(1+\dot{x}^2+\dot{y}^2\right) \frac{1}{n} \frac{\partial n}{\partial y},
-\end{equation}
-which are the starting point for the derivation of Synthetic Schlieren in \cite{dalziel2000whole}.  \footnote{The third equation in (\ref{eq:axraycoord}) reduces to $n \gamma = constant$.  To integrate (\ref{eq:SSeq}) we do not need to assume $\dot{x}$ and $\dot{y}$ are small. Experimentally, this means we can apply Synthetic Schlieren even when the angles of the light rays are large. }
-
-In the application presented in this paper, the optical axis does not coincide with the direction in which the refractive index $n$ does not vary. Our parametric description is in the arc-length $s$ and not in $z$.  We cannot solve (\ref{eq:axialrayequation}) analytically, so we solve it numerically. We first write our system of three second-order differential equations as a system of 6 first-order differential equations by introducing a quantity $\underline{T}$ \cite{southwell1982ray} such that (\ref{eq:axialrayequation}) becomes
-\begin{equation}
-	\label{eq:sys6foeq}
-		\frac{d \underline{r}}{d s} = \frac{\underline{T}}{n}, \qquad
-		\frac{d \underline{T}}{d s} = \nabla n.
-\end{equation}
-We apply a Runge–Kutta fourth-order method to solve this system. %Appendix \ref{app:RKS} gives the details.
-
-\subsection{Mathematical description of Geometrical Objects}
-\label{subsec:RayPath}
+In this section we build a forward model, relating an index of refraction field $n$, position on the ccd-sensor $\underline{x}$ and parameters $\underline{\alpha}$ to the coordinates $\underline{X} = (X,Y,Z)$ where the light rays hits the screen. We seek a model $\underline{X}(n, \underline{\alpha}, \underline{x})$. 
 To give our method flexibility and not making assumption on the relative configuration in our experimental setup, we model the light rays as traversing in a three-dimensional space and allow the different elements in the experimental setup to have any alignments.
+%In Subsection \ref{subsec:rayequ} we discuss the ray equation used in our model. In Subsection \ref{subsec:RayPath} give a mathematical description of all the objects our light rays encounter. In Subsection \ref{subsec:dis} we construct the full ray path from the camera through the tank to the screen
+
+In our experimental setup, static fluids are homogeneous or stratified in the direction of gravity. Then $\partial n / \partial x = 0$. When we relate the horizontal displacements $\Delta x$ to the refractive index $n$, we assume the light rays travel in straight lines. When viewing the experimental setup under an angle, we obtain large horizontal displacements $\Delta x$, while keeping the vertical displacements $\Delta y$ small. 
 
 We place our origin again at the pinhole. The $z$-axis aligns with the optical axis of the camera, i.e. the viewing direction of the camera. All the light entering the camera travels through the pinhole and falls on the ccd-sensor. The $x$- and $y$-axes span a plane through the origin parallel to this ccd-sensor. 
 
-\subsubsection{Plane Definition}
+\subsection{Plane Definition}
 The mathematical definition of a plane is
 \begin{equation}
 	\label{def:plane}
@@ -336,7 +278,7 @@ a x + b y + c z + d_i = 0, \qquad
 & d_1 = d + (a+b+c) (L_s+2L_g+L_t+L_c) = 0 
 \end{align}
 
-\subsubsection{Direction Cosines}
+\subsection{Direction Cosines}
 Each pixel in our image corresponds to a physical location on the ccd-sensor with coordinates $\underline{x} = (x,y, -L_f)$, where $L_f$ is the distance from the ccd-sensor to the pinhole in the $z$-direction. We calculate this distance with the thin lens equation
 \begin{equation}
  \frac{1}{L_f} + \frac{1}{L_m} = \frac{1}{f},
@@ -358,7 +300,7 @@ Each light ray travels in a straight line from these coordinates $\underline{x}$
 \end{align}
 At the pinhole, all light rays pass through the origin and have coordinates (0,0,0). Each light ray has direction cosines $(\alpha, \beta, \gamma)$.
 
-\subsubsection{Intersection Light Rays and Planes: Homogeneous medium}
+\subsection{Intersection Light Rays and Planes: Homogeneous medium}
 The equation governing light rays in homogeneous media is
 \begin{equation}
 	\label{eq:linedef}
@@ -372,19 +314,19 @@ To intersect with a plane, the final position $\underline{p}$ must lie on that p
 \end{equation}
 Substituting this $l$ into (\ref{eq:linedef}) yields the location where each light rays intersects with the plane.
 
-\subsubsection{Snell's Law}
+\subsection{Snell's Law}
 To find the angle of incidence, $\theta_I$, between the incoming light ray and the plane, we compute
 \begin{equation}
 	\cos \theta_I = \underline{\hat{n}} \cdot \underline{I}.
 \end{equation}
-We apply Snell's law (\ref{eq:snellslaw}) to find the angle of refraction, $\theta_T$. The index of refraction of the medium through which the incoming ray travels is $n_I$, the index of refraction of the medium through wich the outgoing ray travels is $n_T$. To find the direction cosines of the outgoing ray, $\underline{T}$, we calculate 
+We apply Snell's law (\ref{eq:snellslaw}) to find the angle of refraction, $\theta_T$. The index of refraction of the medium through which the incoming ray travels is $n_I$ and $n_T$ for the outgoing ray. To find the direction cosines of the outgoing ray, $\underline{T}$, we calculate 
 \begin{align}
 	S = \sign \cos \theta_I, &\qquad
 	\sin \theta_T = \frac{n_I}{n_T} \sqrt{1-\cos^2 \theta_I}, \\
 	\cos \theta_T = \sqrt{1-\left(\frac{n_I}{n_T}\right)^2(1-\cos^2 \theta_I)} &\qquad
 	\underline{T} = \frac{n_I}{n_T} \underline{I} + \left(\frac{n_I}{n_T} \cos \theta_I - S \cos\theta_T\right)\underline{\hat{n}},	
 \end{align}
-where $S$, the sign of $\cos\theta_I$ ensures we stay in the right quadrant.
+where $S$, the sign of $\cos\theta_I$, ensures we stay in the right quadrant.
 
 \subsection{Displacements}
 \label{subsec:dis}
@@ -399,7 +341,7 @@ This equation holds for each measured displacement $\underline{\Delta x} = (\Del
 
 \section{Calibration}
 \label{sec:cal}
-In our forward model in Section \ref{subsec:RayPath}, we have used the parameters $\underline{\alpha}$. However, when setting up a new experiment, these are not known. To obtain these, we perform a calibration step. This calibration determines the parameters very precisely and gives us a lot of experimental freedom. For example, we do not have to align the camera, or even measure the position of the camera relative to the water tank. We use calibration for this.
+In our forward model in (\ref{eq:ForwardModel}), we have used the parameters $\underline{\alpha}$. However, when setting up a new experiment, these are not known. To obtain these, we perform a calibration step. This calibration determines the parameters very precisely and gives us a lot of experimental freedom. For example, we do not have to align the camera, or even measure the position of the camera relative to the water tank. We use calibration for this.
 
 The calibration consists of performing one extra measurement (two in total): we take a reference image, the tank without water (filled with air) and a deformed image, the tank filled with water with a known index of refraction. The easiest is water without any salts. Performing DIC yields us the displacements $\underline{\Delta x}$. This allows us to determine the parameters $\underline{\alpha}.$
 

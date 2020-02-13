@@ -2192,24 +2192,19 @@
     <bcf:citekey order="7">venkatakrishnan2004density</bcf:citekey>
     <bcf:citekey order="7">verso2015background</bcf:citekey>
     <bcf:citekey order="8">nemoto1992measurement</bcf:citekey>
-    <bcf:citekey order="9">holm2011geometric</bcf:citekey>
-    <bcf:citekey order="10">weyl1954analysis</bcf:citekey>
-    <bcf:citekey order="10">dalziel2000whole</bcf:citekey>
-    <bcf:citekey order="11">dalziel2000whole</bcf:citekey>
-    <bcf:citekey order="12">southwell1982ray</bcf:citekey>
-    <bcf:citekey order="13">sutton2009image</bcf:citekey>
-    <bcf:citekey order="14">lu2000deformation</bcf:citekey>
-    <bcf:citekey order="15">thevenaz2000interpolation</bcf:citekey>
-    <bcf:citekey order="15">unser1999splines</bcf:citekey>
+    <bcf:citekey order="9">sutton2009image</bcf:citekey>
+    <bcf:citekey order="10">lu2000deformation</bcf:citekey>
+    <bcf:citekey order="11">thevenaz2000interpolation</bcf:citekey>
+    <bcf:citekey order="11">unser1999splines</bcf:citekey>
+    <bcf:citekey order="12">sutton2009image</bcf:citekey>
+    <bcf:citekey order="13">lewis1995industrial</bcf:citekey>
+    <bcf:citekey order="13">opencv_library</bcf:citekey>
+    <bcf:citekey order="14">pan2012incremental</bcf:citekey>
+    <bcf:citekey order="15">zhou2012propagation</bcf:citekey>
     <bcf:citekey order="16">sutton2009image</bcf:citekey>
-    <bcf:citekey order="17">lewis1995industrial</bcf:citekey>
-    <bcf:citekey order="17">opencv_library</bcf:citekey>
-    <bcf:citekey order="18">pan2012incremental</bcf:citekey>
-    <bcf:citekey order="19">zhou2012propagation</bcf:citekey>
-    <bcf:citekey order="20">sutton2009image</bcf:citekey>
-    <bcf:citekey order="21">lorentz1916theory</bcf:citekey>
-    <bcf:citekey order="21">tan2015dependence</bcf:citekey>
-    <bcf:citekey order="22">maas1997observation</bcf:citekey>
+    <bcf:citekey order="17">lorentz1916theory</bcf:citekey>
+    <bcf:citekey order="17">tan2015dependence</bcf:citekey>
+    <bcf:citekey order="18">maas1997observation</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">

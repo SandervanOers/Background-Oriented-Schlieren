@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7300 64-bit) (preloaded format=pdflatex 2020.2.7)  12 FEB 2020 14:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7300 64-bit) (preloaded format=pdflatex 2020.2.7)  13 FEB 2020 15:14
 entering extended mode
 **./experimentsInFluids.tex
 (experimentsInFluids.tex
@@ -1053,46 +1053,92 @@ Package biblatex Info: ... file 'experimentsInFluids.bbl' found.
 (experimentsInFluids.bbl)
 Package biblatex Info: Reference section=0 on input line 61.
 Package biblatex Info: Reference segment=0 on input line 61.
-LaTeX Font Info:    Calculating math sizes for size <9.5> on input line 92.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 92.
+LaTeX Font Info:    Calculating math sizes for size <9.5> on input line 93.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 93.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex/latex/amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 92.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 93.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex/latex/amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1{C:/Users/Admin/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2] [3]
-<Refsimplefrontal.png, id=25, 1365.1pt x 1033.8625pt>
-<deformedsimplefrontal.png, id=26, 1365.1pt x 1033.8625pt>
-<CCsimplefrontal.png, id=27, 1595.9625pt x 895.84688pt>
-<DXsimplefrontal.png, id=28, 1589.94pt x 895.84688pt>
-<DYsimplefrontal.png, id=29, 1581.65906pt x 895.84688pt>
-<nfromdxsimplefrontal.png, id=30, 1592.19844pt x 886.81313pt>
-<nfromdysimplefrontal.png, id=31, 1592.95125pt x 892.83563pt>
-<nsimplefrontal.png, id=32, 1604.99625pt x 877.02657pt>
-<dndx.png, id=33, 1927.2pt x 995.97093pt>
-<dndt.png, id=34, 1927.2pt x 995.97093pt>
- [4] [5]
-Underfull \vbox (badness 1968) has occurred while \output is active []
+) [1{C:/Users/Admin/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] (schema
+ticsetupangle.tex
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+)
+File: schematicsetupangle.tex Graphic file (type tex)
 
- [6]
-[7] [8] [9] [10] [11] [12] [13] [14] [15] [16] (experimentsInFluids.aux)
+[2] [3]
+<Refsimplefrontal.png, id=25, 1365.1pt x 1033.8625pt>
+File: Refsimplefrontal.png Graphic file (type png)
+<use Refsimplefrontal.png>
+Package pdftex.def Info: Refsimplefrontal.png  used on input line 171.
+(pdftex.def)             Requested size: 156.14894pt x 118.25278pt.
+<deformedsimplefrontal.png, id=26, 1365.1pt x 1033.8625pt>
+File: deformedsimplefrontal.png Graphic file (type png)
+<use deformedsimplefrontal.png>
+Package pdftex.def Info: deformedsimplefrontal.png  used on input line 175.
+(pdftex.def)             Requested size: 156.14894pt x 118.25278pt.
+<CCsimplefrontal.png, id=27, 1595.9625pt x 895.84688pt>
+File: CCsimplefrontal.png Graphic file (type png)
+<use CCsimplefrontal.png>
+Package pdftex.def Info: CCsimplefrontal.png  used on input line 179.
+(pdftex.def)             Requested size: 156.14894pt x 87.64886pt.
+<DXsimplefrontal.png, id=28, 1589.94pt x 895.84688pt>
+File: DXsimplefrontal.png Graphic file (type png)
+<use DXsimplefrontal.png>
+Package pdftex.def Info: DXsimplefrontal.png  used on input line 183.
+(pdftex.def)             Requested size: 156.14894pt x 87.97693pt.
+<DYsimplefrontal.png, id=29, 1581.65906pt x 895.84688pt>
+File: DYsimplefrontal.png Graphic file (type png)
+<use DYsimplefrontal.png>
+Package pdftex.def Info: DYsimplefrontal.png  used on input line 187.
+(pdftex.def)             Requested size: 156.14894pt x 88.4417pt.
+<nfromdxsimplefrontal.png, id=30, 1592.19844pt x 886.81313pt>
+File: nfromdxsimplefrontal.png Graphic file (type png)
+<use nfromdxsimplefrontal.png>
+Package pdftex.def Info: nfromdxsimplefrontal.png  used on input line 191.
+(pdftex.def)             Requested size: 156.14894pt x 86.96799pt.
+<nfromdysimplefrontal.png, id=31, 1592.95125pt x 892.83563pt>
+File: nfromdysimplefrontal.png Graphic file (type png)
+<use nfromdysimplefrontal.png>
+Package pdftex.def Info: nfromdysimplefrontal.png  used on input line 195.
+(pdftex.def)             Requested size: 156.14894pt x 87.51773pt.
+<nsimplefrontal.png, id=32, 1604.99625pt x 877.02657pt>
+File: nsimplefrontal.png Graphic file (type png)
+<use nsimplefrontal.png>
+Package pdftex.def Info: nsimplefrontal.png  used on input line 199.
+(pdftex.def)             Requested size: 156.14894pt x 85.31235pt.
+<diffnsimple.png, id=33, 1729.96312pt x 913.16156pt>
+File: diffnsimple.png Graphic file (type png)
+<use diffnsimple.png>
+Package pdftex.def Info: diffnsimple.png  used on input line 225.
+(pdftex.def)             Requested size: 347.0pt x 183.15855pt.
+ [4] [5 <./Refsimplefrontal.png (PNG copy)> <./deformedsimplefrontal.png (PNG c
+opy)> <./CCsimplefrontal.png (PNG copy)> <./DXsimplefrontal.png (PNG copy)> <./
+DYsimplefrontal.png (PNG copy)> <./nfromdxsimplefrontal.png (PNG copy)> <./nfro
+mdysimplefrontal.png (PNG copy)> <./nsimplefrontal.png (PNG copy)>]
+Underfull \vbox (badness 2698) has occurred while \output is active []
+
+ [6 <./diffnsimple.png>] [7] [8] [9] [10] [11] [12] [13] [14] (experimentsInFlu
+ids.aux)
 Package logreq Info: Writing requests to 'experimentsInFluids.run.xml'.
 \openout1 = `experimentsInFluids.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 25377 strings out of 481565
- 496970 string characters out of 2923409
- 1111235 words of memory out of 3000000
- 40152 multiletter control sequences out of 15000+200000
- 545256 words of font info for 72 fonts, out of 3000000 for 9000
+ 25605 strings out of 481565
+ 502605 string characters out of 2923409
+ 1119930 words of memory out of 3000000
+ 40381 multiletter control sequences out of 15000+200000
+ 545088 words of font info for 71 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 66i,10n,77p,1307b,2729s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 66i,13n,81p,1307b,2729s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbsy10.pfb><C:/P
 rogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program F
 iles/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Program Files/MiKT
@@ -1108,12 +1154,10 @@ KTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Program Files/MiKTeX 2.9/f
 onts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
 1/public/amsfonts/cm/cmsy9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
 amsfonts/cm/cmti8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
-cm/cmti9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt8.
-pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb
->
-Output written on experimentsInFluids.pdf (16 pages, 279013 bytes).
+cm/cmti9.pfb>
+Output written on experimentsInFluids.pdf (14 pages, 4281242 bytes).
 PDF statistics:
- 143 PDF objects out of 1000 (max. 8388607)
+ 128 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 63 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 58 words of extra memory for PDF output out of 10000 (max. 10000000)
 

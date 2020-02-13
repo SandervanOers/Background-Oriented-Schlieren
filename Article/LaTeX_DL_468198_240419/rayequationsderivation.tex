@@ -1,0 +1,63 @@
+
+\subsection{Ray Equation} 
+\label{subsec:rayequ}
+In this section we derive equations describing the paths light rays follow in inhomogeneous media. Inhomogeneous media have a index of refraction $n$ that varies with position.
+
+A curved ray path is a space curve, which we can describe by a parametric representation, $\underline{r}(\sigma) = ( x(\sigma), y(\sigma), z(\sigma))$, where $\sigma$ is an arbitrary parameter. The two most used parameters are (1) the path length long the ray $s$ and (2) the axial position $z$. We denote derivatives with respect to the parameter by dots, so $\dot{\underline{x}}(\sigma) = d\underline{x}(\sigma)/d\sigma$. All parameters are functions of $s$.
+
+The optical length $\mathcal{A}$ of a path $\underline{r}(s)$ taken by a ray of light passing from point $A$ to point $B$ in three-dimensional space is defined by
+\begin{equation}
+	\label{eq:defAA}
+	\mathcal{A} = \int_A^B \! n(\underline{r}(s)) \, \mathrm{d}s,
+\end{equation}
+where $n(\underline{r})$ is the index of refraction at the spatial point $\underline{r} \in \mathbb{R}^3$. We choose the element of arc length $\mathrm{d}s$ along the ray path $\underline{r}(s)$ through that point as $\mathrm{d}s^2 = \mathrm{d}\underline{r}(s) \cdot \mathrm{d}\underline{r}(s)$, so that $|\dot{\underline{r}}|=1$.
+
+Applying Fermat's principle \cite{holm2011geometric} yields the eikonal equation for ray optics
+\begin{equation}
+	\label{eq:axialrayequation}
+	\frac{\partial n}{\partial \underline{r}} = \frac{d}{ds} \left(n(\underline{r}) \frac{\mathrm{d}\underline{r}}{\mathrm{d} s} \right).
+\end{equation}
+%Another way to write this ray equation is
+%\begin{equation}
+	%\label{eq:axialrayequationvector}
+	%\nabla n = n \ddot{\underline{r}} + (\nabla n \cdot \dot{\underline{r}}) \dot{\underline{r}}
+%\end{equation}
+Only two of the component equations are independent, since $|\dot{\underline{r}}| = 1$.
+ 
+To find the equations used in Synthetic Schlieren \cite{weyl1954analysis,dalziel2000whole}, we first derive the axial eikonal equation. Most optical instruments are designed to posses a line of sight (or primary direction of propagation of light) called the optical axis. In Synthetic Schlieren this optical axis coincides with the direction in which the refractive index $n$ does not vary. Choosing a Cartesian coordinate system such that the $z$-axis coincides with this optical axis, expresses the arc-length $\mathrm{d}s$ in terms of the increment along the optical axis, $\mathrm{d}z$. Our parametric description is now in terms of $z$: $\underline{r}(z) = (x(z), y(z), z)$. From our definition of $\mathrm{d}s$
+\begin{equation}
+	\mathrm{d}s(z) = \sqrt{dx^2(z) + dy^2(z) + dz^2} = \sqrt{1+\dot{x}^2 +\dot{y}^2} d z = \frac{1}{\gamma} d z,
+\end{equation}
+where $\dot{x} = d x / dz$ and $\dot{y} = dy/dz$ and 
+\begin{equation}
+	\label{eq:gamma}
+	\gamma = \frac{d z}{d s} = \frac{1}{\sqrt{1+\dot{x}^2+\dot{y}^2}} = \cos \theta\leq 1,
+\end{equation}
+where $\theta$ is the angle the ray makes with the $z$-axis. Using (\ref{eq:gamma}) in (\ref{eq:axialrayequation}) yields the axial eikonal equation %The position of a ray at a fixed value of $z$ is denoted by $[x,y]^T$.
+\begin{equation}
+	\gamma \frac{d}{dz} \left(n(\underline{r}(z)) \gamma \frac{d \underline{r}(z)}{d z} \right)  = \frac{\partial n(\underline{r}(z))}{\partial \underline{r}}.
+\end{equation}
+This yields three equations, one for each coordinate direction,
+\begin{equation}
+	\label{eq:axraycoord}
+	\begin{aligned}
+		\ddot{x}  = \frac{1}{\gamma^2} \frac{1}{n} \left(\frac{\partial n}{\partial x} - \dot{x} \frac{\partial n}{\partial z} \right), \quad
+		\ddot{y} = \frac{1}{\gamma^2} \frac{1}{n} \left(\frac{\partial n}{\partial y} - \dot{y} \frac{\partial n}{\partial z} \right), \quad
+		\frac{\partial n}{\partial z} = \gamma \frac{d}{dz}\left(n  \gamma\right).
+	\end{aligned}
+\end{equation}	
+Indeed, this system of equations shows that only two equations are independent. In Synthetic Schlieren the variation in $n$ in the $z$-direction, the optical axis, is assumed to be zero. Then (\ref{eq:axraycoord}) reduce to
+\begin{equation}
+	\label{eq:SSeq}
+		\ddot{x} = \left(1+\dot{x}^2+\dot{y}^2\right) \frac{1}{n} \frac{\partial n}{\partial x}, \qquad
+		\ddot{y} = \left(1+\dot{x}^2+\dot{y}^2\right) \frac{1}{n} \frac{\partial n}{\partial y},
+\end{equation}
+which are the starting point for the derivation of Synthetic Schlieren in \cite{dalziel2000whole}.  \footnote{The third equation in (\ref{eq:axraycoord}) reduces to $n \gamma = constant$.  To integrate (\ref{eq:SSeq}) we do not need to assume $\dot{x}$ and $\dot{y}$ are small. Experimentally, this means we can apply Synthetic Schlieren even when the angles of the light rays are large. }
+
+In the application presented in this paper, the optical axis does not coincide with the direction in which the refractive index $n$ does not vary. Our parametric description is in the arc-length $s$ and not in $z$.  We cannot solve (\ref{eq:axialrayequation}) analytically, so we solve it numerically. We first write our system of three second-order differential equations as a system of 6 first-order differential equations by introducing a quantity $\underline{T}$ \cite{southwell1982ray} such that (\ref{eq:axialrayequation}) becomes
+\begin{equation}
+	\label{eq:sys6foeq}
+		\frac{d \underline{r}}{d s} = \frac{\underline{T}}{n}, \qquad
+		\frac{d \underline{T}}{d s} = \nabla n.
+\end{equation}
+We apply a Runge–Kutta fourth-order method to solve this system. %Appendix \ref{app:RKS} gives the details.
