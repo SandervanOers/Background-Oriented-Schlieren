@@ -21,7 +21,7 @@ int main(int argc, char** argv )
 		{
 			return -1;
 		}
-		std::cout << "\033[1;32mImages Loaded\033[0m\n" << std::endl;
+		std::cout << std::endl << "\033[1;32mImages Loaded\033[0m\n" << std::endl;
 		/*--------------------------------------------------------------------------*/
 		DIC(img, img1, inputvariables);
 		auto tr2= std::chrono::high_resolution_clock::now();
@@ -29,7 +29,6 @@ int main(int argc, char** argv )
 		<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(tr2-tr1).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(tr2-tr1).count() << " minutes\n"<<std::endl;
 	}
 	/*--------------------------------------------------------------------------*/
-
 	cv::Mat DX = load_matrix(inputvariables.path, "U0", 1);
 	cv::Mat DY = load_matrix(inputvariables.path, "V0", 1);
 	cv::Mat GridX = load_matrix(inputvariables.path, "GridX", 1);
@@ -37,12 +36,13 @@ int main(int argc, char** argv )
 	cv::Mat CC = load_matrix(inputvariables.path, "CorrelationCoefficient", 1);
 	std::cout << std::endl << "\033[1;32mLoading Matrices Completed\033[0m\n" << std::endl;   
 	/*--------------------------------------------------------------------------*/
-
 	if (inputvariables.ordering==1)
 	{
 		DX = - DX;
 		DY = - DY;
 	}
+	DX = DX - 0.2;
+	DY = DY + 0.3;
 	// Median Filter
 	/*
 	DispX.convertTo(DispX, CV_32F);
@@ -53,13 +53,12 @@ int main(int argc, char** argv )
 	DispY.convertTo(DispY, CV_64F);
 	 * */
 	// Gaussian Filter
-	//GaussianBlur(DispX, DispX, Size(5, 5), 0);
-	//GaussianBlur(DispY, DispY, Size(5, 5), 0);
+	GaussianBlur(DX, DX, Size(5, 5), 0);
+	GaussianBlur(DY, DY, Size(5, 5), 0);
 	// Store Again?
-	 
+	std::cout << std::endl << "\033[1;32mFiltering Completed\033[0m\n" << std::endl;  
 	/*--------------------------------------------------------------------------*/
 	auto tr3= std::chrono::high_resolution_clock::now();
-
 	ExperimentalSetupVariables experimentalsetupvariables;
 	// Camera
 	experimentalsetupvariables.focal_length = 50.0e-3;
@@ -69,9 +68,9 @@ int main(int argc, char** argv )
 	experimentalsetupvariables.n = 1.333;
 	// Lengths Small Tank
 	experimentalsetupvariables.L_c = 1e4;
-	experimentalsetupvariables.L_t = 0.191;//0.168;//0.168;//
-	experimentalsetupvariables.L_g = 0.004; //0.01
-	experimentalsetupvariables.L_s = 0.0;
+	experimentalsetupvariables.L_g = 0.8/100;//0.004; //0.01
+	experimentalsetupvariables.L_t = 0.168;//0.191;//15.0/100-2*experimentalsetupvariables.L_g;//13.8/100-2*experimentalsetupvariables.L_g;//0.168;//
+	experimentalsetupvariables.L_s = 0.0;//0.523;
 	//experimentalsetupvariables.Lengths{experimentalsetupvariables.L_c, experimentalsetupvariables.L_t, experimentalsetupvariables.L_g, experimentalsetupvariables.L_s};
 	// Lengths Full Tank
 	/*
@@ -81,9 +80,9 @@ int main(int argc, char** argv )
 	double L_s = 0.0;//0.523;
 	 * */
 	std::vector<double> Lengths{experimentalsetupvariables.L_c, experimentalsetupvariables.L_g, experimentalsetupvariables.L_t, experimentalsetupvariables.L_s};
-	double corr_cut_off = 0.98;
+	double corr_cut_off = 0.8;//
 	/*--------------------------------------------------------------------------*/
-	//CalibrationFigures(GridX, GridY, DX, DY, CC, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, inputvariables.path);
+	//CalibrationFigures2(GridX, GridY, DX, DY, CC, experimentalsetupvariables.focal_length, Lengths, experimentalsetupvariables.Distance_From_Pixels_To_Meters, experimentalsetupvariables.n_0, experimentalsetupvariables.n_1, experimentalsetupvariables.n, inputvariables.path);
 	/*--------------------------------------------------------------------------*/
 	CalibrationValues calibrationValues;
 	if (inputvariables.CalibrationNeeded==1)
@@ -98,6 +97,10 @@ int main(int argc, char** argv )
 		calibrationValues.meanGridY = CalibrationNumbers[5];
 		std::cout << std::endl << "\033[1;32mCalibration Completed\033[0m\n" << std::endl;   
 
+		for (auto i = CalibrationNumbers.begin(); i != CalibrationNumbers.end(); ++i)
+			std::cout << *i << ' ';
+			
+		std::cout << std::endl<< std::endl<< std::endl;
 		auto tr4= std::chrono::high_resolution_clock::now();
 		std::cout << "Calibration took " << std::chrono::duration_cast<std::chrono::milliseconds>(tr4-tr3).count()
 		<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(tr4-tr3).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(tr4-tr3).count() << " minutes"<<std::endl;
@@ -115,7 +118,6 @@ int main(int argc, char** argv )
 		calibrationValues.meanGridY = CalibrationNumbers.at<double>(5);
 		std::cout << std::endl << "\033[1;32mReading Calibration Completed\033[0m\n" << std::endl;   
 	}
-    
 	/*
 	//std::vector<double> CalibrationNumbers = Calibration(GridX, GridY, DX, DY, CC, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, inputvariables.path, corr_cut_off);
 	std::vector<double> CalibrationNumbers = Calibration2(GridX, GridY, DX, DY, CC, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, inputvariables.path, corr_cut_off);
@@ -248,7 +250,6 @@ cv::Mat load_matrix(std::string path, std::string filename, const int &skiplines
 		line++;
     }
 	numberofcols = static_cast<unsigned int>(line-skiplines);
-	
 	cv::Mat In(numberofcols, numberofrows, CV_64FC1);
 	line = 0;
     for(CSVIterator loop(file1); loop != CSVIterator(); ++loop)
