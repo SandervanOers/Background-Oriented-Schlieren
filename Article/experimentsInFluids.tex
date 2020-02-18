@@ -378,14 +378,14 @@ The calibration consists of performing one extra measurement (two in total): we 
 	\item $\underline{x}$, the coordinates on our image sensor; 
 	\item $\underline{\Delta x}$, the measured displacement (after DIC). 
 \end{enumerate}
-The unknowns are the parameters $\underline{\alpha} = (a, b, c, L_m, x_p^0, y_p^0)$. We use the unit normal vector $\underline{\hat{n}}$ in our forward model; the parameters $a$, $b$ and $c$ are normalized. When optimizing we only need to know the ratio between these parameters since we normalize afterwards. We set $a=1$ and find those $b$ and $c$ that optimize our solution. 
+The unknowns are the parameters $\underline{\alpha} = (a, b, c, L_m, x_p^0, y_p^0)$. We use the unit normal vector $\underline{\hat{n}}$ in our forward model; the parameters $a$, $b$ and $c$ are normalized. When optimizing we only need to know the ratio between these parameters since we normalize afterwards. We set $a = - 1$ and find those $b$ and $c$ that optimize our solution. 
 
 Since we have only five parameters to estimate and many measurements (each grid point yields a separate equation), we have an over-determined system. We use least-squares to find those $\underline{\alpha}$ that minimize the sum of squares of the residuals. The forward model depends nonlinearly on the parameters $\underline{\alpha}$ and the measurements $\underline{\Delta x}$. For each measurement $\underline{\Delta x}$ we have a measure of reliability, the correlation coefficient, which we use as a weight $w$ in the least squares procedure
 \begin{equation}
 \label{eq:calmin} 
 	 \min_{\underline{\alpha}} \sum_i w_i \left(X(n_1, \underline{\alpha}, \underline{x}_i+\underline{\Delta x}_i) - X(n_0, \underline{\alpha}, \underline{x}_i)\right)^2, 
 \end{equation}
-with constraints (1) $L_c > 0$ and (2) $L_m \geq L_c + 2 L_g + L_t + L_s$, the experimental setup is in front of the camera; (3) $c < 0$, the unit normal vector of the planes points in the negative $z$-axis. Combining these constraints implies $d>0$. The sum is over all measured displacements.We use only the displacements in the $x$-direction, since that is the direction with the largest angles and thus largest signal. % The weights $w_i$ are $0$ when $CC < 0.8$ and $1$ otherwise. 
+with constraints (1) $L_c > 0$ and (2) $L_m \geq L_c + 2 L_g + L_t + L_s$, the experimental setup is in front of the camera; (3) $c < 0$, the unit normal vector of the planes points in the negative $z$-axis. Combining these constraints implies $d>0$. The sum is over all measured displacements. We use only the displacements in the $x$-direction, since that is the direction with the largest angles and thus largest signal. % The weights $w_i$ are $0$ when $CC < 0.8$ and $1$ otherwise. 
 
 The distance $L_c$ between the camera and the front of water tank (plane 2) along the $\underline{\hat{n}}$ direction is obtained from the total distance $d$ between the camera and the screen along the $z$-direction and the distances $L_g, L_t$ and $L_s$. This ensures internal consistency in our model. We obtain $L_c$ from (\ref{eq:planedef1}).
 
