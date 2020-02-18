@@ -1,0 +1,2 @@
+usage: DisplayImage.out <Image_Path> SplineDegree SubsetLength GridLength ShapeFunction PropagationFunction OrderingImages xStart xEnd yStart yEnd NumberOfThreads MaxPixelYVertical Tolerance MinCorrCoeffIG DICNeeded CalibrationNeeded CalculateRefractionIndex
+./DIC test/1/A0F0 8 41 5 3 1 0 500 600 200 830 8 200 1e-8 0.8 1 1 1 
