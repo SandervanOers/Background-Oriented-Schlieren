@@ -34,15 +34,16 @@ int main(int argc, char** argv )
 	cv::Mat GridX = load_matrix(inputvariables.path, "GridX", 1);
 	cv::Mat GridY = load_matrix(inputvariables.path, "GridY", 1);
 	cv::Mat CC = load_matrix(inputvariables.path, "CorrelationCoefficient", 1);
-	std::cout << std::endl << "\033[1;32mLoading Matrices Completed\033[0m\n" << std::endl;   
+	std::cout << std::endl << "\033[1;32mLoading Matrices Completed\033[0m\n" << std::endl;
 	/*--------------------------------------------------------------------------*/
 	if (inputvariables.ordering==1)
 	{
 		DX = - DX;
 		DY = - DY;
 	}
-	DX = DX - 0.2;
-	DY = DY + 0.3;
+	/////DX = DX - 0.2;
+	/////DY = DY + 0.3;
+	//DY = DY + 0.6;
 	// Median Filter
 	/*
 	DispX.convertTo(DispX, CV_32F);
@@ -56,7 +57,7 @@ int main(int argc, char** argv )
 	GaussianBlur(DX, DX, Size(5, 5), 0);
 	GaussianBlur(DY, DY, Size(5, 5), 0);
 	// Store Again?
-	std::cout << std::endl << "\033[1;32mFiltering Completed\033[0m\n" << std::endl;  
+	std::cout << std::endl << "\033[1;32mFiltering Completed\033[0m\n" << std::endl;
 	/*--------------------------------------------------------------------------*/
 	auto tr3= std::chrono::high_resolution_clock::now();
 	ExperimentalSetupVariables experimentalsetupvariables;
@@ -87,6 +88,7 @@ int main(int argc, char** argv )
 	CalibrationValues calibrationValues;
 	if (inputvariables.CalibrationNeeded==1)
 	{
+		//std::vector<double> CalibrationNumbers = Calibration3(GridX, GridY, DX, DY, CC, experimentalsetupvariables.focal_length, Lengths, experimentalsetupvariables.Distance_From_Pixels_To_Meters, experimentalsetupvariables.n_0, experimentalsetupvariables.n_1, experimentalsetupvariables.n, inputvariables.path, corr_cut_off);
 		std::vector<double> CalibrationNumbers = Calibration2(GridX, GridY, DX, DY, CC, experimentalsetupvariables.focal_length, Lengths, experimentalsetupvariables.Distance_From_Pixels_To_Meters, experimentalsetupvariables.n_0, experimentalsetupvariables.n_1, experimentalsetupvariables.n, inputvariables.path, corr_cut_off);
 		//std::vector<double> CalibrationNumbers = Calibration(GridX, GridY, DX, DY, CC, experimentalsetupvariables.focal_length, Lengths, experimentalsetupvariables.Distance_From_Pixels_To_Meters, experimentalsetupvariables.n_0, experimentalsetupvariables.n_1, experimentalsetupvariables.n, inputvariables.path, corr_cut_off);
 		calibrationValues.a = CalibrationNumbers[0];
@@ -95,11 +97,11 @@ int main(int argc, char** argv )
 		calibrationValues.L_m = CalibrationNumbers[3];
 		calibrationValues.meanGridX = CalibrationNumbers[4];
 		calibrationValues.meanGridY = CalibrationNumbers[5];
-		std::cout << std::endl << "\033[1;32mCalibration Completed\033[0m\n" << std::endl;   
+		std::cout << std::endl << "\033[1;32mCalibration Completed\033[0m\n" << std::endl;
 
 		for (auto i = CalibrationNumbers.begin(); i != CalibrationNumbers.end(); ++i)
 			std::cout << *i << ' ';
-			
+
 		std::cout << std::endl<< std::endl<< std::endl;
 		auto tr4= std::chrono::high_resolution_clock::now();
 		std::cout << "Calibration took " << std::chrono::duration_cast<std::chrono::milliseconds>(tr4-tr3).count()
@@ -116,19 +118,28 @@ int main(int argc, char** argv )
 		calibrationValues.L_m = CalibrationNumbers.at<double>(3);
 		calibrationValues.meanGridX = CalibrationNumbers.at<double>(4);
 		calibrationValues.meanGridY = CalibrationNumbers.at<double>(5);
-		std::cout << std::endl << "\033[1;32mReading Calibration Completed\033[0m\n" << std::endl;   
+		std::cout << std::endl << "\033[1;32mReading Calibration Completed\033[0m\n" << std::endl;
 	}
 	/*
 	//std::vector<double> CalibrationNumbers = Calibration(GridX, GridY, DX, DY, CC, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, inputvariables.path, corr_cut_off);
 	std::vector<double> CalibrationNumbers = Calibration2(GridX, GridY, DX, DY, CC, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, inputvariables.path, corr_cut_off);
 	//std::vector<double> CalibrationNumbers = CalibrationExtended(GridX, GridY, DX, DY, CC, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, inputvariables.path);
 	*/
-
+    // Check Ls
+		double normPD = calculateNorm(calibrationValues.a, calibrationValues.b, calibrationValues.c);
+		double d = -calibrationValues.c/normPD*calibrationValues.L_m;
+		std::vector<double> PlaneDefinition{0, 0, 0, 0};
+		PlaneDefinition[0] = calibrationValues.a/normPD;
+		PlaneDefinition[1] = calibrationValues.b/normPD;
+		PlaneDefinition[2] = calibrationValues.c/normPD;
+		PlaneDefinition[3] = d;
+    //cv::Mat Lsi = CalculateLsi(GridX, GridY, calibrationValues.meanGridX, calibrationValues.meanGridY, DX, DY, experimentalsetupvariables.focal_length, Lengths, experimentalsetupvariables.Distance_From_Pixels_To_Meters, PlaneDefinition, experimentalsetupvariables.n_0, experimentalsetupvariables.n_1, experimentalsetupvariables.n, inputvariables.path);
+    //std::cout << Lsi << std::endl;
 
 	/*--------------------------------------------------------------------------*/
 	if (inputvariables.CalculateRefractionIndex == 1)
 	{
-	
+
 		double normPD = calculateNorm(calibrationValues.a, calibrationValues.b, calibrationValues.c);
 		double d = -calibrationValues.c/normPD*calibrationValues.L_m;
 		std::vector<double> PlaneDefinition{0, 0, 0, 0};
@@ -141,7 +152,7 @@ int main(int argc, char** argv )
 		Lengths[0] = experimentalsetupvariables.L_c;
 		Lengths[2] = experimentalsetupvariables.L_t;
 		//calculateNFigures(GridX, GridY, DX, DY, CC, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, inputvariables.path);
-		
+
 		auto tr5= std::chrono::high_resolution_clock::now();
 		//cv::Mat nfield = CalculateN(GridX, GridY, DX, DY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, inputvariables.path);
 		cv::Mat nfield = CalculateN2(GridX, GridY, calibrationValues.meanGridX, calibrationValues.meanGridY, DX, DY, experimentalsetupvariables.focal_length, Lengths, experimentalsetupvariables.Distance_From_Pixels_To_Meters, PlaneDefinition, experimentalsetupvariables.n_0, experimentalsetupvariables.n_1, inputvariables.path);
@@ -263,7 +274,7 @@ cv::Mat load_matrix(std::string path, std::string filename, const int &skiplines
 				In.at<double>(line-skiplines,i) =  std::stod(s);
 			}
 		}
-		line++;		
+		line++;
     }
 	return In;
 }

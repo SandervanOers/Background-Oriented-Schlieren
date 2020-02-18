@@ -856,10 +856,10 @@ extern void CalibrationFigures2(const cv::Mat &GridX, const cv::Mat &GridY, cons
 
 	double Lc_ini = c/(a+b+c)*Lm-L_s-2.0*L_g-L_t;
 	double Lc = Lc_ini;
-	
+
 	std::vector<double> Lengthsnew(Lengths.begin(), Lengths.end());
 	Lengthsnew[0] = Lc;
-	
+
     std::ofstream myfile;
     myfile.open(path+"/SfilemeanGridXmeanGridY.csv");
     myfile << "meanGridX meanGridY Lm S Lc Ltot a b c"<< std::endl;
@@ -876,7 +876,7 @@ extern void CalibrationFigures2(const cv::Mat &GridX, const cv::Mat &GridY, cons
 	}
 	myfile.close();
 	std::cout << std::endl << "\033[1;32mmeanGridX meanGridY Calibration Complete\033[0m\n" << std::endl;
-	
+
 	meanGridY = meanGridY_ini;
     std::ofstream myfileXLm;
     myfileXLm.open(path+"/SfilemeanGridXLm.csv");
@@ -899,7 +899,7 @@ extern void CalibrationFigures2(const cv::Mat &GridX, const cv::Mat &GridY, cons
 	}
 	myfileXLm.close();
 	std::cout << std::endl << "\033[1;32mmeanGridX Lm Calibration Complete\033[0m\n" << std::endl;
-	
+
 	meanGridX = meanGridX_ini;
     std::ofstream myfileYLm;
     myfileYLm.open(path+"/SfilemeanGridYLm.csv");
@@ -922,7 +922,7 @@ extern void CalibrationFigures2(const cv::Mat &GridX, const cv::Mat &GridY, cons
 	}
 	myfileYLm.close();
 	std::cout << std::endl << "\033[1;32mmeanGridY Lm Calibration Complete\033[0m\n" << std::endl;
-	
+
 	meanGridY = meanGridY_ini;
 	Lm = Lm_ini;
     std::ofstream myfileXa;
@@ -949,7 +949,7 @@ extern void CalibrationFigures2(const cv::Mat &GridX, const cv::Mat &GridY, cons
 	}
 	myfileXa.close();
 	std::cout << std::endl << "\033[1;32mmeanGridX a Calibration Complete\033[0m\n" << std::endl;
-	
+
 	meanGridX = meanGridX_ini;
 	Lm = Lm_ini;
     std::ofstream myfileYa;
@@ -976,7 +976,7 @@ extern void CalibrationFigures2(const cv::Mat &GridX, const cv::Mat &GridY, cons
 	}
 	myfileYa.close();
 	std::cout << std::endl << "\033[1;32mmeanGridY a Calibration Complete\033[0m\n" << std::endl;
-	
+
 	meanGridY = meanGridY_ini;
     std::ofstream myfileLma;
     myfileLma.open(path+"/SfilemeanGridLma.csv");
@@ -1002,7 +1002,7 @@ extern void CalibrationFigures2(const cv::Mat &GridX, const cv::Mat &GridY, cons
 	}
 	myfileLma.close();
 	std::cout << std::endl << "\033[1;32mmeanLm a Calibration Complete\033[0m\n" << std::endl;
-	
+
 	Lm = Lm_ini;
 	a = a_ini;
     std::ofstream myfileXc;
@@ -1029,7 +1029,7 @@ extern void CalibrationFigures2(const cv::Mat &GridX, const cv::Mat &GridY, cons
 	}
 	myfileXc.close();
 	std::cout << std::endl << "\033[1;32mmeanmeanGridX c Calibration Complete\033[0m\n" << std::endl;
-	
+
 	meanGridX = meanGridX_ini;
     std::ofstream myfileYc;
     myfileYc.open(path+"/SfilemeanGridYc.csv");
@@ -1055,7 +1055,7 @@ extern void CalibrationFigures2(const cv::Mat &GridX, const cv::Mat &GridY, cons
 	}
 	myfileYc.close();
 	std::cout << std::endl << "\033[1;32mmeanmeanGridY c Calibration Complete\033[0m\n" << std::endl;
-	
+
 	meanGridY = meanGridY_ini;
     std::ofstream myfileLmc;
     myfileLmc.open(path+"/SfilemeanGridLmc.csv");
@@ -1107,7 +1107,7 @@ extern void CalibrationFigures2(const cv::Mat &GridX, const cv::Mat &GridY, cons
 	}
 	myfileac.close();
 	std::cout << std::endl << "\033[1;32mmeanmeana c Calibration Complete\033[0m\n" << std::endl;
-	
+
 	a = a_ini;
 	c = c_ini;
     std::ofstream myfileXb;
@@ -1134,7 +1134,7 @@ extern void CalibrationFigures2(const cv::Mat &GridX, const cv::Mat &GridY, cons
 	}
 	myfileXb.close();
 	std::cout << std::endl << "\033[1;32mmeanGridX b Calibration Complete\033[0m\n" << std::endl;
-	
+
 	meanGridX = meanGridX_ini;
 	a = a_ini;
 	Lm = Lm_ini;
@@ -1163,7 +1163,7 @@ extern void CalibrationFigures2(const cv::Mat &GridX, const cv::Mat &GridY, cons
 	}
 	myfileYb.close();
 	std::cout << std::endl << "\033[1;32mmeanGridY b Calibration Complete\033[0m\n" << std::endl;
-	
+
 	meanGridY = meanGridY_ini;
 	meanGridX = meanGridX_ini;
 	a = a_ini;
@@ -1192,8 +1192,8 @@ extern void CalibrationFigures2(const cv::Mat &GridX, const cv::Mat &GridY, cons
 		}
 	}
 	myfileLmb.close();
-	std::cout << std::endl << "\033[1;32mLm b Calibration Complete\033[0m\n" << std::endl;	
-	
+	std::cout << std::endl << "\033[1;32mLm b Calibration Complete\033[0m\n" << std::endl;
+
 	meanGridY = meanGridY_ini;
 	meanGridX = meanGridX_ini;
 	a = a_ini;
@@ -1223,7 +1223,7 @@ extern void CalibrationFigures2(const cv::Mat &GridX, const cv::Mat &GridY, cons
 	}
 	myfileab.close();
 	std::cout << std::endl << "\033[1;32ma b Calibration Complete\033[0m\n" << std::endl;
-	
+
 	meanGridY = meanGridY_ini;
 	meanGridX = meanGridX_ini;
 	a = a_ini;
@@ -1252,7 +1252,7 @@ extern void CalibrationFigures2(const cv::Mat &GridX, const cv::Mat &GridY, cons
 		}
 	}
 	myfilebc.close();
-	std::cout << std::endl << "\033[1;32ma b Calibration Complete\033[0m\n" << std::endl;	
+	std::cout << std::endl << "\033[1;32ma b Calibration Complete\033[0m\n" << std::endl;
 }
 
 /*--------------------------------------------------------------------------*/
@@ -1293,8 +1293,8 @@ extern void CalibrationFigures(const cv::Mat &GridX, const cv::Mat &GridY, const
 	double c_ini = -0.439;
 	double L_t_ini = 0.168;
 	L_t = L_t_ini;
-	
-	
+
+
 	outputcount = 1;
     std::ofstream myfileLcLt;
     myfileLcLt.open(path+"/SfileLcLt.csv");
@@ -1313,7 +1313,7 @@ extern void CalibrationFigures(const cv::Mat &GridX, const cv::Mat &GridY, const
 				c = c_ini;
 				double normPD = sqrt(a*a+b*b+c*c);
 				double L_m = L_m_ini;
-				
+
 				for (unsigned int l = 0; l <= iterations_over_d;l++)
 				{
 					for (unsigned int m=0; m <= iterations_over_d; m++)
@@ -1360,7 +1360,7 @@ extern void CalibrationFigures(const cv::Mat &GridX, const cv::Mat &GridY, const
 	}
 	myfileLcLt.close();
 	std::cout << std::endl << "\033[1;32mLcLt Calibration Complete\033[0m\n" << std::endl;
-	
+
 	outputcount = 1;
     std::ofstream myfile;
     myfile.open(path+"/Sfileab.csv");
@@ -1542,8 +1542,8 @@ extern void CalibrationFigures(const cv::Mat &GridX, const cv::Mat &GridY, const
 				c = c_ini;
 				double normPD = sqrt(a*a+b*b+c*c);
 				double L_m = L_m_ini;
-				
-				
+
+
 				//double L_c = c/(a+b+c)*L_m-L_s-2.0*L_g-L_t;
 					for (unsigned int m=0; m <= iterations_over_d; m++)
 					{
@@ -1585,7 +1585,7 @@ extern void CalibrationFigures(const cv::Mat &GridX, const cv::Mat &GridY, const
 	}
 	myfileaLt.close();
 	std::cout << std::endl << "\033[1;32maLt Calibration Complete\033[0m\n" << std::endl;
-	
+
 	outputcount = 1;
     std::ofstream myfilebc;
     myfilebc.open(path+"/Sfilebc.csv");
@@ -1701,7 +1701,7 @@ extern void CalibrationFigures(const cv::Mat &GridX, const cv::Mat &GridY, const
 	}
 	myfilebd.close();
 	std::cout << std::endl << "\033[1;32mbd Calibration Complete\033[0m\n" << std::endl;
-	
+
 	outputcount = 1;
     std::ofstream myfilebLt;
     myfilebLt.open(path+"/SfilebLt.csv");
@@ -1721,7 +1721,7 @@ extern void CalibrationFigures(const cv::Mat &GridX, const cv::Mat &GridY, const
 				double L_m = L_m_ini;
 					d = -c/normPD*L_m;
 					//double L_m = - d / c*normPD;
-					std::vector<double> PlaneDefinition{a/normPD, b/normPD, c/normPD, d};				
+					std::vector<double> PlaneDefinition{a/normPD, b/normPD, c/normPD, d};
 				for (unsigned int l = 0; l <= iterations_over_d;l++)
 				{
 					//double L_m = 1.0;//0.1 + 10.0*(double)l/iterations_over_d;
@@ -1836,7 +1836,7 @@ extern void CalibrationFigures(const cv::Mat &GridX, const cv::Mat &GridY, const
 				c = -1.0 +1.0*(double)k/iterations_over_c;
 				double normPD = sqrt(a*a+b*b+c*c);
 				double L_m = L_m_ini;
-				
+
 					d = -c/normPD*L_m;
 					//double L_m = - d / c*normPD;
 					std::vector<double> PlaneDefinition{a/normPD, b/normPD, c/normPD, d};
@@ -1877,7 +1877,7 @@ extern void CalibrationFigures(const cv::Mat &GridX, const cv::Mat &GridY, const
 	}
 	myfilecLt.close();
 	std::cout << std::endl << "\033[1;32mcLt Calibration Complete\033[0m\n" << std::endl;
-	
+
 	outputcount = 1;
     std::ofstream myfiledLt;
     myfiledLt.open(path+"/SfiledLt.csv");
@@ -1896,7 +1896,7 @@ extern void CalibrationFigures(const cv::Mat &GridX, const cv::Mat &GridY, const
 				c = c_ini;
 				double normPD = sqrt(a*a+b*b+c*c);
 				double L_m = L_m_ini;
-				
+
 				for (unsigned int l = 0; l <= iterations_over_d;l++)
 				{
 					for (unsigned int m=0; m <= iterations_over_d; m++)
@@ -1941,7 +1941,7 @@ extern void CalibrationFigures(const cv::Mat &GridX, const cv::Mat &GridY, const
 
 
 	}
-	myfiledLt.close();	
+	myfiledLt.close();
 	std::cout << std::endl << "\033[1;32mdLt Calibration Complete\033[0m\n" << std::endl;
 }
 /*--------------------------------------------------------------------------*/
@@ -2053,32 +2053,12 @@ static std::vector<cv::Mat> computeNumericalDerivativeForwardModelwrtn(const cv:
 {
 	std::vector<cv::Mat> ReturnMat;
 	double h = 1e-8;//0.001; //sqrt(eps); 10e-8
-	
+
 	double nplus = n+h;
 	double nminus = n-h;
 	std::vector<cv::Mat> nder1 = ForwardModelConstantn(GridX, GridY, DX, DY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, nplus);
 	std::vector<cv::Mat> nder2 = ForwardModelConstantn(GridX, GridY, DX, DY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, nminus);
-	
-	cv::Mat nderX = (nder1[0] - nder2[0])/2.0/h;
-	cv::Mat nderY = (nder1[1] - nder2[1])/2.0/h;
-	cv::Mat nderZ = (nder1[2] - nder2[2])/2.0/h;
 
-	ReturnMat.push_back(nderX);
-	ReturnMat.push_back(nderY);
-	ReturnMat.push_back(nderZ);	
-	return ReturnMat;
-}
-/*--------------------------------------------------------------------------*/
-static std::vector<cv::Mat> computeNumericalDerivativeForwardModelwrtn2(const cv::Mat &GridX, const cv::Mat &GridY, const double &meanGridX, const double &meanGridY, const cv::Mat &DX, const cv::Mat &DY, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const double &n)
-{
-	std::vector<cv::Mat> ReturnMat;
-	double h = 1e-8;//0.001; //sqrt(eps); 10e-8
-	
-	double nplus = n+h;
-	double nminus = n-h;
-	std::vector<cv::Mat> nder1 = ForwardModelConstantn2(GridX, GridY, meanGridX, meanGridY, DX, DY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, nplus);
-	std::vector<cv::Mat> nder2 = ForwardModelConstantn2(GridX, GridY, meanGridX, meanGridY, DX, DY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, nminus);
-	
 	cv::Mat nderX = (nder1[0] - nder2[0])/2.0/h;
 	cv::Mat nderY = (nder1[1] - nder2[1])/2.0/h;
 	cv::Mat nderZ = (nder1[2] - nder2[2])/2.0/h;
@@ -2086,6 +2066,51 @@ static std::vector<cv::Mat> computeNumericalDerivativeForwardModelwrtn2(const cv
 	ReturnMat.push_back(nderX);
 	ReturnMat.push_back(nderY);
 	ReturnMat.push_back(nderZ);
+	return ReturnMat;
+}
+/*--------------------------------------------------------------------------*/
+static std::vector<cv::Mat> computeNumericalDerivativeForwardModelwrtn2(const cv::Mat &GridX, const cv::Mat &GridY, const double &meanGridX, const double &meanGridY, const cv::Mat &DX, const cv::Mat &DY, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const double &n)
+{
+	std::vector<cv::Mat> ReturnMat;
+	double h = 1e-8;//0.001; //sqrt(eps); 10e-8
+
+	double nplus = n+h;
+	double nminus = n-h;
+	std::vector<cv::Mat> nder1 = ForwardModelConstantn2(GridX, GridY, meanGridX, meanGridY, DX, DY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, nplus);
+	std::vector<cv::Mat> nder2 = ForwardModelConstantn2(GridX, GridY, meanGridX, meanGridY, DX, DY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, nminus);
+
+	cv::Mat nderX = (nder1[0] - nder2[0])/2.0/h;
+	cv::Mat nderY = (nder1[1] - nder2[1])/2.0/h;
+	cv::Mat nderZ = (nder1[2] - nder2[2])/2.0/h;
+
+	ReturnMat.push_back(nderX);
+	ReturnMat.push_back(nderY);
+	ReturnMat.push_back(nderZ);
+	return ReturnMat;
+}
+/*--------------------------------------------------------------------------*/
+static std::vector<cv::Mat> computeNumericalDerivativeForwardModelwrtLs2(const cv::Mat &GridX, const cv::Mat &GridY, const double &meanGridX, const double &meanGridY, const cv::Mat &DX, const cv::Mat &DY, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const double &n)
+{
+	std::vector<cv::Mat> ReturnMat;
+	double h = 1e-8;//0.001; //sqrt(eps); 10e-8
+
+	double L_s = Lengths[3];
+	double L_s_plus = L_s+h;
+	double L_s_minus = L_s-h;
+	std::vector<double> Lengthsplus(Lengths.begin(), Lengths.end());
+	std::vector<double> Lengthsminus(Lengths.begin(), Lengths.end());
+	Lengthsplus[3] = L_s_plus;
+	Lengthsminus[3] = L_s_minus;
+	std::vector<cv::Mat> Lsder1 = ForwardModelConstantn2(GridX, GridY, meanGridX, meanGridY, DX, DY, focal_length, Lengthsplus, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
+	std::vector<cv::Mat> Lsder2 = ForwardModelConstantn2(GridX, GridY, meanGridX, meanGridY, DX, DY, focal_length, Lengthsminus, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
+
+	cv::Mat LsderX = (Lsder1[0] - Lsder2[0])/2.0/h;
+	cv::Mat LsderY = (Lsder1[1] - Lsder2[1])/2.0/h;
+	cv::Mat LsderZ = (Lsder1[2] - Lsder2[2])/2.0/h;
+
+	ReturnMat.push_back(LsderX);
+	ReturnMat.push_back(LsderY);
+	ReturnMat.push_back(LsderZ);
 	return ReturnMat;
 }
 /*--------------------------------------------------------------------------*/
@@ -2396,12 +2421,12 @@ static std::vector<cv::Mat> computeNumericalDerivativeForwardModel2(const cv::Ma
 	ReturnMat.push_back(LmderY);
 	ReturnMat.push_back(LmderZ);
 	}
-	
+
 	{
 	// meanGridX derivative
 	double meanGridXplus = meanGridX + h;
 	double meanGridXminus = meanGridX - h;
-	
+
 	std::vector<cv::Mat> meanGridXder1 = ForwardModelConstantn2(GridX, GridY, meanGridXplus, meanGridY, DX, DY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
 	std::vector<cv::Mat> meanGridXder2 = ForwardModelConstantn2(GridX, GridY, meanGridXminus, meanGridY, DX, DY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
 
@@ -2413,12 +2438,12 @@ static std::vector<cv::Mat> computeNumericalDerivativeForwardModel2(const cv::Ma
 	ReturnMat.push_back(meanGridXderY);
 	ReturnMat.push_back(meanGridXderZ);
 	}
-	
+
 	{
 	// meanGridY derivative
 	double meanGridYplus = meanGridY + h;
 	double meanGridYminus = meanGridY - h;
-	
+
 	std::vector<cv::Mat> meanGridYder1 = ForwardModelConstantn2(GridX, GridY, meanGridX, meanGridYplus, DX, DY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
 	std::vector<cv::Mat> meanGridYder2 = ForwardModelConstantn2(GridX, GridY, meanGridX, meanGridYminus, DX, DY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
 
@@ -2430,7 +2455,195 @@ static std::vector<cv::Mat> computeNumericalDerivativeForwardModel2(const cv::Ma
 	ReturnMat.push_back(meanGridYderY);
 	ReturnMat.push_back(meanGridYderZ);
 	}
-		
+
+	 return ReturnMat;
+}
+/*--------------------------------------------------------------------------*/
+static std::vector<cv::Mat> computeNumericalDerivativeForwardModel3(const cv::Mat &GridX, const cv::Mat &GridY, const double &meanGridX, const double &meanGridY, const cv::Mat &DX, const cv::Mat &DY, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const double &n, const double &meanGridScale)
+{
+	std::vector<cv::Mat> ReturnMat;
+	double h = 1e-8;//0.001; //sqrt(eps); 10e-8
+
+	double L_c = Lengths[0];
+	double L_g = Lengths[1];
+	double L_t = Lengths[2];
+	double L_s = Lengths[3];
+	double a = PlaneDefinition[0];
+	double b = PlaneDefinition[1];
+	double c = PlaneDefinition[2];
+	double d = PlaneDefinition[3];
+	double L_m = - d / c;
+	double normPD = calculateNorm(a, b, c);
+	//std::vector<double> PlaneDefinition{a/normPD, b/normPD, c/normPD, d};
+	//double L_c = c/(a+b+c)*L_m-L_s-2.0*L_g-L_t;
+
+	//std::vector<cv::Mat> ader;
+	{
+	// a derivative
+	double aplus = a+h;
+	double normPDplus = calculateNorm(aplus, b, c);
+	double dplus = -c/normPDplus*L_m;
+	double L_cplus = c/(aplus+b+c)*L_m-L_s-2.0*L_g-L_t;
+	std::vector<double> Lengthsnewplus(Lengths.begin(), Lengths.end());
+	Lengthsnewplus[0] = L_cplus;
+	std::vector<double> PlaneDefinitionplus{aplus/normPDplus, b/normPDplus, c/normPDplus, dplus};
+
+	double aminus = a-h;
+	double normPDminus = calculateNorm(aminus, b, c);
+	double dminus = -c/normPDminus*L_m;
+	double L_cminus = c/(aminus+b+c)*L_m-L_s-2.0*L_g-L_t;
+	std::vector<double> Lengthsnewminus(Lengths.begin(), Lengths.end());
+	Lengthsnewminus[0] = L_cminus;
+	std::vector<double> PlaneDefinitionminus{aminus/normPDminus, b/normPDminus, c/normPDminus, dminus};
+
+	std::vector<cv::Mat> ader1 = ForwardModelConstantn2(GridX, GridY, meanGridX*meanGridScale, meanGridY*meanGridScale, DX, DY, focal_length, Lengthsnewplus, Distance_From_Pixels_To_Meters, PlaneDefinitionplus, n_0, n_1, n);
+	std::vector<cv::Mat> ader2 = ForwardModelConstantn2(GridX, GridY, meanGridX*meanGridScale, meanGridY*meanGridScale, DX, DY, focal_length, Lengthsnewminus, Distance_From_Pixels_To_Meters, PlaneDefinitionminus, n_0, n_1, n);
+
+	cv::Mat aderX = (ader1[0] - ader2[0])/2.0/h;
+	cv::Mat aderY = (ader1[1] - ader2[1])/2.0/h;
+	cv::Mat aderZ = (ader1[2] - ader2[2])/2.0/h;
+
+	//ader.push_back(aderX);
+	//ader.push_back(aderY);
+	//ader.push_back(aderZ);
+
+	ReturnMat.push_back(aderX);
+	ReturnMat.push_back(aderY);
+	ReturnMat.push_back(aderZ);
+	}
+
+	//std::vector<cv::Mat> bder;
+	{
+	// b derivative
+	double bplus = b+h;
+	double normPDplus = calculateNorm(a, bplus, c);
+	double dplus = -c/normPDplus*L_m;
+	double L_cplus = c/(a+bplus+c)*L_m-L_s-2.0*L_g-L_t;
+	std::vector<double> Lengthsnewplus(Lengths.begin(), Lengths.end());
+	Lengthsnewplus[0] = L_cplus;
+	std::vector<double> PlaneDefinitionplus{a/normPDplus, bplus/normPDplus, c/normPDplus, dplus};
+
+	double bminus = b-h;
+	double normPDminus = calculateNorm(a, bminus, c);
+	double dminus = -c/normPDminus*L_m;
+	double L_cminus = c/(a+bminus+c)*L_m-L_s-2.0*L_g-L_t;
+	std::vector<double> Lengthsnewminus(Lengths.begin(), Lengths.end());
+	Lengthsnewminus[0] = L_cminus;
+	std::vector<double> PlaneDefinitionminus{a/normPDminus, bminus/normPDminus, c/normPDminus, dminus};
+
+	std::vector<cv::Mat> bder1 = ForwardModelConstantn2(GridX, GridY, meanGridX*meanGridScale, meanGridY*meanGridScale, DX, DY, focal_length, Lengthsnewplus, Distance_From_Pixels_To_Meters, PlaneDefinitionplus, n_0, n_1, n);
+	std::vector<cv::Mat> bder2 = ForwardModelConstantn2(GridX, GridY, meanGridX*meanGridScale, meanGridY*meanGridScale, DX, DY, focal_length, Lengthsnewminus, Distance_From_Pixels_To_Meters, PlaneDefinitionminus, n_0, n_1, n);
+
+	cv::Mat bderX = (bder1[0] - bder2[0])/2.0/h;
+	cv::Mat bderY = (bder1[1] - bder2[1])/2.0/h;
+	cv::Mat bderZ = (bder1[2] - bder2[2])/2.0/h;
+
+	//bder.push_back(bderX);
+	//bder.push_back(bderY);
+	//bder.push_back(bderZ);
+
+	ReturnMat.push_back(bderX);
+	ReturnMat.push_back(bderY);
+	ReturnMat.push_back(bderZ);
+	}
+
+	//std::vector<cv::Mat> cder;
+	{
+	// c derivative
+	double cplus = c+h;
+	double normPDplus = calculateNorm(a, b, cplus);
+	double dplus = -cplus/normPDplus*L_m;
+	double L_cplus = cplus/(a+b+cplus)*L_m-L_s-2.0*L_g-L_t;
+	std::vector<double> Lengthsnewplus(Lengths.begin(), Lengths.end());
+	Lengthsnewplus[0] = L_cplus;
+	std::vector<double> PlaneDefinitionplus{a/normPDplus, b/normPDplus, cplus/normPDplus, dplus};
+
+	double cminus = c-h;
+	double normPDminus = calculateNorm(a, b, cminus);
+	double dminus = -cminus/normPDminus*L_m;
+	double L_cminus = c/(a+b+cminus)*L_m-L_s-2.0*L_g-L_t;
+	std::vector<double> Lengthsnewminus(Lengths.begin(), Lengths.end());
+	Lengthsnewminus[0] = L_cminus;
+	std::vector<double> PlaneDefinitionminus{a/normPDminus, b/normPDminus, cminus/normPDminus, dminus};
+
+	std::vector<cv::Mat> cder1 = ForwardModelConstantn2(GridX, GridY, meanGridX*meanGridScale, meanGridY*meanGridScale, DX, DY, focal_length, Lengthsnewplus, Distance_From_Pixels_To_Meters, PlaneDefinitionplus, n_0, n_1, n);
+	std::vector<cv::Mat> cder2 = ForwardModelConstantn2(GridX, GridY, meanGridX*meanGridScale, meanGridY*meanGridScale, DX, DY, focal_length, Lengthsnewminus, Distance_From_Pixels_To_Meters, PlaneDefinitionminus, n_0, n_1, n);
+
+	cv::Mat cderX = (cder1[0] - cder2[0])/2.0/h;
+	cv::Mat cderY = (cder1[1] - cder2[1])/2.0/h;
+	cv::Mat cderZ = (cder1[2] - cder2[2])/2.0/h;
+
+	//cder.push_back(cderX);
+	//cder.push_back(cderY);
+	//cder.push_back(cderZ);
+	ReturnMat.push_back(cderX);
+	ReturnMat.push_back(cderY);
+	ReturnMat.push_back(cderZ);
+	}
+
+	//std::vector<cv::Mat> Lmder;
+	{
+	// Lm derivative
+	double L_mplus = L_m + h;
+	double dplus = -c/normPD*L_mplus;
+	double L_cplus = c/(a+b+c)*L_mplus-L_s-2.0*L_g-L_t;
+	std::vector<double> Lengthsnewplus(Lengths.begin(), Lengths.end());
+	Lengthsnewplus[0] = L_cplus;
+	std::vector<double> PlaneDefinitionplus{a/normPD, b/normPD, c/normPD, dplus};
+
+	double L_mminus = L_m-h;
+	double dminus = -c/normPD*L_mminus;
+	double L_cminus = c/(a+b+c)*L_mminus-L_s-2.0*L_g-L_t;
+	std::vector<double> Lengthsnewminus(Lengths.begin(), Lengths.end());
+	Lengthsnewminus[0] = L_cminus;
+	std::vector<double> PlaneDefinitionminus{a/normPD, b/normPD, c/normPD, dminus};
+
+	std::vector<cv::Mat> Lmder1 = ForwardModelConstantn2(GridX, GridY, meanGridX*meanGridScale, meanGridY*meanGridScale, DX, DY, focal_length, Lengthsnewplus, Distance_From_Pixels_To_Meters, PlaneDefinitionplus, n_0, n_1, n);
+	std::vector<cv::Mat> Lmder2 = ForwardModelConstantn2(GridX, GridY, meanGridX*meanGridScale, meanGridY*meanGridScale, DX, DY, focal_length, Lengthsnewminus, Distance_From_Pixels_To_Meters, PlaneDefinitionminus, n_0, n_1, n);
+
+	cv::Mat LmderX = (Lmder1[0] - Lmder2[0])/2.0/h;
+	cv::Mat LmderY = (Lmder1[1] - Lmder2[1])/2.0/h;
+	cv::Mat LmderZ = (Lmder1[2] - Lmder2[2])/2.0/h;
+
+	ReturnMat.push_back(LmderX);
+	ReturnMat.push_back(LmderY);
+	ReturnMat.push_back(LmderZ);
+	}
+
+	{
+	// meanGridX derivative
+	double meanGridXplus = meanGridX + h/meanGridScale;
+	double meanGridXminus = meanGridX - h/meanGridScale;
+
+	std::vector<cv::Mat> meanGridXder1 = ForwardModelConstantn2(GridX, GridY, meanGridXplus*meanGridScale, meanGridY*meanGridScale, DX, DY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
+	std::vector<cv::Mat> meanGridXder2 = ForwardModelConstantn2(GridX, GridY, meanGridXminus*meanGridScale, meanGridY*meanGridScale, DX, DY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
+
+	cv::Mat meanGridXderX = (meanGridXder1[0] - meanGridXder2[0])/2.0/h*meanGridScale;
+	cv::Mat meanGridXderY = (meanGridXder1[1] - meanGridXder2[1])/2.0/h;
+	cv::Mat meanGridXderZ = (meanGridXder1[2] - meanGridXder2[2])/2.0/h;
+
+	ReturnMat.push_back(meanGridXderX);
+	ReturnMat.push_back(meanGridXderY);
+	ReturnMat.push_back(meanGridXderZ);
+	}
+
+	{
+	// meanGridY derivative
+	double meanGridYplus = meanGridY + h/meanGridScale;
+	double meanGridYminus = meanGridY - h/meanGridScale;
+
+	std::vector<cv::Mat> meanGridYder1 = ForwardModelConstantn2(GridX, GridY, meanGridX*meanGridScale, meanGridYplus*meanGridScale, DX, DY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
+	std::vector<cv::Mat> meanGridYder2 = ForwardModelConstantn2(GridX, GridY, meanGridX*meanGridScale, meanGridYminus*meanGridScale, DX, DY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
+
+	cv::Mat meanGridYderX = (meanGridYder1[0] - meanGridYder2[0])/2.0/h*meanGridScale;
+	cv::Mat meanGridYderY = (meanGridYder1[1] - meanGridYder2[1])/2.0/h;
+	cv::Mat meanGridYderZ = (meanGridYder1[2] - meanGridYder2[2])/2.0/h;
+
+	ReturnMat.push_back(meanGridYderX);
+	ReturnMat.push_back(meanGridYderY);
+	ReturnMat.push_back(meanGridYderZ);
+	}
+
 	 return ReturnMat;
 }
 /*--------------------------------------------------------------------------*/
@@ -2616,7 +2829,7 @@ static std::vector<cv::Mat> computeNumericalDerivativeForwardModelExtended(const
 	ReturnMat.push_back(LtderX);
 	ReturnMat.push_back(LtderY);
 	ReturnMat.push_back(LtderZ);
-	}	
+	}
 	 return ReturnMat;
 }
 /*--------------------------------------------------------------------------*/
@@ -2624,16 +2837,16 @@ static void calculate_Hessian_Jacobian_ForwardModelwrtn(const cv::Mat &GridX, co
 {
 	std::vector<cv::Mat> X1dn = computeNumericalDerivativeForwardModelwrtn(GridX, GridY, Dx, Dy, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
 	cv::Mat DX0(GridX.size(), CV_64FC1, Scalar(0));
-	cv::Mat DY0(GridX.size(), CV_64FC1, Scalar(0));	
+	cv::Mat DY0(GridX.size(), CV_64FC1, Scalar(0));
 	std::vector<cv::Mat> X1 = ForwardModelConstantn(GridX, GridY, Dx, Dy, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0,  n_1, n);
 	std::vector<cv::Mat> X0 = ForwardModelConstantn(GridX, GridY, DX0, DY0, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0,  n_1, n_0);
-	
+
 	int numberofrows = GridX.rows*GridX.cols;
 	cv::Mat Jx = X1dn[0].reshape(0, numberofrows);
 	cv::Mat Jy = X1dn[1].reshape(0, numberofrows);
 	cv::Mat Jz = X1dn[2].reshape(0, numberofrows);
 	Hessian = Jx.t()*Jx;// + Jy.t()*Jy + Jz.t()*Jz;
-	
+
 	for (unsigned int i = 0; i < 1; i++)
 	{
 		Hessian.at<double>(i,i) *= (1.0+lambda);
@@ -2645,7 +2858,7 @@ static void calculate_Hessian_Jacobian_ForwardModelwrtn(const cv::Mat &GridX, co
 	cv::Mat dy_x = -DX.reshape(0,numberofrows);
 	cv::Mat dy_y = -DY.reshape(0,numberofrows);
 	cv::Mat dy_z = -DZ.reshape(0,numberofrows);
-	
+
 	Jacobian = Jx.t()*dy_x;// + Jy.t()*dy_y + Jz.t()*dy_z;
 }
 /*--------------------------------------------------------------------------*/
@@ -2656,13 +2869,13 @@ static void calculate_Hessian_Jacobian_ForwardModelwrtn2(const cv::Mat &GridX, c
 	cv::Mat DY0(GridX.size(), CV_64FC1, Scalar(0));
 	std::vector<cv::Mat> X1 = ForwardModelConstantn2(GridX, GridY, meanGridX, meanGridY, Dx, Dy, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0,  n_1, n);
 	std::vector<cv::Mat> X0 = ForwardModelConstantn2(GridX, GridY, meanGridX, meanGridY, DX0, DY0, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0,  n_1, n_0);
-	
+
 	int numberofrows = GridX.rows*GridX.cols;
 	cv::Mat Jx = X1dn[0].reshape(0, numberofrows);
 	cv::Mat Jy = X1dn[1].reshape(0, numberofrows);
 	cv::Mat Jz = X1dn[2].reshape(0, numberofrows);
 	Hessian = Jx.t()*Jx;// + Jy.t()*Jy + Jz.t()*Jz;
-	
+
 	for (unsigned int i = 0; i < 1; i++)
 	{
 		Hessian.at<double>(i,i) *= (1.0+lambda);
@@ -2674,7 +2887,36 @@ static void calculate_Hessian_Jacobian_ForwardModelwrtn2(const cv::Mat &GridX, c
 	cv::Mat dy_x = -DX.reshape(0,numberofrows);
 	cv::Mat dy_y = -DY.reshape(0,numberofrows);
 	cv::Mat dy_z = -DZ.reshape(0,numberofrows);
-	
+
+	Jacobian = Jx.t()*dy_x;// + Jy.t()*dy_y + Jz.t()*dy_z;
+}
+/*--------------------------------------------------------------------------*/
+static void calculate_Hessian_Jacobian_ForwardModelwrtLs2(const cv::Mat &GridX, const cv::Mat &GridY, const double &meanGridX, const double &meanGridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const double &n, cv::Mat &Jacobian, cv::Mat &Hessian, const double &lambda)
+{
+	std::vector<cv::Mat> X1dn = computeNumericalDerivativeForwardModelwrtLs2(GridX, GridY, meanGridX, meanGridY, Dx, Dy, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
+	cv::Mat DX0(GridX.size(), CV_64FC1, Scalar(0));
+	cv::Mat DY0(GridX.size(), CV_64FC1, Scalar(0));
+	std::vector<cv::Mat> X1 = ForwardModelConstantn2(GridX, GridY, meanGridX, meanGridY, Dx, Dy, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0,  n_1, n);
+	std::vector<cv::Mat> X0 = ForwardModelConstantn2(GridX, GridY, meanGridX, meanGridY, DX0, DY0, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0,  n_1, n_0);
+
+	int numberofrows = GridX.rows*GridX.cols;
+	cv::Mat Jx = X1dn[0].reshape(0, numberofrows);
+	cv::Mat Jy = X1dn[1].reshape(0, numberofrows);
+	cv::Mat Jz = X1dn[2].reshape(0, numberofrows);
+	Hessian = Jx.t()*Jx;// + Jy.t()*Jy + Jz.t()*Jz;
+
+	for (unsigned int i = 0; i < 1; i++)
+	{
+		Hessian.at<double>(i,i) *= (1.0+lambda);
+	}
+
+	cv::Mat DX = X1[0] - X0[0];
+	cv::Mat DY = X1[1] - X0[1];
+	cv::Mat DZ = X1[2] - X0[2];
+	cv::Mat dy_x = -DX.reshape(0,numberofrows);
+	cv::Mat dy_y = -DY.reshape(0,numberofrows);
+	cv::Mat dy_z = -DZ.reshape(0,numberofrows);
+
 	Jacobian = Jx.t()*dy_x;// + Jy.t()*dy_y + Jz.t()*dy_z;
 }
 /*--------------------------------------------------------------------------*/
@@ -2726,7 +2968,7 @@ static void calculate_Hessian_Jacobian_ForwardModel(const cv::Mat &GridX, const 
 	//	W.at<double>(i,i) = CC1dim.at<double>(i);
 	//}
 	Hessian = Jx.t()*W1dim*Jx;// + Jy.t()*W1dim*Jy + Jz.t()*W1dim*Jz;
-	
+
 	std::vector<cv::Mat> X1 = ForwardModelConstantn(GridX, GridY, Dx, Dy, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0,  n_1, n);
 	std::vector<cv::Mat> X0 = ForwardModelConstantn(GridX, GridY, DX0, DY0, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0,  n_1, n_0);
 
@@ -2802,11 +3044,11 @@ static void calculate_Hessian_Jacobian_ForwardModel2(const cv::Mat &GridX, const
 	//}
 	//std::cout << "Size Jx.t() = " << Jx.t().size() << std::endl;
 	//std::cout << "Size W = " << W.size() << std::endl;
-	
+
 	//cv::Mat Intermediate = Jx.t()*W;
 	//cv::Mat Intermediate(cv::Size(6, numberofrows), CV_64FC1);
 	//std::cout << "Size Intermediate = " << Intermediate.size() << std::endl;
-	
+
 	//for (unsigned int i = 0; i < 6; i++)
 	//{
 	//	for (unsigned int j = 0; j < numberofrows; j++)
@@ -2814,10 +3056,10 @@ static void calculate_Hessian_Jacobian_ForwardModel2(const cv::Mat &GridX, const
 	//		Intermediate.at<double>(i,j) = Jx.t().at<double>
 	//	}
 	//}
-	
-	
+
+
 	Hessian = Jx.t()*W1dim*Jx;// + Jy.t()*W1dim*Jy + Jz.t()*W1dim*Jz;
-	
+
 	std::vector<cv::Mat> X1 = ForwardModelConstantn2(GridX, GridY, meanGridX, meanGridY, Dx, Dy, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0,  n_1, n);
 	std::vector<cv::Mat> X0 = ForwardModelConstantn2(GridX, GridY, meanGridX, meanGridY, DX0, DY0, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0,  n_1, n_0);
 
@@ -2829,6 +3071,102 @@ static void calculate_Hessian_Jacobian_ForwardModel2(const cv::Mat &GridX, const
 	cv::Mat dy_z = -DZ.reshape(0,numberofrows);
 	Jacobian = Jx.t()*W1dim*dy_x;// + Jy.t()*W1dim*dy_y + Jz.t()*W1dim*dy_z;
 	for (unsigned int i = 0; i < 6; i++)
+	{
+		Hessian.at<double>(i,i) *= (1.0+lambda);
+	}
+
+
+}
+/*--------------------------------------------------------------------------*/
+static void calculate_Hessian_Jacobian_ForwardModel3(const cv::Mat &GridX, const cv::Mat &GridY, const double &meanGridX, const double &meanGridY, const cv::Mat &Dx, const cv::Mat &Dy, const cv::Mat &W, const cv::Mat &W1dim, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const double &n, cv::Mat &Jacobian, cv::Mat &Hessian, const double &lambda, const double &meanGridScale)
+//static void calculate_Hessian_Jacobian_ForwardModel2(const cv::Mat &GridX, const cv::Mat &GridY, const double &meanGridX, const double &meanGridY, const cv::Mat &Dx, const cv::Mat &Dy, const cv::Mat &W, const cv::SparseMat &W1dim, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const double &n, cv::Mat &Jacobian, cv::Mat &Hessian, const double &lambda)
+{
+	std::vector<cv::Mat> X1da = computeNumericalDerivativeForwardModel3(GridX, GridY, meanGridX, meanGridY, Dx, Dy, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n, meanGridScale);
+	cv::Mat DX0(GridX.size(), CV_64FC1, Scalar(0));
+	cv::Mat DY0(GridX.size(), CV_64FC1, Scalar(0));
+	std::vector<cv::Mat> X0da = computeNumericalDerivativeForwardModel3(GridX, GridY, meanGridX, meanGridY, DX0, DY0, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n_0, meanGridScale);
+
+	std::vector<cv::Mat> JacobianFull;
+	for (unsigned int i = 0; i < 18; i++)
+	{
+		cv::Mat JXa = X1da[i]-X0da[i];
+		JacobianFull.push_back(JXa);
+	}
+
+	int numberofrows = GridX.rows*GridX.cols;
+	//int numberofcols = 4;
+	cv::Mat Jx, Jy, Jz;
+
+	//cv::Mat dfxda = JacobianFull[0].reshape(0, numberofrows);
+	cv::Mat dfxdb = JacobianFull[3].reshape(0, numberofrows);
+	cv::Mat dfxdc = JacobianFull[6].reshape(0, numberofrows);
+	cv::Mat dfxdLm = JacobianFull[9].reshape(0, numberofrows);
+	cv::Mat dfxdmeanGridX = JacobianFull[12].reshape(0, numberofrows);
+	cv::Mat dfxdmeanGridY = JacobianFull[15].reshape(0, numberofrows);
+	//cv::Mat matArrayX[] = {dfxda, dfxdb, dfxdc, dfxdLm, dfxdmeanGridX, dfxdmeanGridY};
+	//cv::hconcat( matArrayX, 6, Jx);
+	cv::Mat matArrayX[] = {dfxdb, dfxdc, dfxdLm, dfxdmeanGridX, dfxdmeanGridY};
+	cv::hconcat( matArrayX, 5, Jx);
+
+	//cv::Mat dfyda = JacobianFull[1].reshape(0, numberofrows);
+	cv::Mat dfydb = JacobianFull[4].reshape(0, numberofrows);
+	cv::Mat dfydc = JacobianFull[7].reshape(0, numberofrows);
+	cv::Mat dfydLm = JacobianFull[10].reshape(0, numberofrows);
+	cv::Mat dfydmeanGridX = JacobianFull[13].reshape(0, numberofrows);
+	cv::Mat dfydmeanGridY = JacobianFull[16].reshape(0, numberofrows);
+	//cv::Mat matArrayY[] = {dfyda, dfydb, dfydc, dfydLm, dfydmeanGridX, dfydmeanGridY};
+	//cv::hconcat( matArrayY, 6, Jy);
+	cv::Mat matArrayY[] = {dfydb, dfydc, dfydLm, dfydmeanGridX, dfydmeanGridY};
+	cv::hconcat( matArrayY, 5, Jy);
+
+	//cv::Mat dfzda = JacobianFull[2].reshape(0, numberofrows);
+	cv::Mat dfzdb = JacobianFull[5].reshape(0, numberofrows);
+	cv::Mat dfzdc = JacobianFull[8].reshape(0, numberofrows);
+	cv::Mat dfzdLm = JacobianFull[11].reshape(0, numberofrows);
+	cv::Mat dfzdmeanGridX = JacobianFull[14].reshape(0, numberofrows);
+	cv::Mat dfzdmeanGridY = JacobianFull[17].reshape(0, numberofrows);
+	//cv::Mat matArrayZ[] = {dfzda, dfzdb, dfzdc, dfzdLm, dfzdmeanGridX, dfzdmeanGridY};
+	//cv::hconcat( matArrayZ, 6, Jz);
+	cv::Mat matArrayZ[] = {dfzdb, dfzdc, dfzdLm, dfzdmeanGridX, dfzdmeanGridY};
+	cv::hconcat( matArrayZ, 5, Jz);
+
+
+	//cv::Mat W = cv::Mat::eye(numberofrows, numberofrows, CV_64FC1);
+	//cv::Mat CC1dim = CorrelationCoefficient.reshape(0, numberofrows);
+
+	//for (unsigned int i = 0; i < numberofrows; i++)
+	//{
+	//	W.at<double>(i,i) = CC1dim.at<double>(i);
+	//}
+	//std::cout << "Size Jx.t() = " << Jx.t().size() << std::endl;
+	//std::cout << "Size W = " << W.size() << std::endl;
+
+	//cv::Mat Intermediate = Jx.t()*W;
+	//cv::Mat Intermediate(cv::Size(6, numberofrows), CV_64FC1);
+	//std::cout << "Size Intermediate = " << Intermediate.size() << std::endl;
+
+	//for (unsigned int i = 0; i < 6; i++)
+	//{
+	//	for (unsigned int j = 0; j < numberofrows; j++)
+	//	{
+	//		Intermediate.at<double>(i,j) = Jx.t().at<double>
+	//	}
+	//}
+
+
+	Hessian = Jx.t()*W1dim*Jx;// + Jy.t()*W1dim*Jy + Jz.t()*W1dim*Jz;
+
+	std::vector<cv::Mat> X1 = ForwardModelConstantn2(GridX, GridY, meanGridX*meanGridScale, meanGridY*meanGridScale, Dx, Dy, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0,  n_1, n);
+	std::vector<cv::Mat> X0 = ForwardModelConstantn2(GridX, GridY, meanGridX*meanGridScale, meanGridY*meanGridScale, DX0, DY0, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0,  n_1, n_0);
+
+	cv::Mat DX = X1[0] - X0[0];
+	//cv::Mat DY = X1[1] - X0[1];
+	//cv::Mat DZ = X1[2] - X0[2];
+	cv::Mat dy_x = -DX.reshape(0,numberofrows);
+	//cv::Mat dy_y = -DY.reshape(0,numberofrows);
+	//cv::Mat dy_z = -DZ.reshape(0,numberofrows);
+	Jacobian = Jx.t()*W1dim*dy_x;// + Jy.t()*W1dim*dy_y + Jz.t()*W1dim*dy_z;
+	for (unsigned int i = 0; i < 5; i++)
 	{
 		Hessian.at<double>(i,i) *= (1.0+lambda);
 	}
@@ -2887,7 +3225,7 @@ static void calculate_Hessian_Jacobian_ForwardModelExtended(const cv::Mat &GridX
 	//	W.at<double>(i,i) = CC1dim.at<double>(i);
 	//}
 	Hessian = Jx.t()*W1dim*Jx + Jy.t()*W1dim*Jy + Jz.t()*W1dim*Jz;
-	
+
 	std::vector<cv::Mat> X1 = ForwardModelConstantn(GridX, GridY, Dx, Dy, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0,  n_1, n);
 	std::vector<cv::Mat> X0 = ForwardModelConstantn(GridX, GridY, DX0, DY0, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0,  n_1, n_0);
 
@@ -2913,14 +3251,14 @@ extern cv::Mat CalculateN(const cv::Mat &GridX, const cv::Mat &GridY, const cv::
 	double rel_tolerance_threshold = 1e-12;
 	double max_val_nu = 1e7;
 	unsigned int max_iterations = 1e4;
-	
+
 	double n_ini = 1.34;
 	double n_lower_bound = 1.3;//333;
 	double n_upper_bound = 1.4;
 
 	cv::Mat n_field(GridX.size(), CV_64FC1, Scalar(0));
 	double outputcount = 1;
-	
+
 	for( int i = 0; i < GridX.rows; ++i)
 	{
 		for( int j = 0; j < GridX.cols; ++j)
@@ -2939,10 +3277,10 @@ extern cv::Mat CalculateN(const cv::Mat &GridX, const cv::Mat &GridY, const cv::
 			double Snew= Sold;
 			double n = n_ini;
 			double nnew = n_ini;
-			cv::Mat Hessian; 
-			cv::Mat Jacobian; 
+			cv::Mat Hessian;
+			cv::Mat Jacobian;
 			calculate_Hessian_Jacobian_ForwardModelwrtn(GX, GY, dx, dy, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n_ini, Jacobian, Hessian, lambda);
-			while (iterations < max_iterations && nu < max_val_nu && (abs_tolerance > abs_tolerance_threshold || rel_tolerance > rel_tolerance_threshold)) 
+			while (iterations < max_iterations && nu < max_val_nu && (abs_tolerance > abs_tolerance_threshold || rel_tolerance > rel_tolerance_threshold))
 			{
 					iterations++;
 					cv::Mat delta_alpha(1,1,CV_64F);
@@ -2998,20 +3336,114 @@ extern cv::Mat CalculateN(const cv::Mat &GridX, const cv::Mat &GridY, const cv::
 
 }
 /*--------------------------------------------------------------------------*/
+extern cv::Mat CalculateLsi(const cv::Mat &GridX, const cv::Mat &GridY, const double &meanGridX, const double &meanGridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const double &n, const std::string &path)
+{
+    std::cout << "Test"<< std::endl;
+	double abs_tolerance_threshold = 1e-12;
+	double rel_tolerance_threshold = 1e-12;
+	double max_val_nu = 1e7;
+	unsigned int max_iterations = 1e4;
+
+	double Ls_ini = 0.0;
+	double Ls_lower_bound = -1.0;
+	double Ls_upper_bound = 100;
+
+	cv::Mat Ls_field(GridX.size(), CV_64FC1, Scalar(0));
+    std::vector<double> Lengthsnew(Lengths.begin(), Lengths.end());
+    std::vector<double> LengthsChanging(Lengths.begin(), Lengths.end());
+    double outputcount = 1;
+
+	for( int i = 0; i < GridX.rows; ++i)
+	{
+		for( int j = 0; j < GridX.cols; ++j)
+		{
+			unsigned int iterations = 1;
+			double abs_tolerance = 1;
+			double rel_tolerance = 1;
+			double nu = 2.0;
+			double lambda = 1e-10;
+			cv::Mat GX(1, 1, CV_64F, GridX.at<double>(i,j));
+			cv::Mat GY(1, 1, CV_64F, GridY.at<double>(i,j));
+			cv::Mat dx(1, 1, CV_64F, Dx.at<double>(i,j));
+			cv::Mat dy(1, 1, CV_64F, Dy.at<double>(i,j));
+			cv::Mat W(1, 1, CV_64FC1, Scalar(1));
+			double Sold = calculateS2(GX, GY, meanGridX, meanGridY, dx, dy, W, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
+			double Snew= Sold;
+			double Ls = Ls_ini;
+			double Lsnew = Ls_ini;
+			cv::Mat Hessian;
+			cv::Mat Jacobian;
+			calculate_Hessian_Jacobian_ForwardModelwrtLs2(GX, GY, meanGridX, meanGridY, dx, dy, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n, Jacobian, Hessian, lambda);
+			while (iterations < max_iterations && nu < max_val_nu && (abs_tolerance > abs_tolerance_threshold || rel_tolerance > rel_tolerance_threshold))
+			{
+					iterations++;
+					cv::Mat delta_alpha(1,1,CV_64F);
+					cv::solve(Hessian, Jacobian, delta_alpha, cv::DECOMP_CHOLESKY);
+					abs_tolerance = cv::sum(cv::abs(delta_alpha)).val[0];
+					rel_tolerance = cv::sum(cv::abs(delta_alpha)).val[0]/(Ls_ini);
+					if (isnan(abs_tolerance))
+					{
+						std::cout << "NaN Detected"<< std::endl;
+						abs_tolerance = 1;
+						rel_tolerance = 1;
+						delta_alpha.at<double>(0) = 0;
+					}
+					Lsnew = Ls + delta_alpha.at<double>(0);
+					Lengthsnew[3] = Lsnew;
+					Snew = calculateS2(GX, GY, meanGridX, meanGridY, dx, dy, W, focal_length, Lengthsnew, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
+					if ((Snew < Sold ))// && Lsnew > -0.1)// && nnew >= n_lower_bound && nnew <= n_upper_bound)
+					{
+						Ls = Lsnew;
+						Sold = Snew;
+						nu = 2;
+						lambda /= 3.0;
+                        LengthsChanging[3] = Ls;
+						calculate_Hessian_Jacobian_ForwardModelwrtLs2(GX, GY, meanGridX, meanGridY, dx, dy, focal_length, LengthsChanging, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n, Jacobian, Hessian, lambda);
+					}
+					else
+					{
+						// No Improvement
+						// Increase lambda => Less Gauss-Newton, more Gradient Search
+						double lambda_new = lambda*nu;
+						nu *= 2.0;
+						// Scale Diagonal of Hessian
+						// Jacobian stays the same
+						for (unsigned int i = 0; i < 1; i++)
+						{
+							Hessian.at<double>(i,i) *= (1.0+lambda_new)/(1.0+lambda);
+						}
+						lambda = lambda_new;
+					}
+			}
+			Ls_field.at<double>(i,j) = Ls;
+			//Ls_ini  = Ls;
+		}
+		double computed = (double)i/GridX.rows*100.0;
+		if (computed>outputcount)
+		{
+			outputcount++;
+			outputcount++;
+			outputcount++;
+			std::cout << "Points Computed: " << std::setprecision(2) << computed << "%" << std::endl;
+		}
+	}
+	return Ls_field;
+}
+/*--------------------------------------------------------------------------*/
 extern cv::Mat CalculateN2(const cv::Mat &GridX, const cv::Mat &GridY, const double &meanGridX, const double &meanGridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const std::string &path)
 {
 	double abs_tolerance_threshold = 1e-12;
 	double rel_tolerance_threshold = 1e-12;
 	double max_val_nu = 1e7;
 	unsigned int max_iterations = 1e4;
-	
+
 	double n_ini = 1.333;
 	double n_lower_bound = 1.3;
 	double n_upper_bound = 1.4;
 
 	cv::Mat n_field(GridX.size(), CV_64FC1, Scalar(0));
 	double outputcount = 1;
-	
+
 	for( int i = 0; i < GridX.rows; ++i)
 	{
 		for( int j = 0; j < GridX.cols; ++j)
@@ -3030,10 +3462,10 @@ extern cv::Mat CalculateN2(const cv::Mat &GridX, const cv::Mat &GridY, const dou
 			double Snew= Sold;
 			double n = n_ini;
 			double nnew = n_ini;
-			cv::Mat Hessian; 
-			cv::Mat Jacobian; 
+			cv::Mat Hessian;
+			cv::Mat Jacobian;
 			calculate_Hessian_Jacobian_ForwardModelwrtn2(GX, GY, meanGridX, meanGridY, dx, dy, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n_ini, Jacobian, Hessian, lambda);
-			while (iterations < max_iterations && nu < max_val_nu && (abs_tolerance > abs_tolerance_threshold || rel_tolerance > rel_tolerance_threshold)) 
+			while (iterations < max_iterations && nu < max_val_nu && (abs_tolerance > abs_tolerance_threshold || rel_tolerance > rel_tolerance_threshold))
 			{
 					iterations++;
 					cv::Mat delta_alpha(1,1,CV_64F);
@@ -3144,7 +3576,7 @@ extern std::vector<double> Calibration(const cv::Mat &GridX, const cv::Mat &Grid
 		std::cout << *i << " " ;
 	}
 	std::cout << std::endl;
-	std::cout << std::endl;	
+	std::cout << std::endl;
 	std::vector<double> PlaneDefinitionnew{a/normPD, b/normPD, c/normPD, d};
 	std::cout << "Original Plane: " ;
 	 for (auto i = PlaneDefinition.begin(); i < PlaneDefinition.end(); i++)
@@ -3172,11 +3604,11 @@ extern std::vector<double> Calibration(const cv::Mat &GridX, const cv::Mat &Grid
 	auto tr3 = std::chrono::high_resolution_clock::now();
 	std::cout << "Method 2 took " << std::chrono::duration_cast<std::chrono::milliseconds>(tr3-tr2).count()
 	<< " milliseconds = " << std::chrono::duration_cast<std::chrono::nanoseconds>(tr3-tr2).count() << " nanoseconds " <<std::endl;
-	
+
 	cv::Mat CC1dim = W.reshape(0, numberofrows);
 	cv::Mat W1dim = cv::Mat::diag(CC1dim);
-	//std::cout << W1dim << std::endl; 
-	
+	//std::cout << W1dim << std::endl;
+
 	double Sold = calculateS(GridX, GridY, Dx, Dy, W, focal_length, LengthsChanging, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
 	double Snew= Sold;
 	double S_ini = Sold;
@@ -3330,9 +3762,9 @@ extern std::vector<double> Calibration2(const cv::Mat &GridX, const cv::Mat &Gri
 	double nu  = 2.0;
 	double lambda = 1e-10;//1e-4;//10e3;//
 
-	double a = -0.1;//-0.1;//-0.12;//-0.11;//-0.5;//-0.9;//-0.1;//- 0.1; // -1;//-0.19;//
+	double a = 1;//-0.1;//-0.1;//-0.12;//-0.11;//-0.5;//-0.9;//-0.1;//- 0.1; // -1;//-0.19;//
 	double b = 0.001;//-0.001;//0;// -0.9; //-1;//0.0;//
-	double c = -35;//-0.9; //-0.9;//-1;//
+	double c = 35;//-0.9; //-0.9;//-1;//
 	double L_m = 3.0;
 	double meanGridX = -2400;//680;//
 	double meanGridY = 515;
@@ -3389,14 +3821,14 @@ extern std::vector<double> Calibration2(const cv::Mat &GridX, const cv::Mat &Gri
 				Wi[j] = 0.0;
 			}
 	}
-	
-	std::cout << CorrelationCoefficient.size() << std::endl; 
+
+	std::cout << CorrelationCoefficient.size() << std::endl;
 	cv::Mat CC1dim = W.reshape(0, numberofrows);
 
 	std::cout << CC1dim.size() << std::endl;
 	cv::Mat W1dim = cv::Mat::diag(CC1dim);
-	std::cout << W1dim.size() << std::endl; 
-	
+	std::cout << W1dim.size() << std::endl;
+
 	double Sold = calculateS2(GridX, GridY, meanGridX, meanGridY, Dx, Dy, W, focal_length, LengthsChanging, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
 	double Snew= Sold;
 	double S_ini = Sold;
@@ -3408,13 +3840,14 @@ extern std::vector<double> Calibration2(const cv::Mat &GridX, const cv::Mat &Gri
 	calculate_Hessian_Jacobian_ForwardModel2(GridX, GridY, meanGridX, meanGridY, Dx, Dy, W, W1dim, focal_length, LengthsChanging, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n, Jacobian, Hessian, lambda);
 	std::cout << "Size Jacobian = " << Jacobian.size() << std::endl;
 	std::cout << "Size Hessian = " << Hessian.size() << std::endl;
-
+    max_iterations = 10;
 	while (iterations < max_iterations && nu < max_val_nu && (abs_tolerance > abs_tolerance_threshold || rel_tolerance > rel_tolerance_threshold)) // && data_uniform == 0)
 	{
             iterations++;
 
             cv::Mat delta_alpha(6,1,CV_64F);
             cv::solve(Hessian, Jacobian, delta_alpha, cv::DECOMP_CHOLESKY);
+            std::cout << Hessian << std::endl;
 			//std::cout << delta_alpha << std::endl;
                 abs_tolerance = cv::sum(cv::abs(delta_alpha)).val[0];
                 rel_tolerance = cv::sum(cv::abs(delta_alpha)).val[0]/(abs(aold)+abs(bold)+abs(cold)+abs(L_mold)+abs(meanGridXold)+abs(meanGridYold));
@@ -3518,14 +3951,14 @@ extern std::vector<double> Calibration2(const cv::Mat &GridX, const cv::Mat &Gri
 
 	std::cout << "Mean S old = " << S_ini/numberofrows << std::endl;
 	std::cout << "Mean S new = " << Sold/numberofrows << std::endl;
-	
+
 	std::cout << std::endl;
 	std::cout << "mean Grid X old = " << meanGridXold << std::endl;
 	std::cout << "mean Grid Y old = " << meanGridYold << std::endl;
 	std::cout << "mean Grid X new = " << meanGridX << std::endl;
 	std::cout << "mean Grid Y new = " << meanGridY << std::endl;
 	std::cout << std::endl;
-	
+
 	// Normalize plane normal vector
 	normPD = calculateNorm(a, b, c);
 	a = a/normPD;
@@ -3542,6 +3975,253 @@ extern std::vector<double> Calibration2(const cv::Mat &GridX, const cv::Mat &Gri
     myfilen.open(path+"/CalibrationFigures.csv");
     myfilen << "a b c Lm meanGridX meanGridY meanS"<< std::endl;
     myfilen << std::setprecision(8) << a << ", " << b << ", " << c << ", " << L_m << ", " << meanGridX << ", " << meanGridY << ", " << Sold/numberofrows << std::endl;
+	myfilen.close();
+	return Returnvector;
+}
+/*--------------------------------------------------------------------------*/
+extern std::vector<double> Calibration3(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const cv::Mat &CorrelationCoefficient, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const double &n_0, const double &n_1, const double &n, const std::string &path, const double &corr_cut_off)
+{
+	double abs_tolerance = 1;
+	double rel_tolerance = 1;
+	double abs_tolerance_threshold = 1e-12;
+	double rel_tolerance_threshold = 1e-12;
+	double max_val_nu = 1e7;
+	unsigned int max_iterations = 1e5;//1e4;//1e3
+	unsigned int iterations = 1;
+
+	double L_g = Lengths[1];
+	double L_t = Lengths[2];
+	double L_s = Lengths[3];
+
+	cv::Mat DX0(GridX.size(), CV_64FC1, Scalar(0));
+	cv::Mat DY0(GridX.size(), CV_64FC1, Scalar(0));
+
+	double nu  = 2.0;
+	double lambda = 1e-10;//1e-4;//10e3;//
+
+	double a = 1;//-0.1;//-0.1;//-0.12;//-0.11;//-0.5;//-0.9;//-0.1;//- 0.1; // -1;//-0.19;//
+	double b = 0.001;//-0.001;//0;// -0.9; //-1;//0.0;//
+	double c = 35;//-0.9; //-0.9;//-1;//
+	double L_m = 3.0;
+	double meanGridX = -2400;//680;//
+	double meanGridY = 515;
+	double aold = a;
+	double bold = b;
+	double cold = c;
+	double L_mold = L_m;
+	double meanGridXold = meanGridX;
+	double meanGridYold = meanGridY;
+	double normPD = calculateNorm(a, b, c);
+	double d = -c/normPD*L_m;
+	double L_c = c/(a+b+c)*L_m-L_s-2.0*L_g-L_t;
+	std::vector<double> LengthsChanging(Lengths);//Lengths.begin(), Lengths.end());
+	LengthsChanging[0] = L_c;
+	std::vector<double> PlaneDefinition{a/normPD, b/normPD, c/normPD, d};
+
+	std::cout << "L_c = " << L_c << std::endl;
+	std::cout << "L_m = " << L_m << " >  Ltot = " << L_c + 2*L_g + L_s +L_t << std::endl;
+	double anew = a;
+	double bnew = b;
+	double cnew = c;
+	double dnew = d;
+	double meanGridXnew = meanGridX;
+	double meanGridYnew = meanGridY;
+	double L_mnew = L_m;
+	double L_cnew = L_c;
+	std::vector<double> Lengthsnew(LengthsChanging.begin(), LengthsChanging.end());
+	std::cout << "Lengthsnew: " ;
+	 for (auto i = Lengthsnew.begin(); i < Lengthsnew.end(); i++)
+	{
+		std::cout << *i << " " ;
+	}
+	std::cout << std::endl;
+	std::cout << std::endl;
+	std::vector<double> PlaneDefinitionnew{a/normPD, b/normPD, c/normPD, d};
+	std::cout << "Original Plane: " ;
+	 for (auto i = PlaneDefinition.begin(); i < PlaneDefinition.end(); i++)
+	{
+		std::cout << *i << " " ;
+	}
+	std::cout << std::endl;
+	std::cout << std::endl;
+
+	// Scale parameters
+	// |a| = 1; 0 < |b| < 1; 0 < |c| < 50
+	// 0 < Lm < 5; 0 < |meanGridX| < 5000; 0 < |meanGridY| < 5000;
+
+    double meanGridScale = 1000.0;//1.0;//
+    meanGridX = meanGridX/meanGridScale;
+    meanGridY = meanGridY/meanGridScale;
+    meanGridXold = meanGridXold/meanGridScale;
+    meanGridYold = meanGridYold/meanGridScale;
+	int numberofrows = GridX.rows*GridX.cols;
+	cv::Mat W;
+	CorrelationCoefficient.copyTo(W);
+	for(int i = 0; i < W.rows; i++)
+	{
+		double* Wi = W.ptr<double>(i);
+		for(int j = 0; j < W.cols; j++)
+			if (Wi[j]<corr_cut_off)
+			{
+				Wi[j] = 0.0;
+			}
+	}
+
+	std::cout << CorrelationCoefficient.size() << std::endl;
+	cv::Mat CC1dim = W.reshape(0, numberofrows);
+
+	std::cout << CC1dim.size() << std::endl;
+	cv::Mat W1dim = cv::Mat::diag(CC1dim);
+	std::cout << W1dim.size() << std::endl;
+
+	double Sold = calculateS2(GridX, GridY, meanGridX*meanGridScale, meanGridY*meanGridScale, Dx, Dy, W, focal_length, LengthsChanging, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
+	double Snew= Sold;
+	double S_ini = Sold;
+	std::cout << "S old = " << Sold << std::endl;
+
+	cv::Mat Hessian; //(GridX.rows*GridX.cols, GridX.rows*GridX.cols, CV_64F, cv::Scalar(0));
+	cv::Mat Jacobian; //(GridX.rows*GridX.cols,4, CV_64F, cv::Scalar(0));
+	//calculate_Hessian_Jacobian_ForwardModel2(GridX, GridY, meanGridX, meanGridY, Dx, Dy, W, W1dim, focal_length, LengthsChanging, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n, Jacobian, Hessian, lambda);
+	calculate_Hessian_Jacobian_ForwardModel3(GridX, GridY, meanGridX, meanGridY, Dx, Dy, W, W1dim, focal_length, LengthsChanging, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n, Jacobian, Hessian, lambda, meanGridScale);
+	std::cout << "Size Jacobian = " << Jacobian.size() << std::endl;
+	std::cout << "Size Hessian = " << Hessian.size() << std::endl;
+    //max_iterations = 10;
+	while (iterations < max_iterations && nu < max_val_nu && (abs_tolerance > abs_tolerance_threshold || rel_tolerance > rel_tolerance_threshold)) // && data_uniform == 0)
+	{
+            iterations++;
+
+            cv::Mat delta_alpha(5,1,CV_64F);
+            cv::solve(Hessian, Jacobian, delta_alpha, cv::DECOMP_CHOLESKY);
+            //std::cout << Hessian << std::endl;
+			//std::cout << delta_alpha << std::endl;
+                abs_tolerance = cv::sum(cv::abs(delta_alpha)).val[0];
+                rel_tolerance = cv::sum(cv::abs(delta_alpha)).val[0]/(abs(bold)+abs(cold)+abs(L_mold)+abs(meanGridXold)+abs(meanGridYold));
+
+                //abs_tolerance = abs(delta_alpha.at<double>(0))+abs(delta_alpha.at<double>(1))+abs(delta_alpha.at<double>(2))+abs(delta_alpha.at<double>(3))+abs(delta_alpha.at<double>(4))*meanGridScale+abs(delta_alpha.at<double>(5))*meanGridScale;
+                //rel_tolerance = abs_tolerance/(abs(bold)+abs(cold)+abs(L_mold)+abs(meanGridXold)*meanGridScale+abs(meanGridYold)*meanGridScale);
+				if (isnan(abs_tolerance))
+				{
+					std::cout << "NaN Detected"<< std::endl;
+					abs_tolerance = 1;
+					rel_tolerance = 1;
+					delta_alpha.at<double>(0) = 0;
+					delta_alpha.at<double>(1) = 0;
+					delta_alpha.at<double>(2) = 0;
+					delta_alpha.at<double>(3) = 0;
+					delta_alpha.at<double>(4) = 0;
+				}
+
+		{
+		    anew = a;
+			bnew = b+delta_alpha.at<double>(0);
+			cnew = c+delta_alpha.at<double>(1);
+			L_mnew = L_m+delta_alpha.at<double>(2);
+			meanGridXnew = meanGridX+delta_alpha.at<double>(3);
+			meanGridYnew = meanGridY+delta_alpha.at<double>(4);
+			double normPDnew = calculateNorm(anew, bnew, cnew);
+			dnew = -cnew/normPDnew*L_mnew;
+			double pd[] = {anew/normPDnew, bnew/normPDnew, cnew/normPDnew, dnew};
+			PlaneDefinitionnew.assign(pd, pd+4);
+			L_cnew = cnew/(anew+bnew+cnew)*L_mnew-L_s-2.0*L_g-L_t;
+			Lengthsnew[0] = L_cnew;
+			Snew = calculateS2(GridX, GridY, meanGridXnew*meanGridScale, meanGridYnew*meanGridScale, Dx, Dy, W, focal_length, Lengthsnew, Distance_From_Pixels_To_Meters, PlaneDefinitionnew, n_0, n_1, n);
+			//std::cout <<  "L_c suggested = " << L_cnew << ", L_tot = " << L_cnew+2*L_g+L_s+L_t << std::endl;
+			//std::cout << "S new = " << Snew << std::endl;
+		}
+		//if ((Snew < Sold || dis(gen) < exp(-(Snew-Sold)/0.2)) && L_cnew > 0 && L_mnew > L_cnew + 2*L_g+L_s+L_t && cnew < 0 && anew > - 1 &&  cnew > - 1)
+		if ((Snew < Sold ) && L_cnew > 0 && L_mnew > L_cnew + 2*L_g+L_s+L_t)// && cnew < 0)
+		{
+			// Improvement
+			Sold = Snew;
+			//a = anew;
+			b = bnew;
+			c = cnew;
+			d = dnew;
+			L_m = L_mnew;
+			L_c = L_cnew;
+			meanGridX = meanGridXnew;
+			meanGridY = meanGridYnew;
+			PlaneDefinition.assign(PlaneDefinitionnew.begin(), PlaneDefinitionnew.end());
+			nu = 2;
+			lambda /= 3.0;
+			LengthsChanging[0] = L_c;
+			std::cout << a << " " << b << " " << c << " " << L_m << " " << meanGridX*meanGridScale << " " << meanGridY*meanGridScale << " " << Sold << " " << lambda << "\n";
+
+			//calculate_Hessian_Jacobian_ForwardModel2(GridX, GridY, meanGridX, meanGridY, Dx, Dy, W, W1dim, focal_length, LengthsChanging, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n, Jacobian, Hessian, lambda);
+			calculate_Hessian_Jacobian_ForwardModel3(GridX, GridY, meanGridX, meanGridY, Dx, Dy, W, W1dim, focal_length, LengthsChanging, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n, Jacobian, Hessian, lambda, meanGridScale);
+			//std::cout << Hessian << std::endl;
+		}
+		else
+		{
+			// No Improvement
+			// Increase lambda => Less Gauss-Newton, more Gradient Search
+			double lambda_new = lambda*nu;
+			nu *= 2.0;
+
+			// Scale Diagonal of Hessian
+			// Jacobian stays the same
+			for (unsigned int i = 0; i < 6; i++)
+			{
+				Hessian.at<double>(i,i) *= (1.0+lambda_new)/(1.0+lambda);
+			}
+			lambda = lambda_new;
+		}
+	}
+	std::cout << std::endl;
+	std::cout << std::endl;
+	if (iterations >= max_iterations)
+	{
+		std::cout << "max iterations reached" << std::endl;
+	}
+	if (nu >= max_val_nu)
+	{
+		std::cout << "max nu reached" << std::endl;
+	}
+	if (abs_tolerance <= abs_tolerance_threshold)
+	{
+		std::cout << "abs tolerance reached" << std::endl;
+	}
+	if (rel_tolerance <= rel_tolerance_threshold)
+	{
+		std::cout << "rel tolerance reached" << std::endl;
+	}
+	std::cout << std::endl;
+	std::cout << iterations << " " << nu  << " " << abs_tolerance  << " " << rel_tolerance  << std::endl;
+	std::cout << std::endl << "\033[1;32mResult Calibration\033[0m\n" << std::endl<< std::endl;
+	std::cout << "aold = " <<   std::setprecision(4)  << aold << ", bold = " << bold << ", cold = " << cold << ", Lmold = " << L_mold << std::endl;
+	std::cout << "S old = " << std::setprecision(2) << std::scientific << S_ini << std::endl;
+	std::cout << "a = " << std::setprecision(8) << a << ", b = " << b << ", c = " << c << ", Lm = " << L_m << std::endl;
+	std::cout << "S = " << std::setprecision(2) << std::scientific << Sold << std::endl << std::endl;
+	//std::cout << "L_m = " << std::setprecision(3) << std::scientific << L_m << std::endl;
+	std::cout << "L_c = " << std::setprecision(3)  << L_c << std::endl;
+	std::cout << "L_tot = " << std::setprecision(3) << L_c+2.0*L_g+L_t+L_s << std::endl;
+
+	std::cout << "Mean S old = " << S_ini/numberofrows << std::endl;
+	std::cout << "Mean S new = " << Sold/numberofrows << std::endl;
+
+	std::cout << std::endl;
+	std::cout << "mean Grid X old = " << meanGridXold << std::endl;
+	std::cout << "mean Grid Y old = " << meanGridYold << std::endl;
+	std::cout << "mean Grid X new = " << meanGridX*meanGridScale << std::endl;
+	std::cout << "mean Grid Y new = " << meanGridY*meanGridScale << std::endl;
+	std::cout << std::endl;
+
+	// Normalize plane normal vector
+	normPD = calculateNorm(a, b, c);
+	a = a/normPD;
+	b = b/normPD;
+	c = c/normPD;
+	std::vector<double> Returnvector;
+	Returnvector.push_back(a);
+	Returnvector.push_back(b);
+	Returnvector.push_back(c);
+	Returnvector.push_back(L_m);
+	Returnvector.push_back(meanGridX*meanGridScale);
+	Returnvector.push_back(meanGridY*meanGridScale);
+	std::ofstream myfilen;
+    myfilen.open(path+"/CalibrationFigures.csv");
+    myfilen << "a b c Lm meanGridX meanGridY meanS"<< std::endl;
+    myfilen << std::setprecision(8) << a << ", " << b << ", " << c << ", " << L_m << ", " << meanGridX*meanGridScale << ", " << meanGridY*meanGridScale << ", " << Sold/numberofrows << std::endl;
 	myfilen.close();
 	return Returnvector;
 }
@@ -3571,7 +4251,7 @@ extern std::vector<double> CalibrationExtended(const cv::Mat &GridX, const cv::M
 	double c = -0.5; //-0.9;//-1;//
 	double L_m = 2.0;
 	double L_t = 0.168;
-	
+
 	double L_m_ini = 2.44;
 	double a_ini = -0.12;
 	double b_ini = -0.0052;
@@ -3579,13 +4259,13 @@ extern std::vector<double> CalibrationExtended(const cv::Mat &GridX, const cv::M
 	double L_t_ini = 0.168;
 	double L_t_min = 0.1;
 	double L_t_max = 0.2;
-		
+
 	a = a_ini;
 	b = b_ini;
 	c = c_ini;
 	L_m = L_m_ini;
 	L_t = L_t_ini;
-	
+
 	double aold = a;
 	double bold = b;
 	double cold = c;
@@ -3616,7 +4296,7 @@ extern std::vector<double> CalibrationExtended(const cv::Mat &GridX, const cv::M
 		std::cout << *i << " " ;
 	}
 	std::cout << std::endl;
-	std::cout << std::endl;	
+	std::cout << std::endl;
 	std::vector<double> PlaneDefinitionnew{a/normPD, b/normPD, c/normPD, d};
 	std::cout << "Original Plane: " ;
 	 for (auto i = PlaneDefinition.begin(); i < PlaneDefinition.end(); i++)
@@ -3644,11 +4324,11 @@ extern std::vector<double> CalibrationExtended(const cv::Mat &GridX, const cv::M
 	auto tr3 = std::chrono::high_resolution_clock::now();
 	//std::cout << "Method 2 took " << std::chrono::duration_cast<std::chrono::milliseconds>(tr3-tr2).count()
 	//<< " milliseconds = " << std::chrono::duration_cast<std::chrono::nanoseconds>(tr3-tr2).count() << " nanoseconds " <<std::endl;
-	
+
 	cv::Mat CC1dim = W.reshape(0, numberofrows);
 	cv::Mat W1dim = cv::Mat::diag(CC1dim);
-	//std::cout << W1dim << std::endl; 
-	
+	//std::cout << W1dim << std::endl;
+
 	double Sold = calculateS(GridX, GridY, Dx, Dy, W, focal_length, LengthsChanging, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n);
 	double Snew = Sold;
 	double S_ini = Sold;
@@ -3775,7 +4455,7 @@ extern std::vector<double> CalibrationExtended(const cv::Mat &GridX, const cv::M
 	a = a/normPD;
 	b = b/normPD;
 	c = c/normPD;
-	
+
 	std::vector<double> Returnvector;
 	Returnvector.push_back(a);
 	Returnvector.push_back(b);
@@ -3805,7 +4485,7 @@ extern void calculateNFigures(const cv::Mat &GridX, const cv::Mat &GridY, const 
 			}
 		}
 		//std::cout << std::endl << std::endl;
-	}*/	
+	}*/
     std::ofstream myfilen;
     myfilen.open(path+"/ffilen.csv");
     myfilen << "GridX GridY f n "<< std::endl;
