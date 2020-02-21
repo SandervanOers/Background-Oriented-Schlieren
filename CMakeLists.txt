@@ -8,7 +8,7 @@ add_executable (DIC DisplayImage.cpp)
 set (LIBSRC DisplayImage.hpp DIC.hpp DIC.cpp CalibrationValues.hpp PointsWithValue.hpp InputVariables.hpp ExperimentalSetupVariables.hpp 
 PositionDirection.hpp pixeltranslation.hpp pixeltranslation.cpp 
 nonlineariteration.hpp 
-nonlineariteration.cpp calculateN.hpp calculateN.cpp InputOut.hpp InputOut.cpp coeff.h coeff.c interpol.h interpol.c)
+nonlineariteration.cpp calculateN.hpp calculateN.cpp InputOut.hpp InputOut.cpp csvload.hpp csvload.cpp coeff.h coeff.c interpol.h interpol.c)
 add_library(coeff STATIC ${LIBSRC})
 target_link_libraries( DIC coeff ${OpenCV_LIBS} )
 set(CMAKE_CXX_FLAGS "-g3 -pg -O0 -Wall -Wextra -Wconversion -pedantic")

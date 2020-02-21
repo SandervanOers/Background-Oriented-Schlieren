@@ -10,6 +10,7 @@
 #include <thread>
 #include <sys/stat.h>
 #include "InputVariables.hpp"
+#include "csvload.hpp"
 
 #include <opencv2/opencv.hpp>
 using namespace cv;

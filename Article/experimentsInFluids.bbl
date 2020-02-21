@@ -71,6 +71,55 @@
       \field{year}{2000}
       \keyw{bibtex-import}
     \endentry
+    \entry{chen2009quality}{article}{}
+      \name{author}{5}{}{%
+        {{hash=ee84d545b8db732f0b189acbecad288f}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Lujie},
+           giveni={L\bibinitperiod}}}%
+        {{hash=242d90a6acfd3f7bb8f4e74ff1e4035a}{%
+           family={Treece},
+           familyi={T\bibinitperiod},
+           given={Graham\bibnamedelima M},
+           giveni={G\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=1fbd53c53c8def6e9e650e6baa91ccb7}{%
+           family={Lindop},
+           familyi={L\bibinitperiod},
+           given={Joel\bibnamedelima E},
+           giveni={J\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+        {{hash=42667ec0c37679d817b8a6d05a6640c2}{%
+           family={Gee},
+           familyi={G\bibinitperiod},
+           given={Andrew\bibnamedelima H},
+           giveni={A\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=d11318668e241ae5eae6b18aad4236e0}{%
+           family={Prager},
+           familyi={P\bibinitperiod},
+           given={Richard\bibnamedelima W},
+           giveni={R\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{c23042363871796ab89c72ffa482720c}
+      \strng{fullhash}{1fa71e7f03d8f3970afbf13dbe9d3ca5}
+      \strng{bibnamehash}{c23042363871796ab89c72ffa482720c}
+      \strng{authorbibnamehash}{c23042363871796ab89c72ffa482720c}
+      \strng{authornamehash}{c23042363871796ab89c72ffa482720c}
+      \strng{authorfullhash}{1fa71e7f03d8f3970afbf13dbe9d3ca5}
+      \field{sortinit}{C}
+      \field{sortinithash}{4c244ceae61406cdc0cc2ce1cb1ff703}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Medical image analysis}
+      \field{number}{2}
+      \field{title}{A quality-guided displacement tracking algorithm for ultrasonic elasticity imaging}
+      \field{volume}{13}
+      \field{year}{2009}
+      \field{pages}{286\bibrangedash 296}
+      \range{pages}{11}
+    \endentry
     \entry{dalziel2000whole}{article}{}
       \name{author}{3}{}{%
         {{hash=7f750baca5d9b14b81644fba16906dbd}{%
@@ -109,30 +158,6 @@
       \field{year}{2000}
       \field{pages}{322\bibrangedash 335}
       \range{pages}{14}
-    \endentry
-    \entry{holm2011geometric}{book}{}
-      \name{author}{1}{}{%
-        {{hash=54da33665d182072fc9af545bafcc456}{%
-           family={Holm},
-           familyi={H\bibinitperiod},
-           given={Darryl\bibnamedelima D},
-           giveni={D\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {World Scientific Publishing Company}%
-      }
-      \strng{namehash}{54da33665d182072fc9af545bafcc456}
-      \strng{fullhash}{54da33665d182072fc9af545bafcc456}
-      \strng{bibnamehash}{54da33665d182072fc9af545bafcc456}
-      \strng{authorbibnamehash}{54da33665d182072fc9af545bafcc456}
-      \strng{authornamehash}{54da33665d182072fc9af545bafcc456}
-      \strng{authorfullhash}{54da33665d182072fc9af545bafcc456}
-      \field{sortinit}{H}
-      \field{sortinithash}{6db6145dae8dc9e1271a8d556090b50a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Geometric mechanics: Part I: Dynamics and symmetry}
-      \field{year}{2011}
     \endentry
     \entry{lewis1995industrial}{article}{}
       \name{author}{1}{}{%
@@ -357,6 +382,45 @@
       \field{pages}{586\bibrangedash 592}
       \range{pages}{7}
     \endentry
+    \entry{pan2013high}{article}{}
+      \name{author}{3}{}{%
+        {{hash=95c96de3d7a254ef14f49bff7df44179}{%
+           family={Pan},
+           familyi={P\bibinitperiod},
+           given={Bing},
+           giveni={B\bibinitperiod}}}%
+        {{hash=caa098cf20a9af60ebff2b29fed26991}{%
+           family={Yu},
+           familyi={Y\bibinitperiod},
+           given={Liping},
+           giveni={L\bibinitperiod}}}%
+        {{hash=35637fe71dd87959bc427d8480b7ddf8}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Dafang},
+           giveni={D\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IOP Publishing}%
+      }
+      \strng{namehash}{2ae04eeb91b3ea9bcdc9c50fd7643a44}
+      \strng{fullhash}{2ae04eeb91b3ea9bcdc9c50fd7643a44}
+      \strng{bibnamehash}{2ae04eeb91b3ea9bcdc9c50fd7643a44}
+      \strng{authorbibnamehash}{2ae04eeb91b3ea9bcdc9c50fd7643a44}
+      \strng{authornamehash}{2ae04eeb91b3ea9bcdc9c50fd7643a44}
+      \strng{authorfullhash}{2ae04eeb91b3ea9bcdc9c50fd7643a44}
+      \field{sortinit}{P}
+      \field{sortinithash}{bb5b15f2db90f7aef79bb9e83defefcb}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Measurement Science and Technology}
+      \field{number}{2}
+      \field{title}{High-accuracy 2D digital image correlation measurements using low-cost imaging lenses: implementation of a generalized compensation method}
+      \field{volume}{25}
+      \field{year}{2013}
+      \field{pages}{025001}
+      \range{pages}{1}
+    \endentry
     \entry{raffel2015background}{article}{}
       \name{author}{1}{}{%
         {{hash=54a9ad924481051b623e25e9f428b33c}{%
@@ -385,35 +449,6 @@
       \field{year}{2015}
       \field{pages}{60}
       \range{pages}{1}
-    \endentry
-    \entry{southwell1982ray}{article}{}
-      \name{author}{1}{}{%
-        {{hash=1f72057fef22b45f255e4c856c4d1335}{%
-           family={Southwell},
-           familyi={S\bibinitperiod},
-           given={WH},
-           giveni={W\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {Optical Society of America}%
-      }
-      \strng{namehash}{1f72057fef22b45f255e4c856c4d1335}
-      \strng{fullhash}{1f72057fef22b45f255e4c856c4d1335}
-      \strng{bibnamehash}{1f72057fef22b45f255e4c856c4d1335}
-      \strng{authorbibnamehash}{1f72057fef22b45f255e4c856c4d1335}
-      \strng{authornamehash}{1f72057fef22b45f255e4c856c4d1335}
-      \strng{authorfullhash}{1f72057fef22b45f255e4c856c4d1335}
-      \field{sortinit}{S}
-      \field{sortinithash}{c319cff79d99c853d775f88277d4e45f}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{JOSA}
-      \field{number}{7}
-      \field{title}{Ray tracing in gradient-index media}
-      \field{volume}{72}
-      \field{year}{1982}
-      \field{pages}{908\bibrangedash 911}
-      \range{pages}{4}
     \endentry
     \entry{sutton2009image}{book}{}
       \name{author}{3}{}{%
@@ -520,6 +555,44 @@
       \field{pages}{739\bibrangedash 758}
       \range{pages}{20}
     \endentry
+    \entry{tian2018accuracy}{article}{}
+      \name{author}{3}{}{%
+        {{hash=08c8d6e1356ab4df1562801c5984c64f}{%
+           family={Tian},
+           familyi={T\bibinitperiod},
+           given={Long},
+           giveni={L\bibinitperiod}}}%
+        {{hash=caa098cf20a9af60ebff2b29fed26991}{%
+           family={Yu},
+           familyi={Y\bibinitperiod},
+           given={Liping},
+           giveni={L\bibinitperiod}}}%
+        {{hash=95c96de3d7a254ef14f49bff7df44179}{%
+           family={Pan},
+           familyi={P\bibinitperiod},
+           given={Bing},
+           giveni={B\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{595fffbb44ec965aa3ba98fe7b8f3da6}
+      \strng{fullhash}{595fffbb44ec965aa3ba98fe7b8f3da6}
+      \strng{bibnamehash}{595fffbb44ec965aa3ba98fe7b8f3da6}
+      \strng{authorbibnamehash}{595fffbb44ec965aa3ba98fe7b8f3da6}
+      \strng{authornamehash}{595fffbb44ec965aa3ba98fe7b8f3da6}
+      \strng{authorfullhash}{595fffbb44ec965aa3ba98fe7b8f3da6}
+      \field{sortinit}{T}
+      \field{sortinithash}{51f9faf24c60c62ca764a77f78cf5666}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Optics and Lasers in Engineering}
+      \field{title}{Accuracy enhancement of a video extensometer by real-time error compensation}
+      \field{volume}{110}
+      \field{year}{2018}
+      \field{pages}{272\bibrangedash 278}
+      \range{pages}{7}
+    \endentry
     \entry{unser1999splines}{article}{}
       \name{author}{1}{}{%
         {{hash=f8c2e37553f0e8266bcc62ccb15065f4}{%
@@ -616,30 +689,6 @@
       \field{year}{2015}
       \field{pages}{103705}
       \range{pages}{1}
-    \endentry
-    \entry{weyl1954analysis}{article}{}
-      \name{author}{1}{}{%
-        {{hash=f22b2c1e3868396973625ac29ad5af29}{%
-           family={Weyl},
-           familyi={W\bibinitperiod},
-           given={FJ},
-           giveni={F\bibinitperiod}}}%
-      }
-      \strng{namehash}{f22b2c1e3868396973625ac29ad5af29}
-      \strng{fullhash}{f22b2c1e3868396973625ac29ad5af29}
-      \strng{bibnamehash}{f22b2c1e3868396973625ac29ad5af29}
-      \strng{authorbibnamehash}{f22b2c1e3868396973625ac29ad5af29}
-      \strng{authornamehash}{f22b2c1e3868396973625ac29ad5af29}
-      \strng{authorfullhash}{f22b2c1e3868396973625ac29ad5af29}
-      \field{sortinit}{W}
-      \field{sortinithash}{1af34bd8c148ffb32de1494636b49713}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Physical measurements in gas dynamics and combustion. Princeton University Press, Princeton, New Jersey}
-      \field{title}{Analysis of optical methods}
-      \field{year}{1954}
-      \field{pages}{3\bibrangedash 25}
-      \range{pages}{23}
     \endentry
     \entry{zhou2012propagation}{article}{}
       \name{author}{2}{}{%

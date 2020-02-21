@@ -44,6 +44,9 @@ int main(int argc, char** argv )
 	/////DX = DX - 0.2;
 	/////DY = DY + 0.3;
 	//DY = DY + 0.6;
+	// TwoLayer - Fresh Correction 2
+	//DX = DX-0.15;
+	//DY = DY+0.3;
 	// Median Filter
 	/*
 	DispX.convertTo(DispX, CV_32F);
@@ -54,8 +57,8 @@ int main(int argc, char** argv )
 	DispY.convertTo(DispY, CV_64F);
 	 * */
 	// Gaussian Filter
-	GaussianBlur(DX, DX, Size(5, 5), 0);
-	GaussianBlur(DY, DY, Size(5, 5), 0);
+	///GaussianBlur(DX, DX, Size(5, 5), 0);
+	///GaussianBlur(DY, DY, Size(5, 5), 0);
 	// Store Again?
 	std::cout << std::endl << "\033[1;32mFiltering Completed\033[0m\n" << std::endl;
 	/*--------------------------------------------------------------------------*/
@@ -70,8 +73,8 @@ int main(int argc, char** argv )
 	// Lengths Small Tank
 	experimentalsetupvariables.L_c = 1e4;
 	experimentalsetupvariables.L_g = 0.8/100;//0.004; //0.01
-	experimentalsetupvariables.L_t = 0.168;//0.191;//15.0/100-2*experimentalsetupvariables.L_g;//13.8/100-2*experimentalsetupvariables.L_g;//0.168;//
-	experimentalsetupvariables.L_s = 0.0;//0.523;
+	experimentalsetupvariables.L_t = 0.191;//15.0/100-2*experimentalsetupvariables.L_g;//13.8/100-2*experimentalsetupvariables.L_g;//0.168;//0.168;//
+	experimentalsetupvariables.L_s = 0.523;0.0;//
 	//experimentalsetupvariables.Lengths{experimentalsetupvariables.L_c, experimentalsetupvariables.L_t, experimentalsetupvariables.L_g, experimentalsetupvariables.L_s};
 	// Lengths Full Tank
 	/*
@@ -88,8 +91,7 @@ int main(int argc, char** argv )
 	CalibrationValues calibrationValues;
 	if (inputvariables.CalibrationNeeded==1)
 	{
-		//std::vector<double> CalibrationNumbers = Calibration3(GridX, GridY, DX, DY, CC, experimentalsetupvariables.focal_length, Lengths, experimentalsetupvariables.Distance_From_Pixels_To_Meters, experimentalsetupvariables.n_0, experimentalsetupvariables.n_1, experimentalsetupvariables.n, inputvariables.path, corr_cut_off);
-		std::vector<double> CalibrationNumbers = Calibration2(GridX, GridY, DX, DY, CC, experimentalsetupvariables.focal_length, Lengths, experimentalsetupvariables.Distance_From_Pixels_To_Meters, experimentalsetupvariables.n_0, experimentalsetupvariables.n_1, experimentalsetupvariables.n, inputvariables.path, corr_cut_off);
+	    std::vector<double> CalibrationNumbers = Calibration2(GridX, GridY, DX, DY, CC, experimentalsetupvariables.focal_length, Lengths, experimentalsetupvariables.Distance_From_Pixels_To_Meters, experimentalsetupvariables.n_0, experimentalsetupvariables.n_1, experimentalsetupvariables.n, inputvariables.path, corr_cut_off);
 		//std::vector<double> CalibrationNumbers = Calibration(GridX, GridY, DX, DY, CC, experimentalsetupvariables.focal_length, Lengths, experimentalsetupvariables.Distance_From_Pixels_To_Meters, experimentalsetupvariables.n_0, experimentalsetupvariables.n_1, experimentalsetupvariables.n, inputvariables.path, corr_cut_off);
 		calibrationValues.a = CalibrationNumbers[0];
 		calibrationValues.b = CalibrationNumbers[1];
@@ -126,13 +128,13 @@ int main(int argc, char** argv )
 	//std::vector<double> CalibrationNumbers = CalibrationExtended(GridX, GridY, DX, DY, CC, focal_length, Lengths, Distance_From_Pixels_To_Meters, n_0, n_1, n, inputvariables.path);
 	*/
     // Check Ls
-		double normPD = calculateNorm(calibrationValues.a, calibrationValues.b, calibrationValues.c);
-		double d = -calibrationValues.c/normPD*calibrationValues.L_m;
-		std::vector<double> PlaneDefinition{0, 0, 0, 0};
-		PlaneDefinition[0] = calibrationValues.a/normPD;
-		PlaneDefinition[1] = calibrationValues.b/normPD;
-		PlaneDefinition[2] = calibrationValues.c/normPD;
-		PlaneDefinition[3] = d;
+		//double normPD = calculateNorm(calibrationValues.a, calibrationValues.b, calibrationValues.c);
+		//double d = -calibrationValues.c/normPD*calibrationValues.L_m;
+		//std::vector<double> PlaneDefinition{0, 0, 0, 0};
+		//PlaneDefinition[0] = calibrationValues.a/normPD;
+		//PlaneDefinition[1] = calibrationValues.b/normPD;
+		//PlaneDefinition[2] = calibrationValues.c/normPD;
+		//PlaneDefinition[3] = d;
     //cv::Mat Lsi = CalculateLsi(GridX, GridY, calibrationValues.meanGridX, calibrationValues.meanGridY, DX, DY, experimentalsetupvariables.focal_length, Lengths, experimentalsetupvariables.Distance_From_Pixels_To_Meters, PlaneDefinition, experimentalsetupvariables.n_0, experimentalsetupvariables.n_1, experimentalsetupvariables.n, inputvariables.path);
     //std::cout << Lsi << std::endl;
 
@@ -155,8 +157,13 @@ int main(int argc, char** argv )
 
 		auto tr5= std::chrono::high_resolution_clock::now();
 		//cv::Mat nfield = CalculateN(GridX, GridY, DX, DY, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, inputvariables.path);
+        		std::cout << "loading diff n" << std::endl;
 		cv::Mat nfield = CalculateN2(GridX, GridY, calibrationValues.meanGridX, calibrationValues.meanGridY, DX, DY, experimentalsetupvariables.focal_length, Lengths, experimentalsetupvariables.Distance_From_Pixels_To_Meters, PlaneDefinition, experimentalsetupvariables.n_0, experimentalsetupvariables.n_1, inputvariables.path);
-		store_matrix(inputvariables.path,"nfield", nfield);
+		//cv::Mat diffn = load_matrix(inputvariables.path, "diffn", 0);
+		//std::cout << "diff n loaded" << std::endl;
+		//cv::Mat nfield = CalculateN3(GridX, GridY, calibrationValues.meanGridX, calibrationValues.meanGridY, DX, DY, experimentalsetupvariables.focal_length, Lengths, experimentalsetupvariables.Distance_From_Pixels_To_Meters, PlaneDefinition, experimentalsetupvariables.n_0, experimentalsetupvariables.n_1, inputvariables.path, diffn);
+
+		//store_matrix(inputvariables.path,"nfield", nfield);
 		auto tr6= std::chrono::high_resolution_clock::now();
 		std::cout << "n Calculation took " << std::chrono::duration_cast<std::chrono::milliseconds>(tr6-tr5).count()
 		<< " milliseconds = " << std::chrono::duration_cast<std::chrono::seconds>(tr6-tr5).count() << " seconds = " << std::chrono::duration_cast<std::chrono::minutes>(tr6-tr5).count() << " minutes"<<std::endl;
@@ -243,62 +250,6 @@ void store_matrix(std::string path, std::string filename, cv::Mat Matrix_To_Be_S
     myfile.open(path+"/"+filename+".csv");
     myfile << format(Matrix_To_Be_Stored,cv::Formatter::FMT_MATLAB);
     myfile.close();
-}
-/*--------------------------------------------------------------------------*/
-cv::Mat load_matrix(std::string path, std::string filename, const int &skiplines)
-{
-
-    std::ifstream file(path+"/"+filename+".csv");
-    std::ifstream file1(path+"/"+filename+".csv");
-	int line = 0;
-	unsigned int numberofrows, numberofcols;
-    for(CSVIterator loop(file); loop != CSVIterator(); ++loop)
-    {
-		if (line>=skiplines)
-		{
-			numberofrows = static_cast<unsigned int>((*loop).size());
-		}
-		line++;
-    }
-	numberofcols = static_cast<unsigned int>(line-skiplines);
-	cv::Mat In(numberofcols, numberofrows, CV_64FC1);
-	line = 0;
-    for(CSVIterator loop(file1); loop != CSVIterator(); ++loop)
-    {
-		if (line>=skiplines)
-		{
-			for (unsigned int i = 0; i < (*loop).size(); i++ )
-			{
-				std::string s = (*loop)[i];
-				removeCharsFromString( s, ";" );
-				In.at<double>(line-skiplines,i) =  std::stod(s);
-			}
-		}
-		line++;
-    }
-	return In;
-}
-
-/*--------------------------------------------------------------------------*/
-bool sort_by_C_value (const  Points_With_Value &lhs, const Points_With_Value &rhs)
-{
-    return lhs.C_value > rhs.C_value;
-}
-/*--------------------------------------------------------------------------*/
-static void compute_Save_GridX_Y(const cv::Size &Size, const unsigned int &xStart_ROI, const unsigned int &yStart_ROI, const unsigned int &GridLength, const std::string path)
-{
-    cv::Mat GridX(Size, CV_64FC1, Scalar(0));
-    cv::Mat GridY(Size, CV_64FC1, Scalar(0));
-	for (unsigned int i = 0; i < static_cast<unsigned int>(GridX.cols); i++)
-	{
-		for (unsigned int j = 0; j < static_cast<unsigned int>(GridX.rows); j++)
-		{
-			GridX.at<double>(j,i) = xStart_ROI + i*GridLength;
-			GridY.at<double>(j,i) = yStart_ROI + j*GridLength;
-		}
-	}
-    store_matrix(path,"GridX", GridX);
-	store_matrix(path,"GridY", GridY);
 }
 /*--------------------------------------------------------------------------*/
 

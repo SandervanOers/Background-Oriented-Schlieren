@@ -3521,6 +3521,98 @@ extern cv::Mat CalculateN2(const cv::Mat &GridX, const cv::Mat &GridY, const dou
 
 }
 /*--------------------------------------------------------------------------*/
+extern cv::Mat CalculateN3(const cv::Mat &GridX, const cv::Mat &GridY, const double &meanGridX, const double &meanGridY, const cv::Mat &Dx, const cv::Mat &Dy, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const std::vector<double> &PlaneDefinition, const double &n_0, const double &n_1, const std::string &path, const cv::Mat &ndiff)
+{
+	double abs_tolerance_threshold = 1e-12;
+	double rel_tolerance_threshold = 1e-12;
+	double max_val_nu = 1e7;
+	unsigned int max_iterations = 1e4;
+
+	double n_ini = 1.333;
+	double n_lower_bound = 1.3;
+	double n_upper_bound = 1.4;
+
+	cv::Mat n_field(GridX.size(), CV_64FC1, Scalar(0));
+	double outputcount = 1;
+
+	for( int i = 0; i < GridX.rows; ++i)
+	{
+		for( int j = 0; j < GridX.cols; ++j)
+		{
+			unsigned int iterations = 1;
+			double abs_tolerance = 1;
+			double rel_tolerance = 1;
+			double nu = 2.0;
+			double lambda = 1e-10;
+			cv::Mat GX(1, 1, CV_64F, GridX.at<double>(i,j));
+			cv::Mat GY(1, 1, CV_64F, GridY.at<double>(i,j));
+			cv::Mat dx(1, 1, CV_64F, Dx.at<double>(i,j));
+			cv::Mat dy(1, 1, CV_64F, Dy.at<double>(i,j));
+			cv::Mat W(1, 1, CV_64FC1, Scalar(1));
+			double diffn = -ndiff.at<double>(i,j);
+			double Sold = calculateS2(GX, GY, meanGridX, meanGridY, dx, dy, W, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n_ini+diffn);
+			double Snew= Sold;
+			double n = n_ini;
+			double nnew = n_ini;
+			cv::Mat Hessian;
+			cv::Mat Jacobian;
+			calculate_Hessian_Jacobian_ForwardModelwrtn2(GX, GY, meanGridX, meanGridY, dx, dy, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n_ini+diffn, Jacobian, Hessian, lambda);
+			while (iterations < max_iterations && nu < max_val_nu && (abs_tolerance > abs_tolerance_threshold || rel_tolerance > rel_tolerance_threshold))
+			{
+					iterations++;
+					cv::Mat delta_alpha(1,1,CV_64F);
+					cv::solve(Hessian, Jacobian, delta_alpha, cv::DECOMP_CHOLESKY);
+					abs_tolerance = cv::sum(cv::abs(delta_alpha)).val[0];
+					rel_tolerance = cv::sum(cv::abs(delta_alpha)).val[0]/(n_ini);
+					if (isnan(abs_tolerance))
+					{
+						std::cout << "NaN Detected"<< std::endl;
+						abs_tolerance = 1;
+						rel_tolerance = 1;
+						delta_alpha.at<double>(0) = 0;
+					}
+					nnew = n + delta_alpha.at<double>(0);
+					Snew = calculateS2(GX, GY, meanGridX, meanGridY, dx, dy, W, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, nnew+diffn);
+					if ((Snew < Sold ) && nnew >= n_lower_bound && nnew <= n_upper_bound)
+					{
+						n = nnew;
+						Sold = Snew;
+						nu = 2;
+						lambda /= 3.0;
+
+						calculate_Hessian_Jacobian_ForwardModelwrtn2(GX, GY, meanGridX, meanGridY, dx, dy, focal_length, Lengths, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n+diffn, Jacobian, Hessian, lambda);
+					}
+					else
+					{
+						// No Improvement
+						// Increase lambda => Less Gauss-Newton, more Gradient Search
+						double lambda_new = lambda*nu;
+						nu *= 2.0;
+						// Scale Diagonal of Hessian
+						// Jacobian stays the same
+						for (unsigned int i = 0; i < 1; i++)
+						{
+							Hessian.at<double>(i,i) *= (1.0+lambda_new)/(1.0+lambda);
+						}
+						lambda = lambda_new;
+					}
+			}
+			n_field.at<double>(i,j) = n;
+			n_ini = n;
+		}
+		double computed = (double)i/GridX.rows*100.0;
+		if (computed>outputcount)
+		{
+			outputcount++;
+			outputcount++;
+			outputcount++;
+			std::cout << "Points Computed: " << std::setprecision(2) << computed << "%" << std::endl;
+		}
+	}
+	return n_field;
+
+}
+/*--------------------------------------------------------------------------*/
 extern std::vector<double> Calibration(const cv::Mat &GridX, const cv::Mat &GridY, const cv::Mat &Dx, const cv::Mat &Dy, const cv::Mat &CorrelationCoefficient, const double &focal_length, const std::vector<double> &Lengths, const double &Distance_From_Pixels_To_Meters, const double &n_0, const double &n_1, const double &n, const std::string &path, const double &corr_cut_off)
 {
 	//std::cout << GridX << std::endl<< std::endl;
@@ -3749,7 +3841,7 @@ extern std::vector<double> Calibration2(const cv::Mat &GridX, const cv::Mat &Gri
 	double abs_tolerance_threshold = 1e-12;
 	double rel_tolerance_threshold = 1e-12;
 	double max_val_nu = 1e7;
-	unsigned int max_iterations = 1e5;//1e4;//1e3
+	unsigned int max_iterations = 1e4;//10;//1e5;//1e3
 	unsigned int iterations = 1;
 
 	double L_g = Lengths[1];
@@ -3763,11 +3855,11 @@ extern std::vector<double> Calibration2(const cv::Mat &GridX, const cv::Mat &Gri
 	double lambda = 1e-10;//1e-4;//10e3;//
 
 	double a = 1;//-0.1;//-0.1;//-0.12;//-0.11;//-0.5;//-0.9;//-0.1;//- 0.1; // -1;//-0.19;//
-	double b = 0.001;//-0.001;//0;// -0.9; //-1;//0.0;//
-	double c = 35;//-0.9; //-0.9;//-1;//
-	double L_m = 3.0;
-	double meanGridX = -2400;//680;//
-	double meanGridY = 515;
+	double b = 0.0440422;//0.001;//-0.001;//0;// -0.9; //-1;//0.0;//
+	double c = 37.9486;//35;//-0.9; //-0.9;//-1;//
+	double L_m = 2.23157;//3.0;
+	double meanGridX = -1525.04;//-2400;//680;//
+	double meanGridY = -293.566;//515;
 	double aold = a;
 	double bold = b;
 	double cold = c;
@@ -3840,14 +3932,14 @@ extern std::vector<double> Calibration2(const cv::Mat &GridX, const cv::Mat &Gri
 	calculate_Hessian_Jacobian_ForwardModel2(GridX, GridY, meanGridX, meanGridY, Dx, Dy, W, W1dim, focal_length, LengthsChanging, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n, Jacobian, Hessian, lambda);
 	std::cout << "Size Jacobian = " << Jacobian.size() << std::endl;
 	std::cout << "Size Hessian = " << Hessian.size() << std::endl;
-    max_iterations = 10;
+
 	while (iterations < max_iterations && nu < max_val_nu && (abs_tolerance > abs_tolerance_threshold || rel_tolerance > rel_tolerance_threshold)) // && data_uniform == 0)
 	{
             iterations++;
 
             cv::Mat delta_alpha(6,1,CV_64F);
             cv::solve(Hessian, Jacobian, delta_alpha, cv::DECOMP_CHOLESKY);
-            std::cout << Hessian << std::endl;
+            //std::cout << Hessian << std::endl;
 			//std::cout << delta_alpha << std::endl;
                 abs_tolerance = cv::sum(cv::abs(delta_alpha)).val[0];
                 rel_tolerance = cv::sum(cv::abs(delta_alpha)).val[0]/(abs(aold)+abs(bold)+abs(cold)+abs(L_mold)+abs(meanGridXold)+abs(meanGridYold));
@@ -3898,7 +3990,7 @@ extern std::vector<double> Calibration2(const cv::Mat &GridX, const cv::Mat &Gri
 			nu = 2;
 			lambda /= 3.0;
 			LengthsChanging[0] = L_c;
-			std::cout << a << " " << b << " " << c << " " << L_m << " " << meanGridX << " " << meanGridY << " " << Sold << " " << lambda << "\n";
+			std::cout << a << " " << b << " " << c << " " << L_m << " " << meanGridX << " " << meanGridY << " " << Sold << " " << lambda << " " << iterations << "\n";
 
 			//calculate_Hessian_Jacobian_ForwardModel2(GridX, GridY, meanGridX, meanGridY, Dx, Dy, W, W1dim, focal_length, LengthsChanging, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n, Jacobian, Hessian, lambda);
 			calculate_Hessian_Jacobian_ForwardModel2(GridX, GridY, meanGridX, meanGridY, Dx, Dy, W, W1dim, focal_length, LengthsChanging, Distance_From_Pixels_To_Meters, PlaneDefinition, n_0, n_1, n, Jacobian, Hessian, lambda);

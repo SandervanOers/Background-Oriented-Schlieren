@@ -109,7 +109,7 @@ extern int readinput(unsigned int argc, char *argv[], InputVariables &inputvaria
 	}
 	inputvariables.yStart = yStart;
 	inputvariables.yEnd = yEnd;
-	
+
     unsigned int offset = 2*((SplineDegree+1)/2) > 5 ? 2*((SplineDegree+1)/2) : 5;
 	//std::cout << " offset = " << offset << std::endl;
     offset = GridLength > (SubsetLength/2+offset) ? GridLength-SubsetLength/2 : offset;
@@ -348,40 +348,65 @@ extern int checkinput(unsigned int argc, char *argv[], std::string &pathname_str
 /*--------------------------------------------------------------------------*/
 extern int readImageDataFromFile(cv::Mat &img, cv::Mat &img1, InputVariables &inputvariables)
 {
+    // First see if a SubFolder 'Averaged' exists
+    // If it does, load the csv files from 'Averaged'
+    // Otherwise, load the tif files from Folder in path
+    std::vector<cv::Mat> data;
+    bool readimagesfromcurrentpath = 0;
+
     std::vector<cv::String> filenames;
-	cv::String path1;
-	path1 = inputvariables.path+"/*.tif";
+    cv::String path1;
+    path1 = inputvariables.path+"/Averaged/*.csv";
     cv::glob(path1,filenames,true); // recurse
-	// Read First Image to Determine Size
-	{
-		cv::Mat im = cv::imread(filenames[0] , IMREAD_GRAYSCALE );
-		if (im.empty())
-		{
-			std::cout << "No Images Found" << std::endl;
-			return -1;
-		}
-		else
-		{
-			if (inputvariables.xEnd > static_cast<unsigned int>(im.cols) || inputvariables.yEnd > static_cast<unsigned int>(im.rows))
-			{
-				std::cout << "Region of Interest (ROI) larger than Image" << std::endl;
-				std::cout << "Image Size = " << im.size() << std::endl;
-				return -1;
-			}
-		}
-	}
-	std::vector<cv::Mat> data;
-	// Read all tif files in folder
-    for (size_t k=0; k<filenames.size(); ++k)
+
+    if (!filenames.empty())
     {
-         cv::Mat im = cv::imread(filenames[k] , IMREAD_GRAYSCALE );
-         if (im.empty()) continue; //only proceed if sucsessful
-		 // Change Here
-         //im = im(Range(inputvariables.yStart,inputvariables.yEnd),Range(inputvariables.xStart,inputvariables.xEnd));
-         data.push_back(im);
-         std::cout << filenames[k] << std::endl;
+        cv::Mat I0 = load_matrix(inputvariables.path+"/Averaged/", "A", 0);
+        cv::Mat I1 = load_matrix(inputvariables.path+"/Averaged/", "B", 0);
+
+        data.push_back(I0);
+        data.push_back(I1);
+    }
+    else
+    {
+        readimagesfromcurrentpath = 1;
     }
 
+    if (readimagesfromcurrentpath)
+    {
+        std::vector<cv::String> filenames;
+        cv::String path1;
+        path1 = inputvariables.path+"/*.tif";
+        cv::glob(path1,filenames,true); // recurse
+        // Read First Image to Determine Size
+        {
+            cv::Mat im = cv::imread(filenames[0] , IMREAD_GRAYSCALE );
+            if (im.empty())
+            {
+                std::cout << "No Images Found" << std::endl;
+                return -1;
+            }
+            else
+            {
+                if (inputvariables.xEnd > static_cast<unsigned int>(im.cols) || inputvariables.yEnd > static_cast<unsigned int>(im.rows))
+                {
+                    std::cout << "Region of Interest (ROI) larger than Image" << std::endl;
+                    std::cout << "Image Size = " << im.size() << std::endl;
+                    return -1;
+                }
+            }
+        }
+        // Read all tif files in folder
+        for (size_t k=0; k<filenames.size(); ++k)
+        {
+             cv::Mat im = cv::imread(filenames[k] , IMREAD_GRAYSCALE );
+             if (im.empty()) continue; //only proceed if sucsessful
+             // Change Here
+             //im = im(Range(inputvariables.yStart,inputvariables.yEnd),Range(inputvariables.xStart,inputvariables.xEnd));
+             data.push_back(im);
+             std::cout << filenames[k] << std::endl;
+        }
+    }
     if (inputvariables.ordering==0)
     {
         (data.at(0)).copyTo(img);
@@ -392,21 +417,20 @@ extern int readImageDataFromFile(cv::Mat &img, cv::Mat &img1, InputVariables &in
         (data.at(1)).copyTo(img);
         (data.at(0)).copyTo(img1);
     }
-	
+
 	// Restrict Template to specified Region
 	img = img(Range(inputvariables.yStart,inputvariables.yEnd),Range(inputvariables.xStart,inputvariables.xEnd));
-	
-	
+
+
 	//inputvariables.xDiff = 0;
 	//inputvariables.yDiff = 0;
 	//img1 = img1(Range(inputvariables.yStart,inputvariables.yEnd),Range(inputvariables.xStart,inputvariables.xEnd));
-	
+
 	inputvariables.xDiff = inputvariables.xStart;
 	inputvariables.yDiff = inputvariables.yStart;
 
     imwrite(inputvariables.path+"/Template.png", img);
     imwrite(inputvariables.path+"/Deformed.png", img1);
-
 
     img.convertTo(img, CV_32F);
     img1.convertTo(img1, CV_32F);

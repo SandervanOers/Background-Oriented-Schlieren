@@ -416,22 +416,27 @@ We use the Levenberg-Marquardt(LM) algorithm to solve (\ref{eq:calmin}). In our 
 %		\caption{$\log_{10}S(c,d)$}\label{fig:ScLm}
 %\end{figure}
 
+\section{Correction}
+\label{sec:cor}
+%\subsection{Permanent Compensation}
+Region of Compensation: Sightly similar to \cite{tian2018accuracy} and \cite{pan2013high}
+
 \section{Digital Image Correlation}
 \label{sec:DIC}
-Digital Image Correlation (DIC) is a technique \cite{sutton2009image} to obtain deformation maps from images. We use second-order shape functions \cite{lu2000deformation} to handle large nonlinear deformations. To attain sub-pixel accuracy we interpolate our images with B-splines \cite{thevenaz2000interpolation, unser1999splines}. To obtain the deformations we optimize a Correlation Coefficient, the ZNSSD \cite{sutton2009image}. We solve this nonlinear least-squares problem  by (1) providing an initial guess and (2) solving an iterative scheme. As an initial guess we perform Template Matching \cite{lewis1995industrial,opencv_library} on a limited set of points to obtain rigid deformations with pixel accuracy. After applying DIC to obtain sub-pixel deformations, we use reliability guided DIC \cite{pan2012incremental} with a propagation function \cite{zhou2012propagation} to determine the initial guesses. As iterative scheme we use the LM algorithm. 
+Digital Image Correlation (DIC) is a technique \cite{sutton2009image} to obtain deformation maps from images. We use second-order shape functions \cite{lu2000deformation} to handle large nonlinear deformations. To attain sub-pixel accuracy we interpolate our images with B-splines \cite{thevenaz2000interpolation, unser1999splines}. To obtain the deformations we optimize a Correlation Coefficient, the ZNSSD \cite{sutton2009image}. We solve this nonlinear least-squares problem  by (1) providing an initial guess and (2) solving an iterative scheme. As an initial guess we perform Template Matching \cite{lewis1995industrial,opencv_library} on a limited set of points to obtain rigid deformations with pixel accuracy. After applying DIC to obtain sub-pixel deformations, we use reliability guided DIC \cite{chen2009quality, pan2012incremental} with a propagation function \cite{zhou2012propagation} to determine the initial guesses. As iterative scheme we use the LM algorithm. 
 
 
 \begin{table}[htbp]
-\caption{Digital Image Correlation parameters.}
+\caption{Digital Image Correlation parameters corresponding to Figure \ref{fig:0side}.}
 \label{tab:esterrmagn}
 \centering
 \begin{tabular}{ll}
-Noise & \\
-Subset Size & \\
-Grid Size 	& 5 \\
-Measurements Points & \\
-Total Number of Images & \\
-Number of Averaged Images & \\
+Noise & \% \\
+Subset Size & 41 pixels \\
+Grid Size 	& 5 pixels \\
+Measurement Points & $735 \times 415$ pixels \\
+%Total Number of Images & \\
+Number of Averaged Images & 240 \\
 Displacements & \\
 \qquad Spatial Resolution & x pixels, x mm \\
 \qquad Resolution & 0.0105 pixels (x mm) \\
@@ -461,11 +466,7 @@ The unknown is the index of refraction field $n$. Unlike the simple model, we ca
 \end{equation}
 with constraints $1.333 \leq n_i \leq 1.4$. For each measurement $\underline{\Delta x}_i$ we solve (\ref{eq:nmin}) with the LM algorithm to find $n_i$. In our experiments, (\ref{eq:nmin}) has one minimum in the range $1.333 \leq n_i \leq 1.4$. Picking an initial condition in this range ensures LM finds this minimum.
 
-Since we are working with liquids we use the Lorentz-Lorenz equation to relate the index of refraction $n$ to the density $\rho$ \cite{lorentz1916theory, tan2015dependence},
-\begin{equation}
- 	\frac{n^2-1}{n^2+2} \frac{1}{\rho} = \mbox{ constant}.
-\end{equation}
-We use our calibration measurement to determine the constant: $\rho=1$ for $n=1.333$.
+We use the experimental data from \cite{tan2015dependence} to relate the measured index of refraction to the density.
 
 \section{Results}
 \label{sec:res}
@@ -475,42 +476,38 @@ In the first application, Figure \ref{fig:0side}, we measured the background den
 
 \begin{figure}[htbp]
 \begin{subfigure}{.5\linewidth}
-%		\centering \includegraphics[width = \textwidth]{}
+		\centering \includegraphics[width = \textwidth]{TL_air}
 		\subcaption{Reference Image: Filled with air}\label{fig:air0side}
 \end{subfigure}%
 \begin{subfigure}{.5\linewidth}
-%	\centering \includegraphics[width = \textwidth]{}
-	\subcaption{Calibration Image Image: Filled with water with known $n$}\label{fig:fresh0side}
+		\centering \includegraphics[width = \textwidth]{TL_fresh}
+	\subcaption{Calibration Image: Filled with water with known $n$}\label{fig:fresh0side}
 \end{subfigure}\\
 \begin{subfigure}{.5\linewidth}
-%		\centering \includegraphics[width = \textwidth]{}
+		\centering \includegraphics[width = \textwidth]{TL_TL}
 		\subcaption{Deformed Image: Filled with salt water with unknown $n$-field }\label{fig:twolayer0side}
 \end{subfigure}%
 \begin{subfigure}{.5\linewidth}
-%	\centering \includegraphics[width = \textwidth]{}
+	\centering \includegraphics[width = \textwidth]{Calibrationnsurf}
 	\subcaption{Index of Refraction $n$ for Calibration Image}\label{fig:ncalibration0side}
 \end{subfigure}\\
 \begin{subfigure}{.5\linewidth}
-%		\centering \includegraphics[width = \textwidth]{}
+		\centering \includegraphics[width = \textwidth]{TL_DX}
 		\subcaption{$\Delta x$ from DIC}\label{fig:dx0side}
 \end{subfigure}%
 \begin{subfigure}{.5\linewidth}
-%	\centering \includegraphics[width = \textwidth]{}
+	\centering \includegraphics[width = \textwidth]{TL_DY}
 		\subcaption{$\Delta y$ from DIC}\label{fig:dy0side}
 \end{subfigure}\\
 \begin{subfigure}{.5\linewidth}
-%		\centering \includegraphics[width = \textwidth]{}
+		\centering \includegraphics[width = \textwidth]{TwoLayernSurf}
 		\subcaption{Index of Refraction $n$ for Deformed Image}\label{fig:ndeformed0side}
 \end{subfigure}%
 \begin{subfigure}{.5\linewidth}
-%	\centering \includegraphics[width = \textwidth]{}
-		\subcaption{Correlation Coefficient from DIC}\label{fig:C0side}
-\end{subfigure} \\
-\begin{subfigure}{.5\linewidth}
-%	\centering \includegraphics[width = \textwidth]{}
+	\centering \includegraphics[width = \textwidth]{TwoLayerHorizontalAveraged}
 		\subcaption{$n$ profiles for Calibration and Deformed Images}\label{fig:nprofiles0side}
 \end{subfigure}
-\caption{The procedure for obtaining the index of refraction field $n$. We obtain three images: one Reference Image (\ref{fig:air0side}) filled with air, one Calibration Image (\ref{fig:fresh0side}) filled with water without salts and one Deformed Image (\ref{fig:twolayer0side}) filled with water with an unknown $n$-field. Applying DIC between the Reference Image and the Correlation image, we find the displacements $D=(\Delta x, \Delta y)$. Using these displacements $D$ in (\ref{eq:calmin}), we obtain the parameters $\underline{\alpha}$. After calibration, the resulting $n$-field is uniform (\ref{fig:ncalibration0side}). Applying DIC between the Reference Image and the Deformed Image, we find the displacements $\Delta x$ (\ref{fig:dx0side}) and $\Delta y$ (\ref{fig:dy0side}) with corresponding Correlation Coefficient (\ref{fig:C0side}).  Using these displacements in (\ref{eq:nmin}), we obtain the unknown index of refraction field $n$ (\ref{fig:ndeformed0side}). Horizontally averaging the index of refraction fields $n$ yields the profiles in \ref{fig:nprofiles0side}.}
+\caption{The procedure for obtaining the index of refraction field $n$. We obtain three images: one Reference Image (\ref{fig:air0side}) filled with air, one Calibration Image (\ref{fig:fresh0side}) filled with water without salts and one Deformed Image (\ref{fig:twolayer0side}) filled with water with an unknown $n$-field. Applying DIC between the Reference Image and the Correlation image, we find the displacements $D=(\Delta x, \Delta y)$. Using these displacements $D$ in (\ref{eq:calmin}), we obtain the parameters $\underline{\alpha}$. After calibration, the resulting $n$-field is uniform (\ref{fig:ncalibration0side}). Applying DIC between the Reference Image and the Deformed Image, we find the displacements $\Delta x$ (\ref{fig:dx0side}) and $\Delta y$ (\ref{fig:dy0side}).  Using these displacements in (\ref{eq:nmin}), we obtain the unknown index of refraction field $n$ (\ref{fig:ndeformed0side}). Horizontally averaging the index of refraction field $n$ yields the profiles (\ref{fig:nprofiles0side}).}
 \label{fig:0side}
 \end{figure}
 
@@ -526,40 +523,32 @@ $\beta$  & 1 & 1 & 1 & 1 & 1
 
 In the second application, Figure \ref{fig:0side}, we measured the background density of a continuously stratified fluid. We filled a tank through the double bucket method. After taking a Reference Image, a Calibration Image and a Deformed Image, we repositioned the camera for a Synthetic Schlieren measurement. After oscillating the tank, we measured the angles of the internal waves propagating in the fluid. Table \ref{tab:SSintwav} shows the forcing frequencies $\omega$ and angles $\beta$. Through
 \begin{equation}
-	N = \omega \cos \beta
+	\omega = N \cos \beta
 \end{equation}
 we determined the buoyancy frequency $N$. Through
 \begin{equation}
-	N^2 = - \frac{g}{\rho_0}\frac{d \rho_0}{d z}
+	N^2 = - \frac{g}{\rho^*}\frac{d \rho_0}{d z}
 \end{equation}
-we determined the buoyancy frequency $N$, obtained from our new method. 
+we determined the buoyancy frequency $N$, obtained from our new method. From Figure \ref{fig:stratrho0deformed0side} we see that $d \rho_0 / d z =\SI{ - 0.2}{\gram\per\cubic\centi\metre\per\metre}$. Taking a mean reference density $\rho^*$ of $\SI{1}{\gram\per\cubic\centi\metre}$, we find a buoyancy frequency of $N = \SI{1.4}{\radian\per\second}$.
 
 \begin{figure}[htbp]
 \begin{subfigure}{.5\linewidth}
-%		\centering \includegraphics[width = \textwidth]{}
+\centering \includegraphics[width = \textwidth]{TL_strat}
 		\subcaption{Deformed Image: Filled with salt water with unknown $n$-field }\label{fig:strat0side}
 \end{subfigure}%
 \begin{subfigure}{.5\linewidth}
-%	\centering \includegraphics[width = \textwidth]{}
-		\subcaption{Correlation Coefficient from DIC}\label{fig:stratC0side}
+		\centering \includegraphics[width = \textwidth]{strat_DX}
+		\subcaption{$\Delta x$ from DIC}\label{fig:stratdx0side}
 \end{subfigure} \\
 \begin{subfigure}{.5\linewidth}
-%		\centering \includegraphics[width = \textwidth]{}
-		\subcaption{$\Delta x$ from DIC}\label{fig:stratdx0side}
-\end{subfigure}%
-\begin{subfigure}{.5\linewidth}
-%	\centering \includegraphics[width = \textwidth]{}
+	\centering \includegraphics[width = \textwidth]{strat_DY}
 		\subcaption{$\Delta y$ from DIC}\label{fig:stratdy0side}
-\end{subfigure}\\
-\begin{subfigure}{.5\linewidth}
-%		\centering \includegraphics[width = \textwidth]{}
-		\subcaption{Index of Refraction $n$ for Deformed Image}\label{fig:stratndeformed0side}
 \end{subfigure}%
 \begin{subfigure}{.5\linewidth}
-%		\centering \includegraphics[width = \textwidth]{}
+		\centering \includegraphics[width = \textwidth]{Strat_DensityProfile}
 		\subcaption{Background Density $\rho_0$ for Deformed Image}\label{fig:stratrho0deformed0side}
 \end{subfigure} 
-\caption{Determining the background density for a continuously stratified fluid. After taking three images, with the Deformed Image \ref{fig:strat0side}, we obtain the displacements $\Delta x$ in Figure \ref{fig:stratdx0side} and $\Delta y$ in Figure \ref{fig:stratdy0side} from DIC. After calibration we obtain the index of refraction field $n$ in Figure \ref{fig:stratndeformed0side}. Using the Lorentz-Lorenz relation we obtain the density profile \ref{fig:stratrho0deformed0side} with buoyancy frequency $N$ of NUMBER. }
+\caption{Determining the background density for a continuously stratified fluid. After taking three images, with the Deformed Image \ref{fig:strat0side}, we obtain the displacements $\Delta x$ in Figure \ref{fig:stratdx0side} and $\Delta y$ in Figure \ref{fig:stratdy0side} from DIC. After calibration we obtain an index of refraction field $n$ and density field $\rho$. Horizontally averaging the density field we obtain the density profile \ref{fig:stratrho0deformed0side} with buoyancy frequency $N = \SI{1.4}{\radian\per\second}$.}
 \label{figs:strat0side}
 \end{figure}
 
@@ -593,6 +582,8 @@ In the third application, we measured the density field of a wave attractor \cit
 \label{figs:WA0side}
 \end{figure}
 
+
+\clearpage
 \section{Discussion}
 \label{sec:dis}
 
