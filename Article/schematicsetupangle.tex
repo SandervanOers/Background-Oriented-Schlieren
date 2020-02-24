@@ -1,8 +1,26 @@
 \documentclass{standalone}
 \usepackage{tikz}
 \usetikzlibrary{patterns,snakes}
+\usetikzlibrary{calc}
 \usepackage{graphicx}
-
+\usepackage{pgf}
+\tikzset{
+    right angle quadrant/.code={
+        \pgfmathsetmacro\quadranta{{1,1,-1,-1}[#1-1]}     % Arrays for selecting quadrant
+        \pgfmathsetmacro\quadrantb{{1,-1,-1,1}[#1-1]}},
+    right angle quadrant=1, % Make sure it is set, even if not called explicitly
+    right angle length/.code={\def\rightanglelength{#1}},   % Length of symbol
+    right angle length=2ex, % Make sure it is set...
+    right angle symbol/.style n args={3}{
+        insert path={
+            let \p0 = ($(#1)!(#3)!(#2)$) in     % Intersection
+                let \p1 = ($(\p0)!\quadranta*\rightanglelength!(#3)$), % Point on base line
+                \p2 = ($(\p0)!\quadrantb*\rightanglelength!(#2)$) in % Point on perpendicular line
+                let \p3 = ($(\p1)+(\p2)-(\p0)$) in  % Corner point of symbol
+            (\p1) -- (\p3) -- (\p2)
+        }
+    }
+}
 \begin{document}
 
 %\begin{figure}
@@ -12,23 +30,75 @@
 \def\alp{0.57735};
 \def\offset{.1};
 
+\def\angle{40};
 %\draw[thick,->] (1,2) -- (1.5,2);
 %\draw[thick,->] (1,2) -- (1,2.5);
 %\draw (1.25,2) node[below] {$z$};
 %\draw (1,2.25) node[left] {$x$};
 
+% X and Z axis
 \def\sizeaxis{1.2}
 \draw[thick,->] (1,0.5+\Cz) -- (1+\sizeaxis,0.5+\Cz);
 \draw[thick,->] (1,0.5+\Cz) -- (1,0.5+\Cz+\sizeaxis);
 \draw (1+\sizeaxis/2,0.5+\Cz) node[below] {$z$};
 \draw (1,0.5+\Cz+\sizeaxis/2) node[left] {$x$};
 
-\draw (-\alp*1.25+0.433+\offset,\Cz+1.5) node[above] {$L_f$};
-\draw[<->] (-\alp-\alp*0.25+\offset,0.25+1+\Cz) -- (0.866-\alp-\alp*0.25+\offset,0.25+1.5+\Cz);
-
-\draw (\alp+\offset,-1+\Cz) node[below] {0} -- (-\alp+\offset,1+\Cz);
-\draw (0.866+\alp+\offset,-0.5+\Cz) node[below] {1} -- (0.866-\alp+\offset,1.5+\Cz);
+% Camera
+%\draw (-\alp*1.25+0.433+\offset,\Cz+1.5) node[above] {$L_f$};
+%\draw[<->] (-\alp-\alp*0.25+\offset,0.25+1+\Cz) -- (0.866-\alp-\alp*0.25+\offset,0.25+1.5+\Cz);
+%\draw (\alp+\offset,-1+\Cz) node[below] {0} -- (-\alp+\offset,1+\Cz);
+%\draw (0.866+\alp+\offset,-0.5+\Cz) node[below] {1} -- (0.866-\alp+\offset,1.5+\Cz);
 %\draw[dashed] (0,0+\Cz) -- (4,4.6188*0.5+\Cz);
+
+%\draw[dashed] (\offset, \Cz) -- (2.0*0.866+\offset, 1+\Cz);
+
+\coordinate (O) at (1,0.5+\Cz);
+\coordinate (1R) at ({1+\sizeaxis*cos(\angle)}, {0.5+\Cz-\sizeaxis*sin(\angle)});
+\coordinate (1L) at ({1-\sizeaxis*cos(\angle)}, {0.5+\Cz+\sizeaxis*sin(\angle)});
+
+\def\distance12{0.75}
+\coordinate (0C) at ({1-\distance12*sin(\angle)}, {0.5+\Cz-\distance12*cos(\angle)});
+\coordinate (0R) at ($(0C) + ({\sizeaxis*cos(\angle)},{-\sizeaxis*sin(\angle)})$);
+\coordinate (0L) at ($(0C) + ({-\sizeaxis*cos(\angle)},{\sizeaxis*sin(\angle)})$);
+
+\coordinate(FC) at ({1+2*\distance12*sin(\angle)}, {0.5+\Cz+2*\distance12*cos(\angle)});
+
+\def\distanceLf{0.2}
+\coordinate (0RR) at ($(0C) + ({(\sizeaxis+\distanceLf)*cos(\angle)},{-(\sizeaxis+\distanceLf)*sin(\angle)})$);
+\coordinate (1RR) at  ({1+(\sizeaxis+\distanceLf)*cos(\angle)}, {0.5+\Cz-(\sizeaxis+\distanceLf)*sin(\angle)});
+\coordinate (0LL) at ($(0C) + ({-(\sizeaxis+\distanceLf)*cos(\angle)},{(\sizeaxis+\distanceLf)*sin(\angle)})$);
+\coordinate (1LL) at ({1-(\sizeaxis+\distanceLf)*cos(\angle)}, {0.5+\Cz+(\sizeaxis+\distanceLf)*sin(\angle)});
+
+\draw[] (1L)--(1R) node[below] {1};
+\draw[] (0L)--(0R) node[below] {0};
+\draw[, dashed] (0C) -- (FC);
+
+\draw [, thick,decoration={mirror,brace,raise=0.5cm},decorate] ({1-\distance12*sin(\angle)-\sizeaxis*cos(\angle)},-3) --  ({1+\sizeaxis*cos(\angle)},-3);
+\draw [] ($({1-0.5*\distance12*sin(\angle)},{0.5+\Cz-0.5*\distance12*cos(\angle)})+(0,-1.5)$ )  node[below] {Camera};
+
+\pgfmathsetmacro{\a}{2.1139/(3.0+\offset)};
+\pgfmathsetmacro{\b}{0.5+\Cz-\a};
+\pgfmathsetmacro{\aa}{-tan(\angle)};
+\pgfmathsetmacro{\bb}{0.5+\Cz-\distance12*cos(\angle)-\aa*(1-\distance12*sin(\angle))};
+\pgfmathsetmacro{\x}{(\bb-\b)/(\a-\aa)};
+\pgfmathsetmacro{\y}{\a*\x+\b};
+
+\draw[, <->] (0LL) -- (1LL)  node [midway, above left] {$L_f$};
+\draw[red] (\x,\y) -- (O);
+%\draw[red] (0.866-0.8290+\offset,\Cz+0.5-0.5592) -- (O);
+\draw[red] (O) -- (4+\offset,\Cz+0.5+2.1139);
+
+\draw [] (1,\Cz+0.5+1) arc [radius = 1, start angle = 90, end angle = 180-\angle] node [midway, above] {$\alpha$};
+
+\draw [, right angle quadrant=1,right angle symbol={0L}{0R}{O}];
+%% Camera
+%\draw (-\alp*1.25+0.433+\offset,\Cz+1.5) node[above] {$L_f$};
+%\draw[<->] (-\alp-\alp*0.25+\offset,0.25+1+\Cz) -- (0.866-\alp-\alp*0.25+\offset,0.25+1.5+\Cz);
+%\draw (\alp+\offset,-1+\Cz) node[below] {0} -- (-\alp+\offset,1+\Cz);
+%\draw (0.866+\alp+\offset,-0.5+\Cz) node[below] {1} -- (0.866-\alp+\offset,1.5+\Cz);
+
+
+
 
 %\draw[dashed] (0,0+\Cz) -- (3,1.732+\Cz);
 %\draw[dashed] (4,4.6188*0.5+\Cz) -- (5,4.6188*0.5+0.3333+\Cz);
@@ -36,11 +106,11 @@
 %\draw[dashed] (8,4.6188*0.5+0.3333*1+3*0.5+\Cz) -- (9,4.6188*0.5+0.3333*1+3*0.5+0.3333+\Cz);
 %\draw[dashed] (9,4.6188*0.5+0.3333*1+3*0.5+0.3333+\Cz) -- (12,4.6188*0.5+0.3333*1+3*0.5+0.3333+3*0.5+\Cz);
 
-\draw (4,0) node[below] {2} -- (4,4);
-\draw (5,0) node[below] {3} -- (5,4);
-\draw (8,0) node[below] {4} -- (8,4);
-\draw (9,0) node[below] {5} -- (9,4);
-\draw (12,-2) node[below] {6} -- (12,6);
+\draw (4+\offset,0) node[below] {2} -- (4+\offset,4);
+\draw (5+\offset,0) node[below] {3} -- (5+\offset,4);
+\draw (8+\offset,0) node[below] {4} -- (8+\offset,4);
+\draw (9+\offset,0) node[below] {5} -- (9+\offset,4);
+\draw (12+\offset,-2) node[below] {6} -- (12,6);
 
 \draw (2.5,0) node[below] {$n_0$};
 \draw (4.5,0) node[below] {$n_1$};
@@ -49,54 +119,60 @@
 \draw (10.5,0) node[below] {$n_0$};
 
 %\draw[<->] (0,6) -- (1,6);
-\draw[<->] (1,6) -- (4,6);
-\draw[<->] (4,6) -- (5,6);
-\draw[<->] (5,6) -- (8,6);
-\draw[<->] (8,6) -- (9,6);
-\draw[<->] (9,6) -- (12,6);
+\draw[<->] (1,6) -- (4+\offset,6);
+\draw[<->] (4+\offset,6) -- (5+\offset,6);
+\draw[<->] (5+\offset,6) -- (8+\offset,6);
+\draw[<->] (8+\offset,6) -- (9+\offset,6);
+\draw[<->] (9+\offset,6) -- (12,6);
 
 \draw[dotted] (1,6) -- (1,\Cz+0.5);
 
 %\draw (0.5,6) node[above] {$L_f$};
-\draw (2.5,6) node[above] {$L_c$};
-\draw (4.5,6) node[above] {$L_g$};
-\draw (6.5,6) node[above] {$L_t$};
-\draw (8.5,6) node[above] {$L_g$};
-\draw (10.5,6) node[above] {$L_s$};
+\draw (2.5+\offset,6) node[above] {$L_c$};
+\draw (4.5+\offset,6) node[above] {$L_g$};
+\draw (6.5+\offset,6) node[above] {$L_t$};
+\draw (8.5+\offset,6) node[above] {$L_g$};
+\draw (10.5+\offset,6) node[above] {$L_s$};
 
-\draw [thick,decoration={mirror,brace,raise=0.5cm},decorate] (-0.5+\offset,\Cz-1) -- (1.5+\offset,\Cz-1);
+%\draw [thick,decoration={mirror,brace,raise=0.5cm},decorate] (-0.5+\offset,\Cz-1) -- (1.5+\offset,\Cz-1);
 \draw [thick,decoration={mirror,brace,raise=0.5cm},decorate] (3.5,\Cz) -- (9.5,\Cz);
 \draw [thick,decoration={mirror,brace,raise=0.5cm},decorate] (11.5,\Cz) -- (12.5,\Cz);
-\draw (0.5+\offset,\Cz-1.5) node[below] {Camera};
+%\draw (0.5+\offset,\Cz-1.5) node[below] {Camera};
 \draw (6.5,\Cz-0.5) node[below] {Water Tank};
 \draw (12,\Cz-0.5) node[below] {Screen};
 
 \draw[dotted] (1,2) -- (12,2);
 
-\draw[red] (0.866-0.8290+\offset,\Cz+0.5-0.5592) -- (0.866+\offset,\Cz+0.5);
-\draw[red] (0.866+\offset,\Cz+0.5) -- (4+\offset,\Cz+0.5+2.1139);
+%\draw[red] (0.866-0.8290+\offset,\Cz+0.5-0.5592) -- (0.866+\offset,\Cz+0.5);
+%\draw[red] (0.866+\offset,\Cz+0.5) -- (4+\offset,\Cz+0.5+2.1139);
 \draw[red] (4+\offset,\Cz+0.5+2.1139) -- (5+\offset,\Cz+0.5+2.1139+0.3728);
 \draw[red] (5+\offset,\Cz+0.5+2.1139+0.3728) -- (8+\offset, \Cz+0.5+2.1139+0.3728+2.0235);
 \draw[red] (8+\offset, \Cz+0.5+2.1139+0.3728+2.0235) -- (9+\offset,\Cz+0.5+2.1139+0.3728*2+2.0235);
-\draw[red] (9+\offset,\Cz+0.5+2.1139+0.3728*2+2.0235) -- (12,\Cz+0.5+2.1139+0.3728*2+2.0235+3*0.6745-\offset*0.6745);
+\coordinate (X61) at (12,\Cz+0.5+2.1139+0.3728*2+2.0235+3*0.6745-\offset*0.6745);
+\node [red, circle,fill,inner sep=1pt, label={right:$x_6(n_2=n_0)$}] at (X61) {};
+\draw[red] (9+\offset,\Cz+0.5+2.1139+0.3728*2+2.0235) -- (12,\Cz+0.5+2.1139+0.3728*2+2.0235+3*0.6745-\offset*0.6745);% node[above right] {$x_6(n_2=n_0)$};
 \draw[dashed, red] (5+\offset,\Cz+0.5+2.1139+0.3728) -- (8+\offset, \Cz+0.5+2.1139+0.3728+1.386);
 \draw[dashed, red] (8+\offset, \Cz+0.5+2.1139+0.3728+1.386) -- (9+\offset,\Cz+0.5+2.1139+0.3728*2+1.386);
-\draw[dashed, red] (9+\offset,\Cz+0.5+2.1139+0.3728*2+1.386) -- (12,\Cz+0.5+2.1139+0.3728*2+1.386+3*0.6745-\offset*0.6745);
+\coordinate (X62) at (12,\Cz+0.5+2.1139+0.3728*2+1.386+3*0.6745-\offset*0.6745);
+\node [red, circle,fill,inner sep=1pt, label={right:$x_6(n_2=n)$}] at (X62) {};
+\draw[dashed, red] (9+\offset,\Cz+0.5+2.1139+0.3728*2+1.386) -- (12,\Cz+0.5+2.1139+0.3728*2+1.386+3*0.6745-\offset*0.6745);% node[right] {$x_6(n_2=n)$};
 
-\draw[thick, <->] (12.15,\Cz+0.5+2.1139+0.3728*2+2.0235*2) -- (12.15,\Cz+0.5+2.1139+0.3728*2+1.386+2.0235);
-\draw (12.15,2.0235+\Cz+0.5+2.1139+0.3728*2+0.5*1.386+0.5*2.20235) node[right] {$\Delta x$};
+%\draw[thick, <->] (12.15,\Cz+0.5+2.1139+0.3728*2+2.0235*2) -- (12.15,\Cz+0.5+2.1139+0.3728*2+1.386+2.0235);
+%\draw (12.15,2.0235+\Cz+0.5+2.1139+0.3728*2+0.5*1.386+0.5*2.20235) node[right] {$\Delta x$};
+
+%\draw (12.15,2.0235+\Cz+0.5+2.1139+0.3728*2+0.5*1.386+0.5*2.20235-2) node[right] {$\Delta x=x_6(n_2=n)-x_6(n_2=n_0)$};
 
 %\draw (2,1.155+\Cz) arc (1:7:1);
 %\node[above] at (2,1.155+\Cz+0.1)  {$\phi_{0}$};
 \draw[dotted] (1,0.5+\Cz) -- (3,0.5+\Cz);
 %\draw (1.5,0.5+\Cz) arc [radius = 0.5, start angle = 0, end angle = 38];
-%\node[right] at (1.4, 0.65+\Cz) {$\alpha$};
+%\node[right] at (1.4, 0.65+\Cz) {$\angle$};
 \draw (2,0.5+\Cz) arc [radius = 1, start angle = 0, end angle = 35];
 \node[right] at (1.9,0.85+\Cz) {$\theta_x=\alpha+\phi_x$};
-%\node[below] at (3, \Cz) {$\theta_0 = \alpha + \phi_0$};
+%\node[below] at (3, \Cz) {$\theta_0 = \angle + \phi_0$};
 
-\draw (1,\Cz+0.5+1) arc [radius = 1, start angle = 90, end angle = 122];
-\node[above] at (1-0.3,\Cz+0.5+0.925) {$\alpha$};
+%\draw (1,\Cz+0.5+1) arc [radius = 1, start angle = 90, end angle = 122];
+%\node[above] at (1-0.3,\Cz+0.5+0.925) {$\alpha$};
 
 \end{tikzpicture}
 %\end{figure}

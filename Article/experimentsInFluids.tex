@@ -81,9 +81,9 @@
 \begin{document}
 
 \title{Whole-field total density measurements by Digital Image Correlation
-\thanks{Grants or other notes
-about the article that should go on the front page should be
-placed here. }
+%\thanks{Grants or other notes
+%about the article that should go on the front page should be
+%placed here. }
 }
 
 
@@ -103,7 +103,7 @@ placed here. }
              P.O. Box 10000, 1780 CA Den Helder, The Netherlands  %  if needed
            \and
            Leo R.M. Maas \at
-              Imau, Inst. for Marine and Atmospheric research Utrecht, Utrecht University, Princetonplein 5, 3584 CC, Utrecht, The Netherlands
+           Inst. for Marine and Atmospheric research Utrecht, Utrecht University, Princetonplein 5, 3584 CC, Utrecht, The Netherlands
 }
 
 \date{Received: date / Accepted: date}
@@ -123,13 +123,13 @@ An optical method for the quantitative measurement of the total density field of
 \label{intro}
 The Background Oriented Schlieren technique (BOS) is an optical density visualization technique \cite{meier2002computerized,raffel2015background}. First described in \cite{dalziel2000whole}, where it was called Synthetic Schlieren (SS). This technique provides whole-field measurements of density gradients. One of the strengths of this technique was the simplicity of the experimental setup. Parts of the traditional, more extensive optical setups were replaced by digital image analysis. 
 
-In a typical SS application, perturbations (waves) in a fluid contained in a tank are imaged. Two or more images are compared using Digital Image Correlation (DIC) \cite{sutton2009image}. This comparison yields the displacements between the images. These displacements are related to the changes in the gradients of the index of refraction using a ray tracing model. These gradients of the index of refraction are related to the gradients of the density by experimentally determined data (e.g. \cite{tan2015dependence}), by the Gladstone-Dale relation for gases \cite{born2013principles} or by the Lorentz-Lorenz equation for liquids \cite{lorentz1916theory}. The density field is sometimes obtained from the gradients of the density perturbations by solving a Poisson equation \cite{venkatakrishnan2004density, verso2015background}.
+In a typical SS application, perturbations (waves) in a fluid contained in a tank are imaged. Two or more images are compared using Digital Image Correlation (DIC) \cite{sutton2009image}. This comparison yields the displacements between the images. These displacements are related to the changes in the gradients of the index of refraction using a ray tracing model. These gradients of the index of refraction are related to the gradients of the density by experimentally determined data (e.g. \cite{tan2015dependence}), by the Gladstone-Dale relation for gases \cite{born2013principles} or by the Lorentz-Lorenz equation for liquids \cite{lorentz1916theory}. The density field is sometimes obtained from the gradients of the density perturbations by solving a Poisson equation \cite{venkatakrishnan2004density, hazewinkel2011comparison,verso2015background}.
 
 In this paper we present a modification to the BOS or SS technique to directly measure the density field. We take images of static situations:  (1) before filling a tank in the experimental setup with (stratified) fluids, (2) after filling the tank with a calibration fluid and (3) after filling the tank with (stratified) fluids. Then we take images of the dynamic situations: we image, as in SS, the perturbations, or waves, traveling through a fluid. We perform DIC to obtain displacements between the images. Using a ray tracing model we relate these displacements to the index of refraction. The static images give us the background density. The dynamic images give us the dynamic density field.
 
-The challenge of this new method is to have enough accuracy in our measurements and models to ensure that our results are useful. Determining the value of the density is more sensitive to noise than determining the density gradients of perturbations in a BOS or SS application. We also want to preserve the experimental simplicity of the BOS or SS method. In Section \ref{sec:simmod} we perform a naive application of the SS technique to try to measure the index of refraction of homogeneous water. We analyze a simple ray tracing model to determine why our naive approach failed. We show that light rays, traveling from the background through the fluid to the camera, should not travel in nearly straight lines (as in BOS or SS) but should have large deflections. We should either rotate the fluid tank or rotate (and move) our camera. We should not be placing our camera right in front of the fluid tank. 
+The challenge of this new method is to have enough accuracy in our measurements and models to ensure that our results are useful. Determining the value of the density is more sensitive to noise than determining the density gradients of perturbations in a BOS or SS application. We also want to preserve the experimental simplicity of the BOS or SS method. In Section \ref{sec:simmod} we perform a naive application of the SS technique to try to measure the index of refraction of homogeneous water. We analyze a simple ray tracing model to determine why our naive approach failed. We show that light rays, traveling from the background through the fluid to the camera, should not travel in nearly straight lines (as in BOS or SS) but should have large deflections. To achieve this, either the fluid tank or the camera can be rotated. When placing the camera right in front of the fluid tank the errors due to noise are largest.
 
-To obtain the required accuracy in determining the density field we optimize all the steps in our method.  In Section \ref{sec:formod} we derive our ray tracing model relating displacements to the index of refraction. We call this our forward model: given an index of refraction field and experimental parameters, we can compute the displacement field of our experimental setup. This ray tracing model is a 3D model that allows the camera to be placed under an angle with respect to the fluid tank. In Section \ref{sec:cal} we describe our calibration procedure. This calibration determines accurately certain parameters in our forward model.  In Section \ref{sec:DIC} we discuss DIC. We provide references to papers that discuss techniques that allow us to get the most of our DIC procedure. We also provide information about our settings for a typical DIC calculation. We discuss best practices to get the most out of our experiments. In Section \ref{sec:invmod} we discuss how to solve our inverse model: how to obtain the index of refraction from the experimentally obtained displacements and our forward model. Section \ref{sec:res} shows three applications of our new method. In Section \ref{sec:dis} we summarize the main strengths and weaknesses of our method.
+To obtain the required accuracy in determining the density field we optimize all the steps in our method.  In Section \ref{sec:formod} we derive our ray tracing model relating displacements to the index of refraction. We call this our forward model: given an index of refraction field and experimental parameters, we can compute the displacement field of our experimental setup. This ray tracing model is a 3D model that allows the camera to be placed under any angle with respect to the fluid tank. In Section \ref{sec:cal} we describe our calibration procedure. This calibration determines accurately certain parameters in our forward model.  In Section \ref{sec:DIC} we discuss DIC. We provide references to papers that discuss techniques that allow us to get the most of our DIC procedure. We also provide information about our settings for a typical DIC calculation. We discuss best practices to get the most out of our experiments. In Section \ref{sec:invmod} we discuss how to solve our inverse model: how to obtain the index of refraction from the experimentally obtained displacements and our forward model. Section \ref{sec:res} shows three applications of our new method. In Section \ref{sec:dis} we summarize the main strengths and weaknesses of our method.
 
 \section{Simple Model}
 \label{sec:simmod}
@@ -219,15 +219,15 @@ Figure \ref{fig:simmod} shows the results when using (\ref{eq:invdexcon2}) to ob
 	\centering \includegraphics[width = \textwidth,keepaspectratio]{nsimplefrontal}
 	\subcaption{$n$ from $\sqrt{\Delta x^2+\Delta y^2}$}\label{fig:nfrontal}
 \end{subfigure}
-\caption{Simple Model Result. Applying DIC to the Reference Image in \ref{fig:air0simplefrontal} and the Deformed Image \ref{fig:fresh0simplefrontal} yields the correlation coefficient in \ref{fig:CCsimplefrontal}, the horizontal displacements in \ref{fig:DXsimplefrontal} and the vertical displacements in \ref{fig:DYsimplefrontal}. Using (\ref{eq:invdexcon2}) the index of refraction $n$ in \ref{fig:nfromdxsimplefrontal}, \ref{fig:nfromdysimplefrontal} and \ref{fig:nfrontal} are obtained. When the displacements $\Delta x$ and $\Delta y$ approach zero, large errors in $n$ appear. }
+\caption{Simple Model Result. Applying DIC to the Reference Image in \ref{fig:air0simplefrontal} and the Deformed Image \ref{fig:fresh0simplefrontal} yields the correlation coefficient in \ref{fig:CCsimplefrontal}, the horizontal displacements in \ref{fig:DXsimplefrontal} and the vertical displacements in \ref{fig:DYsimplefrontal}. Using (\ref{eq:invdexcon2}) the index of refraction $n$ in \ref{fig:nfromdxsimplefrontal}, \ref{fig:nfromdysimplefrontal} and \ref{fig:nfrontal} is obtained. When the displacements $\Delta x$ and $\Delta y$ approach zero, large errors in $n$ appear. }
 \label{fig:simmod}
 \end{figure} %Around the location of the $z$-axis, where the angles and displacements approach zero, the errors are large.   and we get possibly negative values of $n$ since both terms in the denominator can go to zero
 
-We see that when the displacements approach zero, we have large errors in $n$. Figure \ref{fig:nfrontal} looks best, but is still unacceptable.The entire figure should have a constant value of $n = 1.333$. This is not the case.
+We see that when the displacements approach zero, we have large errors in $n$. Figure \ref{fig:nfrontal} looks best, but is still unacceptable. The entire figure should have a constant value of $n$, the refraction coefficient of pure water $n= 1.333$. This is not the case.
  
-Equations (\ref{eq:dexcon2}) and (\ref{eq:invdexcon2}) reveal a problem when determining $n$: When the angle $\theta_x$ goes to zero, (\ref{eq:dexcon2}) shows $\Delta x$ goes to zero. Then the numerator in the fraction in (\ref{eq:invdexcon2}) goes to zero, while the two terms in the denominator both go to zero. So we get large errors in the magnitude of $n$ since we are dividing $0/0$. In any measurement we have noise, resulting in uncertainties in $\Delta x$ and $\theta_x$. These uncertainties have a large effect on the value of $n$ since the expected values of $\Delta x$ and $\theta_x$ are small. %The Signal-to-Noise Ratio is very bad because our signal is very small.
+Equations (\ref{eq:dexcon2}) and (\ref{eq:invdexcon2}) reveal a problem when determining $n$: When the angle $\theta_x$ goes to zero, (\ref{eq:dexcon2}) shows $\Delta x$ goes to zero too. Then the numerator in the fraction in (\ref{eq:invdexcon2}) goes to zero, while the two terms in the denominator both go to zero. So we get large errors in the magnitude of $n$ since we are dividing $0/0$. In any measurement we have noise, resulting in uncertainties in $\Delta x$ and $\theta_x$. These uncertainties have a large effect on the value of $n$ since the expected values of $\Delta x$ and $\theta_x$ are small. %The Signal-to-Noise Ratio is very bad because our signal is very small.
 
-To solve this, we want $\theta_x$ to not approach zero. Then, according to (\ref{eq:dexcon2}), $\Delta x$ does not approach zero and our calculation of $n$ is not plagued by a fraction that approaches $0/0$. To achieve this, we place our camera at an angle $\alpha$ with respect to the water tank. The angle $\theta_x$ is replaced by $\alpha+\phi_x$, where $\phi_x$ is the angle of the light ray relative to the principal axis of the camera, which is at an angle $\alpha$. %For example, we position our camera at an angle of $\alpha=30^\circ$ relative to the tank. The camera has a viewing range of $[-4,4]^\circ$. Then $\phi_x$ varies from $-4^\circ$ to $4^\circ$.
+To solve this, we want $\theta_x$ to stay away from zero. Then, according to (\ref{eq:dexcon2}), $\Delta x$ does not approach zero and our calculation of $n$ is not plagued by a fraction that approaches $0/0$. To achieve this, we place our camera at an angle $\alpha$ with respect to the water tank. The angle $\theta_x$ is replaced by $\alpha+\phi_x$, where $\phi_x$ is the angle of the light ray relative to the principal axis of the camera, which is at an angle $\alpha$,  relative to the along-screen x-direction.  %For example, we position our camera at an angle of $\alpha=30^\circ$ relative to the tank. The camera has a viewing range of $[-4,4]^\circ$. Then $\phi_x$ varies from $-4^\circ$ to $4^\circ$.
 
 %\begin{figure}[hpbt]
 %	\includegraphics[width=\textwidth, keepaspectratio]{dndx.png}
@@ -247,7 +247,7 @@ To solve this, we want $\theta_x$ to not approach zero. Then, according to (\ref
 	\label{fig:diffnsimple}
 \end{figure}
 
-We want $\Delta x$ and $\theta_x$ to vary with $n$ as much as possible. So, we want $n$ to vary with $\Delta x$ and $\theta_x$ as little as possible. To find the best angle $\theta_x$ to achieve this, we take the derivative of (\ref{eq:invdexcon2}) with respect to $\Delta x/L_t$ and $\theta_x$ \cite{nemoto1992measurement}. Figure \ref{fig:diffnsimple} shows these derivatives: $\partial n/\partial (\Delta x/L_t)$ decreases with increasing $\theta_x$. $\left|\partial n/\partial \theta_x\right|$ first decreases with increasing $\theta_x$, reaches a minimum, then increases again. The worst possible angle to measure is $0^\circ$. 
+We want $\Delta x$ and $\theta_x$ to vary with $n$ as much as possible. So, we want $n$ to vary with $\Delta x$ and $\theta_x$ as little as possible. To find the best angle $\theta_x$ to achieve this, we take the derivative of (\ref{eq:invdexcon2}) with respect to $\xi \equiv \Delta x/L_t$ and $\theta_x$ \cite{nemoto1992measurement}. Figure \ref{fig:diffnsimple} shows these derivatives: $\partial n/\partial \xi$ decreases with increasing $\theta_x$. $\left|\partial n/\partial \theta_x\right|$ first decreases with increasing $\theta_x$, reaches a minimum, then increases again. The worst possible angle to measure is $0^\circ$, the classical front view.
 
 %Since there is also an uncertainty in the angle, we want $n$ to vary with $\theta_x$ as little as possible. Figure \ref{fig:diffnsimple} also shows this derivative. The magnitude of this derivative $\left|\partial n/\partial \theta_x\right|$ first decreases with increasing $\theta_x$, reaches a minimum, then increases again. The worst possible angles to measure at are $0^\circ$ and $90^\circ$. The minimum is reached at $31^\circ$. Any angle between $15^\circ$ and $55^\circ$ yields approximately the same sensitivity of $n$. 
 
@@ -260,7 +260,7 @@ We want $\Delta x$ and $\theta_x$ to vary with $n$ as much as possible. So, we w
  
 \section{Forward Model}
 \label{sec:formod}
-In this section we build a forward model, relating an index of refraction field $n$, position on the image sensor $\underline{x}$ and parameters $\underline{\alpha}$ to the coordinates $\underline{X} = (X,Y,Z)$ where the light rays hits the screen. We seek a model $\underline{X}(n, \underline{\alpha}, \underline{x})$. 
+In this section we build a forward model, relating an index of refraction field $n(\underline{x})$, position on the image sensor $\underline{x}$ and parameters $\underline{\alpha}$ to the coordinates $\underline{X} = (X,Y,Z)$ where the light rays hit the screen. We seek a model $\underline{X}(n, \underline{\alpha}, \underline{x})$. 
 To give our method flexibility, we model the light rays as traversing in a three-dimensional space and allow the different elements in the experimental setup to have any alignments.
 %In Subsection \ref{subsec:rayequ} we discuss the ray equation used in our model. In Subsection \ref{subsec:RayPath} give a mathematical description of all the objects our light rays encounter. In Subsection \ref{subsec:dis} we construct the full ray path from the camera through the tank to the screen
 
@@ -297,6 +297,7 @@ a x + b y + c z + d_i = 0, \qquad
 \label{eq:planedef1}
 & d_1 = d + (a+b+c) (L_s+2L_g+L_t+L_c) = 0.
 \end{align}
+Here the equivalence $d_1=0$ in the last equation expresses that the pinhole lies in plane 1. 
 
 \subsection{Direction Cosines}
 Each pixel in our image corresponds to a physical location on the image sensor with coordinates $\underline{x} = (x,y, -L_f)$, where $L_f$ is the distance from the image sensor to the pinhole in the $z$-direction. We calculate this distance with the thin lens equation
@@ -332,7 +333,7 @@ To intersect with a plane, the final position $\underline{p}$ must lie on that p
 \begin{equation}
 	l = - \frac{d + a s_x + b s_y + c s_z}{a \alpha + b \beta + c \gamma}
 \end{equation}
-Substituting this $l$ into (\ref{eq:linedef}) yields the location where each light rays intersects with the plane.
+Substituting this $l$ into (\ref{eq:linedef}) yields the location where each light ray intersects with the plane.
 
 \subsection{Snell's Law}
 To find the angle of incidence, $\theta_I$, between the incoming light ray and the plane, we compute
@@ -370,7 +371,7 @@ In our forward model in (\ref{eq:ForwardModel}), we have used the parameters $\u
 
 When setting up a new experiment, the parameters $\underline{\alpha}$ are not known. To obtain these, we perform a calibration step. This calibration determines the parameters precisely and gives us a lot of experimental freedom. For example, we do not have to align the camera, or even measure the position of the camera relative to the water tank.
 
-The calibration consists of performing one extra measurement (two in total): we take a reference image, the tank without water (filled with air) and a deformed image, the tank filled with water with a known index of refraction. The easiest is water without any salts. Performing DIC yields us the displacements $\underline{\Delta x}$. This allows us to determine the parameters $\underline{\alpha}.$
+The calibration consists of performing one extra measurement (two in total): we take a reference image, the tank without water (filled with air) and a deformed image, the tank filled with water with a known index of refraction. The easiest is water without salt. Performing DIC yields us the displacements $\underline{\Delta x}$. This allows us to determine the parameters $\underline{\alpha}.$
 
 \noindent Looking at our forward model (\ref{eq:ForwardModel}), we know
 \begin{enumerate}
@@ -383,13 +384,13 @@ The unknowns are the parameters $\underline{\alpha} = (a, b, c, L_m, x_p^0, y_p^
 Since we have only five parameters to estimate and many measurements (each grid point yields a separate equation), we have an over-determined system. We use least-squares to find those $\underline{\alpha}$ that minimize the sum of squares of the residuals. The forward model depends nonlinearly on the parameters $\underline{\alpha}$ and the measurements $\underline{\Delta x}$. For each measurement $\underline{\Delta x}$ we have a measure of reliability, the correlation coefficient, which we use as a weight $w$ in the least squares procedure
 \begin{equation}
 \label{eq:calmin} 
-	 \min_{\underline{\alpha}} \sum_i w_i \left(X(n_1, \underline{\alpha}, \underline{x}_i+\underline{\Delta x}_i) - X(n_0, \underline{\alpha}, \underline{x}_i)\right)^2, 
+	 \min_{\underline{\alpha}} \sum_i w_i \left(X_j(n_1, \underline{\alpha}, \underline{x}_i+\underline{\Delta x}_i) - X_j(n_0, \underline{\alpha}, \underline{x}_i)\right)^2, \qquad X_j = X \mbox{ or } Y
 \end{equation}
-with constraints (1) $L_c > 0$ and (2) $L_m \geq L_c + 2 L_g + L_t + L_s$, the experimental setup is in front of the camera; (3) $c < 0$, the unit normal vector of the planes points in the negative $z$-axis. Combining these constraints implies $d>0$. The sum is over all measured displacements. We use only the displacements in the $x$-direction, since that is the direction with the largest angles and thus largest signal. % The weights $w_i$ are $0$ when $CC < 0.8$ and $1$ otherwise. 
+with constraints (1) $L_c > 0$ and (2) $L_m \geq L_c + 2 L_g + L_t + L_s$, the experimental setup is in front of the camera; (3) $c < 0$, the unit normal vector of the planes points in the negative $z$-direction. Combining these constraints implies $d>0$. The sum is over all measured displacements. Since plane 6 is a plane, we do not calibrate over one of the directions. When only viewing under an horizontal angle, we use only the displacements in the $x$-direction, since that is the direction with the largest angles and thus largest signal. % The weights $w_i$ are $0$ when $CC < 0.8$ and $1$ otherwise. 
 
 The distance $L_c$ between the camera and the front of water tank (plane 2) along the $\underline{\hat{n}}$ direction is obtained from the total distance $d$ between the camera and the screen along the $z$-direction and the distances $L_g, L_t$ and $L_s$. This ensures internal consistency in our model. We obtain $L_c$ from (\ref{eq:planedef1}).
 
-We use the Levenberg-Marquardt(LM) algorithm to solve (\ref{eq:calmin}). In our experiments, (\ref{eq:calmin}) has one minimum that satisfies the constraints. When the initial condition satisfies these constraints, the LM algorithm will find this minimum.
+We use the Levenberg-Marquardt(LM) \cite{fletcher1971modified} algorithm to solve (\ref{eq:calmin}). In our experiments, (\ref{eq:calmin}) has one minimum that satisfies the constraints. When the initial condition satisfies these constraints, the LM algorithm will find this minimum.
 
 %\begin{figure}[htbp]
 %		\centering \includegraphics[width = \textwidth]{leastsquaresab.png}
@@ -423,7 +424,7 @@ Region of Compensation: Sightly similar to \cite{tian2018accuracy} and \cite{pan
 
 \section{Digital Image Correlation}
 \label{sec:DIC}
-Digital Image Correlation (DIC) is a technique \cite{sutton2009image} to obtain deformation maps from images. We use second-order shape functions \cite{lu2000deformation} to handle large nonlinear deformations. To attain sub-pixel accuracy we interpolate our images with B-splines \cite{thevenaz2000interpolation, unser1999splines}. To obtain the deformations we optimize a Correlation Coefficient, the ZNSSD \cite{sutton2009image}. We solve this nonlinear least-squares problem  by (1) providing an initial guess and (2) solving an iterative scheme. As an initial guess we perform Template Matching \cite{lewis1995industrial,opencv_library} on a limited set of points to obtain rigid deformations with pixel accuracy. After applying DIC to obtain sub-pixel deformations, we use reliability guided DIC \cite{chen2009quality, pan2012incremental} with a propagation function \cite{zhou2012propagation} to determine the initial guesses. As iterative scheme we use the LM algorithm. 
+Digital Image Correlation (DIC) is a technique \cite{sutton2009image} to obtain deformation maps from images. We use second-order shape functions \cite{lu2000deformation} to handle large nonlinear deformations, especially relevant for sharp interfaces in the fluid. To attain sub-pixel accuracy we interpolate our images with B-splines \cite{thevenaz2000interpolation, unser1999splines}. To obtain the deformations we optimize a Correlation Coefficient, the zero-mean normalized sum of squared differences (ZNSSD) \cite{sutton2009image}. We solve this nonlinear least-squares problem by (1) providing an initial guess and (2) solving an iterative scheme. To obtain an initial guess we perform Template Matching (TM) \cite{lewis1995industrial,opencv_library} on a limited set of points. In TM a template (a small subset from one image) is compared to a displaced copy in another image. TM yields rigid deformations with pixel accuracy. After applying DIC to obtain sub-pixel deformations, we use reliability guided DIC \cite{chen2009quality, pan2012incremental} with a propagation function \cite{zhou2012propagation} to determine the initial guesses. As iterative scheme we use the LM algorithm. 
 
 
 \begin{table}[htbp]
@@ -472,7 +473,7 @@ We use the experimental data from \cite{tan2015dependence} to relate the measure
 \label{sec:res}
 In this section we show three applications of the new method: (1) A static two-layer fluid with large nonlinear deformations, (2) A static stratified fluid and (3) a dynamic fluid/flow? with wave attractor.
 
-In the first application, Figure \ref{fig:0side}, we measured the background density of a two-layer fluid system. We filled the bottom half of a tank with Wadden Sea water (with an index of refraction of 1.338)\footnote{Measured by a refractometer: The Atago Urine Specific Gravity Refractometer with a refractive index range of 1.333-1.356 and a resolution of 0.0005.} and the upper half of the tank with tap water (with an index of refraction of 1.333). We kept the interface between the two layers sharp by filling the upper half of the tank through a sponge. The observed deformations of the dot pattern through this interface are large. Through the use of the second-order shape functions in the DIC procedure, we can still determine these deformations. Figure \ref{fig:ndeformed0side} shows the index of refraction field $n$. The expected theoretical density profile is an error function. We see this in Figure \ref{fig:ndeformed0side}.
+In the first application, Figure \ref{fig:0side}, we measured the background density of a two-layer fluid system. We filled the bottom half of a tank with Wadden Sea water (with an index of refraction of 1.338)\footnote{Measured by a refractometer: The Atago Urine Specific Gravity Refractometer with a refractive index range of 1.333-1.356 and a resolution of 0.0005.} and the upper half of the tank with tap water (with an index of refraction of 1.333). We kept the interface between the two layers sharp by filling the upper half of the tank through a sponge. The observed deformations of the dot pattern through this interface are large. Through the use of the second-order shape functions in the DIC procedure, we can still determine these deformations. Figure \ref{fig:ndeformed0side} shows the index of refraction field $n$. %The expected theoretical density profile is an error function. We see this in Figure \ref{fig:ndeformed0side}.
 
 \begin{figure}[htbp]
 \begin{subfigure}{.5\linewidth}
@@ -505,9 +506,9 @@ In the first application, Figure \ref{fig:0side}, we measured the background den
 \end{subfigure}%
 \begin{subfigure}{.5\linewidth}
 	\centering \includegraphics[width = \textwidth]{TwoLayerHorizontalAveraged}
-		\subcaption{$n$ profiles for Calibration and Deformed Images}\label{fig:nprofiles0side}
+		\subcaption{$n$ profile for Calibration and Deformed Images}\label{fig:nprofiles0side}
 \end{subfigure}
-\caption{The procedure for obtaining the index of refraction field $n$. We obtain three images: one Reference Image (\ref{fig:air0side}) filled with air, one Calibration Image (\ref{fig:fresh0side}) filled with water without salts and one Deformed Image (\ref{fig:twolayer0side}) filled with water with an unknown $n$-field. Applying DIC between the Reference Image and the Correlation image, we find the displacements $D=(\Delta x, \Delta y)$. Using these displacements $D$ in (\ref{eq:calmin}), we obtain the parameters $\underline{\alpha}$. After calibration, the resulting $n$-field is uniform (\ref{fig:ncalibration0side}). Applying DIC between the Reference Image and the Deformed Image, we find the displacements $\Delta x$ (\ref{fig:dx0side}) and $\Delta y$ (\ref{fig:dy0side}).  Using these displacements in (\ref{eq:nmin}), we obtain the unknown index of refraction field $n$ (\ref{fig:ndeformed0side}). Horizontally averaging the index of refraction field $n$ yields the profiles (\ref{fig:nprofiles0side}).}
+\caption{The procedure for obtaining the index of refraction field $n$. We obtain three images: one Reference Image (\ref{fig:air0side}) filled with air, one Calibration Image (\ref{fig:fresh0side}) filled with water without salts and one Deformed Image (\ref{fig:twolayer0side}) filled with water with an unknown $n$-field. Applying DIC on the area of the red rectangle between the Reference Image and the Correlation image, we find the displacements $D=(\Delta x, \Delta y)$. Using these displacements $D$ in (\ref{eq:calmin}), we obtain the parameters $\underline{\alpha}$. After calibration, the resulting $n$-field is uniform (\ref{fig:ncalibration0side}). Applying DIC between the Reference Image and the Deformed Image, we find the displacements $\Delta x$ (\ref{fig:dx0side}) and $\Delta y$ (\ref{fig:dy0side}).  Using these displacements in (\ref{eq:nmin}), we obtain the unknown index of refraction field $n$ (\ref{fig:ndeformed0side}). Horizontally averaging the index of refraction field $n$ yields the profiles (\ref{fig:nprofiles0side}).}
 \label{fig:0side}
 \end{figure}
 
@@ -521,7 +522,7 @@ $\beta$  & 1 & 1 & 1 & 1 & 1
 \end{tabular}
 \end{table}
 
-In the second application, Figure \ref{fig:0side}, we measured the background density of a continuously stratified fluid. We filled a tank through the double bucket method. After taking a Reference Image, a Calibration Image and a Deformed Image, we repositioned the camera for a Synthetic Schlieren measurement. After oscillating the tank, we measured the angles of the internal waves propagating in the fluid. Table \ref{tab:SSintwav} shows the forcing frequencies $\omega$ and angles $\beta$. Through
+In the second application, Figure \ref{fig:strat0side}, we measured the background density of a continuously stratified fluid. We filled a tank such that the buoyancy frequency was constant . After taking a Reference Image, a Calibration Image and a Deformed Image, we repositioned the camera for a Synthetic Schlieren measurement. After oscillating the tank, we measured the angles of the internal waves propagating in the fluid. Table \ref{tab:SSintwav} shows the forcing frequencies $\omega$ and angles $\beta$. Through
 \begin{equation}
 	\omega = N \cos \beta
 \end{equation}
@@ -552,7 +553,7 @@ we determined the buoyancy frequency $N$, obtained from our new method. From Fig
 \label{figs:strat0side}
 \end{figure}
 
-In the third application, we measured the density field of a wave attractor \cite{maas1997observation}. Figure \ref{figs:WA0side} shows the measured density fields over one period of a (1,1) Wave Attractor. 
+In the third application, we measured the spatially and temporally varying density field of a wave attractor \cite{maas1997observation}. Figure \ref{figs:WA0side} shows the measured density fields during one period of a (1,1) Wave Attractor. 
 \begin{figure}[htbp]
 \begin{subfigure}{.5\linewidth}
 %		\centering \includegraphics[width = \textwidth]{}

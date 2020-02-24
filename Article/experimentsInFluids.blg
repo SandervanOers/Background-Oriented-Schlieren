@@ -1,19 +1,19 @@
 [0] Config.pm:304> INFO - This is Biber 2.14
 [0] Config.pm:307> INFO - Logfile is 'experimentsInFluids.blg'
-[81] biber-MSWIN64:322> INFO - === 
-[144] Biber.pm:415> INFO - Reading 'experimentsInFluids.bcf'
-[280] Biber.pm:943> INFO - Found 21 citekeys in bib section 0
-[298] Biber.pm:4256> INFO - Processing section 0
-[299] Utils.pm:75> INFO - Globbing data source 'articleBOS.bib'
-[329] Utils.pm:91> INFO - Globbed data source 'articleBOS.bib' to articleBOS.bib
-[358] Biber.pm:4455> INFO - Looking for bibtex format file 'articleBOS.bib' for section 0
-[366] bibtex.pm:1653> INFO - LaTeX decoding ...
-[418] bibtex.pm:1471> INFO - Found BibTeX data source 'articleBOS.bib'
-[527] Utils.pm:304> WARN - month field 'July' in entry 'thevenaz2000interpolation' is not an integer - this will probably not sort properly.
-[599] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[599] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[599] Biber.pm:4084> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
-[599] Biber.pm:4090> INFO - No sort tailoring available for locale 'en-US'
-[622] bbl.pm:652> INFO - Writing 'experimentsInFluids.bbl' with encoding 'UTF-8'
-[634] bbl.pm:755> INFO - Output to experimentsInFluids.bbl
-[640] Biber.pm:128> INFO - WARNINGS: 1
+[72] biber-MSWIN64:322> INFO - === 
+[94] Biber.pm:415> INFO - Reading 'experimentsInFluids.bcf'
+[227] Biber.pm:943> INFO - Found 23 citekeys in bib section 0
+[246] Biber.pm:4256> INFO - Processing section 0
+[247] Utils.pm:75> INFO - Globbing data source 'articleBOS.bib'
+[257] Utils.pm:91> INFO - Globbed data source 'articleBOS.bib' to articleBOS.bib
+[273] Biber.pm:4455> INFO - Looking for bibtex format file 'articleBOS.bib' for section 0
+[283] bibtex.pm:1653> INFO - LaTeX decoding ...
+[342] bibtex.pm:1471> INFO - Found BibTeX data source 'articleBOS.bib'
+[427] Utils.pm:304> WARN - month field 'July' in entry 'thevenaz2000interpolation' is not an integer - this will probably not sort properly.
+[497] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[497] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[497] Biber.pm:4084> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
+[497] Biber.pm:4090> INFO - No sort tailoring available for locale 'en-US'
+[522] bbl.pm:652> INFO - Writing 'experimentsInFluids.bbl' with encoding 'UTF-8'
+[534] bbl.pm:755> INFO - Output to experimentsInFluids.bbl
+[540] Biber.pm:128> INFO - WARNINGS: 1

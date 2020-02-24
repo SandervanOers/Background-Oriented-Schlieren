@@ -159,6 +159,69 @@
       \field{pages}{322\bibrangedash 335}
       \range{pages}{14}
     \endentry
+    \entry{fletcher1971modified}{article}{}
+      \name{author}{1}{}{%
+        {{hash=8abe2db93042a6dd925f3a2a2d32b43e}{%
+           family={Fletcher},
+           familyi={F\bibinitperiod},
+           given={Roger},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Theoretical Physics Division, Atomic Energy Research Establishment}%
+      }
+      \strng{namehash}{8abe2db93042a6dd925f3a2a2d32b43e}
+      \strng{fullhash}{8abe2db93042a6dd925f3a2a2d32b43e}
+      \strng{bibnamehash}{8abe2db93042a6dd925f3a2a2d32b43e}
+      \strng{authorbibnamehash}{8abe2db93042a6dd925f3a2a2d32b43e}
+      \strng{authornamehash}{8abe2db93042a6dd925f3a2a2d32b43e}
+      \strng{authorfullhash}{8abe2db93042a6dd925f3a2a2d32b43e}
+      \field{sortinit}{F}
+      \field{sortinithash}{fb0c0faa89eb6abae8213bf60e6799ea}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{A modified Marquardt subroutine for non-linear least squares}
+      \field{year}{1971}
+    \endentry
+    \entry{hazewinkel2011comparison}{article}{}
+      \name{author}{3}{}{%
+        {{hash=b710a9398cbd6b04276ff20eff3aecfc}{%
+           family={Hazewinkel},
+           familyi={H\bibinitperiod},
+           given={Jeroen},
+           giveni={J\bibinitperiod}}}%
+        {{hash=8973454dbe1d7c7b86bda21bdfc0c3b3}{%
+           family={Grisouard},
+           familyi={G\bibinitperiod},
+           given={Nicolas},
+           giveni={N\bibinitperiod}}}%
+        {{hash=0e4d002dc61129ddcd404df2c12c4d2d}{%
+           family={Dalziel},
+           familyi={D\bibinitperiod},
+           given={Stuart\bibnamedelima B},
+           giveni={S\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{b86a44672b654cf884fb24e3da919bdb}
+      \strng{fullhash}{b86a44672b654cf884fb24e3da919bdb}
+      \strng{bibnamehash}{b86a44672b654cf884fb24e3da919bdb}
+      \strng{authorbibnamehash}{b86a44672b654cf884fb24e3da919bdb}
+      \strng{authornamehash}{b86a44672b654cf884fb24e3da919bdb}
+      \strng{authorfullhash}{b86a44672b654cf884fb24e3da919bdb}
+      \field{sortinit}{H}
+      \field{sortinithash}{6db6145dae8dc9e1271a8d556090b50a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{European Journal of Mechanics-B/Fluids}
+      \field{number}{1}
+      \field{title}{Comparison of laboratory and numerically observed scalar fields of an internal wave attractor}
+      \field{volume}{30}
+      \field{year}{2011}
+      \field{pages}{51\bibrangedash 56}
+      \range{pages}{6}
+    \endentry
     \entry{lewis1995industrial}{article}{}
       \name{author}{1}{}{%
         {{hash=6b99a49678f06cf0c212364ceaf29545}{%
